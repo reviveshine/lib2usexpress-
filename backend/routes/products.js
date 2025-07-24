@@ -194,16 +194,29 @@ router.get('/', async (req, res) => {
 // Get single product by ID
 router.get('/:id', async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
+        let product = null;
+        
+        try {
+            // Try MongoDB first
+            product = await Product.findById(req.params.id);
+            
+            if (product) {
+                // Increment view count
+                await Product.findByIdAndUpdate(req.params.id, { $inc: { views: 1 } });
+            }
+        } catch (dbError) {
+            // Fallback to mock data
+            product = mockProducts.find(p => p._id === req.params.id);
+            if (product) {
+                product.views++;
+            }
+        }
         
         if (!product) {
             return res.status(404).json({
                 error: 'Product not found'
             });
         }
-
-        // Increment view count
-        await Product.findByIdAndUpdate(req.params.id, { $inc: { views: 1 } });
 
         res.json({
             success: true,
@@ -223,27 +236,58 @@ router.get('/seller/:sellerId', async (req, res) => {
         const { sellerId } = req.params;
         const { page = 1, limit = 12, status } = req.query;
 
-        const filter = { sellerId: Number(sellerId) };
-        if (status) filter.status = status;
-
-        const skip = (page - 1) * limit;
+        let products = [];
         
-        const products = await Product.find(filter)
-            .sort({ createdAt: -1 })
-            .skip(skip)
-            .limit(Number(limit));
+        try {
+            // Try MongoDB first
+            const filter = { sellerId: Number(sellerId) };
+            if (status) filter.status = status;
 
-        const total = await Product.countDocuments(filter);
+            const skip = (page - 1) * limit;
+            
+            products = await Product.find(filter)
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(Number(limit));
 
-        res.json({
-            success: true,
-            data: products,
-            pagination: {
-                currentPage: Number(page),
-                totalPages: Math.ceil(total / limit),
-                totalProducts: total
-            }
-        });
+            const total = await Product.countDocuments(filter);
+
+            res.json({
+                success: true,
+                data: products,
+                pagination: {
+                    currentPage: Number(page),
+                    totalPages: Math.ceil(total / limit),
+                    totalProducts: total
+                }
+            });
+        } catch (dbError) {
+            // Fallback to mock data
+            let filteredProducts = mockProducts.filter(product => {
+                if (product.sellerId !== Number(sellerId)) return false;
+                if (status && product.status !== status) return false;
+                return true;
+            });
+
+            // Sort by creation date (newest first)
+            filteredProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            // Pagination
+            const total = filteredProducts.length;
+            const totalPages = Math.ceil(total / limit);
+            const skip = (page - 1) * limit;
+            const paginatedProducts = filteredProducts.slice(skip, skip + Number(limit));
+
+            res.json({
+                success: true,
+                data: paginatedProducts,
+                pagination: {
+                    currentPage: Number(page),
+                    totalPages,
+                    totalProducts: total
+                }
+            });
+        }
     } catch (error) {
         res.status(500).json({
             error: 'Failed to fetch seller products',
@@ -272,7 +316,7 @@ router.post('/', auth, requireSeller, async (req, res) => {
             });
         }
 
-        const product = new Product({
+        const productData = {
             name,
             description,
             price: Number(price),
@@ -280,16 +324,38 @@ router.post('/', auth, requireSeller, async (req, res) => {
             images: images || [],
             stock: Number(stock) || 0,
             sellerId: req.user.userId,
-            sellerName: `${req.user.firstName || ''} ${req.user.lastName || ''}`.trim() || 'Unknown Seller'
-        });
+            sellerName: `${req.user.firstName || ''} ${req.user.lastName || ''}`.trim() || 'Unknown Seller',
+            status: 'active',
+            views: 0
+        };
 
-        await product.save();
+        try {
+            // Try MongoDB first
+            const product = new Product(productData);
+            await product.save();
 
-        res.status(201).json({
-            success: true,
-            message: 'Product created successfully',
-            data: product
-        });
+            res.status(201).json({
+                success: true,
+                message: 'Product created successfully',
+                data: product
+            });
+        } catch (dbError) {
+            // Fallback to mock data
+            const newProduct = {
+                _id: String(nextProductId++),
+                ...productData,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+            
+            mockProducts.push(newProduct);
+
+            res.status(201).json({
+                success: true,
+                message: 'Product created successfully',
+                data: newProduct
+            });
+        }
     } catch (error) {
         if (error.name === 'ValidationError') {
             return res.status(400).json({
@@ -326,18 +392,38 @@ router.put('/:id', auth, requireSeller, requireProductOwnership, async (req, res
         if (images) updateData.images = images;
         if (stock !== undefined) updateData.stock = Number(stock);
         if (status) updateData.status = status;
+        updateData.updatedAt = new Date();
 
-        const product = await Product.findByIdAndUpdate(
-            req.params.id,
-            updateData,
-            { new: true, runValidators: true }
-        );
+        try {
+            // Try MongoDB first
+            const product = await Product.findByIdAndUpdate(
+                req.params.id,
+                updateData,
+                { new: true, runValidators: true }
+            );
 
-        res.json({
-            success: true,
-            message: 'Product updated successfully',
-            data: product
-        });
+            res.json({
+                success: true,
+                message: 'Product updated successfully',
+                data: product
+            });
+        } catch (dbError) {
+            // Fallback to mock data
+            const productIndex = mockProducts.findIndex(p => p._id === req.params.id);
+            if (productIndex === -1) {
+                return res.status(404).json({
+                    error: 'Product not found'
+                });
+            }
+
+            mockProducts[productIndex] = { ...mockProducts[productIndex], ...updateData };
+
+            res.json({
+                success: true,
+                message: 'Product updated successfully',
+                data: mockProducts[productIndex]
+            });
+        }
     } catch (error) {
         if (error.name === 'ValidationError') {
             return res.status(400).json({
@@ -356,7 +442,20 @@ router.put('/:id', auth, requireSeller, requireProductOwnership, async (req, res
 // Delete product (product owner only)
 router.delete('/:id', auth, requireSeller, requireProductOwnership, async (req, res) => {
     try {
-        await Product.findByIdAndDelete(req.params.id);
+        try {
+            // Try MongoDB first
+            await Product.findByIdAndDelete(req.params.id);
+        } catch (dbError) {
+            // Fallback to mock data
+            const productIndex = mockProducts.findIndex(p => p._id === req.params.id);
+            if (productIndex === -1) {
+                return res.status(404).json({
+                    error: 'Product not found'
+                });
+            }
+            
+            mockProducts.splice(productIndex, 1);
+        }
 
         res.json({
             success: true,
@@ -371,3 +470,4 @@ router.delete('/:id', auth, requireSeller, requireProductOwnership, async (req, 
 });
 
 module.exports = router;
+module.exports.mockProducts = mockProducts;

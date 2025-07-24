@@ -38,7 +38,16 @@ const requireSeller = (req, res, next) => {
 const requireProductOwnership = async (req, res, next) => {
     try {
         const Product = require('../models/Product');
-        const product = await Product.findById(req.params.id);
+        let product = null;
+        
+        try {
+            // Try MongoDB first
+            product = await Product.findById(req.params.id);
+        } catch (dbError) {
+            // Fallback to mock data
+            const { mockProducts } = require('../routes/products');
+            product = mockProducts.find(p => p._id === req.params.id);
+        }
         
         if (!product) {
             return res.status(404).json({

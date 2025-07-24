@@ -17,8 +17,11 @@
                 <a href="index.html">Home</a>
                 <a href="marketplace.html">Marketplace</a>
                 <a href="#contact">Contact</a>
-                <a href="login.html" class="btn-primary">Login</a>
-                <a href="register.html" class="btn-secondary">Register</a>
+                <a id="dashboard-link" href="seller-dashboard.html" style="display: none;">Dashboard</a>
+                <span id="user-name" class="user-name" style="display: none;"></span>
+                <button id="logout-btn" class="btn-secondary" style="display: none;">Logout</button>
+                <a id="login-link" href="login.html" class="btn-primary">Login</a>
+                <a id="register-link" href="register.html" class="btn-secondary">Register</a>
             </nav>
         </div>
     </header>
@@ -99,9 +102,44 @@
 
         // Load products on page load
         document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
             loadProducts();
             setupEventListeners();
         });
+
+        function checkAuthStatus() {
+            const token = localStorage.getItem('auth_token');
+            const userData = localStorage.getItem('user_data');
+            
+            if (token && userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    
+                    // Show user info and logout button
+                    document.getElementById('user-name').textContent = `${user.firstName} ${user.lastName}`;
+                    document.getElementById('user-name').style.display = 'inline';
+                    document.getElementById('logout-btn').style.display = 'inline';
+                    
+                    // Show dashboard link for sellers
+                    if (user.userType === 'seller') {
+                        document.getElementById('dashboard-link').style.display = 'inline';
+                    }
+                    
+                    // Hide login/register links
+                    document.getElementById('login-link').style.display = 'none';
+                    document.getElementById('register-link').style.display = 'none';
+                    
+                    // Setup logout handler
+                    document.getElementById('logout-btn').addEventListener('click', function() {
+                        localStorage.removeItem('auth_token');
+                        localStorage.removeItem('user_data');
+                        location.reload();
+                    });
+                } catch (error) {
+                    console.error('Error parsing user data:', error);
+                }
+            }
+        }
 
         function setupEventListeners() {
             // Search functionality
