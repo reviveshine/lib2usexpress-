@@ -1,10 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 
 // Import routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
+const productRoutes = require('./routes/products');
 
 // Load environment variables
 dotenv.config();
@@ -20,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -38,9 +41,23 @@ app.get('/', (req, res) => {
         endpoints: {
             health: '/api/health',
             auth: '/api/auth',
-            users: '/api/users'
+            users: '/api/users',
+            products: '/api/products'
         }
     });
+});
+
+// MongoDB connection
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/lib-marketplace';
+
+mongoose.connect(MONGODB_URI, {
+    serverSelectionTimeoutMS: 3000, // Timeout after 3s instead of 30s
+    socketTimeoutMS: 3000,
+})
+.then(() => console.log('✓ MongoDB connected successfully'))
+.catch(err => {
+    console.error('✗ MongoDB connection error:', err.message);
+    console.log('  Running with in-memory storage for development...');
 });
 
 // Error handling middleware

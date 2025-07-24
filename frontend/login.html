@@ -65,5 +65,69 @@
             <p>&copy; 2025 LIB MARKETPLACE. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            const token = localStorage.getItem('auth_token');
+            if (token) {
+                redirectToDashboard();
+            }
+
+            // Setup form handler
+            document.querySelector('.auth-form').addEventListener('submit', handleLogin);
+        });
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const loginData = {
+                email: formData.get('email'),
+                password: formData.get('password')
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(loginData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Store authentication data
+                    localStorage.setItem('auth_token', data.token);
+                    localStorage.setItem('user_data', JSON.stringify(data.user));
+                    
+                    alert('Login successful!');
+                    redirectToDashboard();
+                } else {
+                    alert('Login failed: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login failed. Please check your connection and try again.');
+            }
+        }
+
+        function redirectToDashboard() {
+            try {
+                const userData = JSON.parse(localStorage.getItem('user_data'));
+                if (userData.userType === 'seller') {
+                    window.location.href = 'seller-dashboard.html';
+                } else {
+                    window.location.href = 'marketplace.html';
+                }
+            } catch (error) {
+                window.location.href = 'marketplace.html';
+            }
+        }
+    </script>
 </body>
 </html>

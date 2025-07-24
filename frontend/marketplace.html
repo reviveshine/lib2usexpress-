@@ -17,8 +17,11 @@
                 <a href="index.html">Home</a>
                 <a href="marketplace.html">Marketplace</a>
                 <a href="#contact">Contact</a>
-                <a href="login.html" class="btn-primary">Login</a>
-                <a href="register.html" class="btn-secondary">Register</a>
+                <a id="dashboard-link" href="seller-dashboard.html" style="display: none;">Dashboard</a>
+                <span id="user-name" class="user-name" style="display: none;"></span>
+                <button id="logout-btn" class="btn-secondary" style="display: none;">Logout</button>
+                <a id="login-link" href="login.html" class="btn-primary">Login</a>
+                <a id="register-link" href="register.html" class="btn-secondary">Register</a>
             </nav>
         </div>
     </header>
@@ -60,18 +63,17 @@
 
         <section class="marketplace-content">
             <div class="container">
-                <div class="marketplace-notice">
-                    <div class="notice-card">
-                        <h3>🚀 Marketplace Coming Soon</h3>
-                        <p>We're currently setting up our marketplace with verified sellers. Products will be available once our backend system is complete.</p>
-                        <div class="notice-features">
-                            <div class="feature-item">✅ Secure KYC verification for all sellers</div>
-                            <div class="feature-item">✅ Real-time chat with sellers</div>
-                            <div class="feature-item">✅ Safe payment processing</div>
-                            <div class="feature-item">✅ Quality guaranteed products</div>
-                        </div>
-                        <a href="register.html" class="btn-primary">Join as Seller</a>
-                    </div>
+                <div id="products-grid" class="products-grid">
+                    <!-- Products will be loaded here -->
+                </div>
+                <div id="products-loading" class="loading-message">
+                    <p>Loading products...</p>
+                </div>
+                <div id="no-products" class="no-products" style="display: none;">
+                    <p>No products found matching your criteria.</p>
+                </div>
+                <div id="pagination" class="pagination">
+                    <!-- Pagination will be loaded here -->
                 </div>
             </div>
         </section>
@@ -82,5 +84,225 @@
             <p>&copy; 2025 LIB MARKETPLACE. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+        let currentPage = 1;
+        let currentFilters = {};
+
+        // DOM elements
+        const productsGrid = document.getElementById('products-grid');
+        const loadingMessage = document.getElementById('products-loading');
+        const noProductsMessage = document.getElementById('no-products');
+        const paginationContainer = document.getElementById('pagination');
+        const searchInput = document.querySelector('.search-input');
+        const searchBtn = document.querySelector('.search-btn');
+        const categorySelect = document.querySelector('.filter-select');
+        const sortSelect = document.querySelector('.filter-select:last-child');
+
+        // Load products on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
+            loadProducts();
+            setupEventListeners();
+        });
+
+        function checkAuthStatus() {
+            const token = localStorage.getItem('auth_token');
+            const userData = localStorage.getItem('user_data');
+            
+            if (token && userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    
+                    // Show user info and logout button
+                    document.getElementById('user-name').textContent = `${user.firstName} ${user.lastName}`;
+                    document.getElementById('user-name').style.display = 'inline';
+                    document.getElementById('logout-btn').style.display = 'inline';
+                    
+                    // Show dashboard link for sellers
+                    if (user.userType === 'seller') {
+                        document.getElementById('dashboard-link').style.display = 'inline';
+                    }
+                    
+                    // Hide login/register links
+                    document.getElementById('login-link').style.display = 'none';
+                    document.getElementById('register-link').style.display = 'none';
+                    
+                    // Setup logout handler
+                    document.getElementById('logout-btn').addEventListener('click', function() {
+                        localStorage.removeItem('auth_token');
+                        localStorage.removeItem('user_data');
+                        location.reload();
+                    });
+                } catch (error) {
+                    console.error('Error parsing user data:', error);
+                }
+            }
+        }
+
+        function setupEventListeners() {
+            // Search functionality
+            searchBtn.addEventListener('click', handleSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleSearch();
+                }
+            });
+
+            // Filter change handlers
+            categorySelect.addEventListener('change', handleFilterChange);
+            sortSelect.addEventListener('change', handleFilterChange);
+        }
+
+        function handleSearch() {
+            currentFilters.search = searchInput.value.trim();
+            currentPage = 1;
+            loadProducts();
+        }
+
+        function handleFilterChange() {
+            currentFilters.category = categorySelect.value;
+            
+            const sortValue = sortSelect.value;
+            if (sortValue) {
+                if (sortValue === 'price-low') {
+                    currentFilters.sort = 'price';
+                    currentFilters.order = 'asc';
+                } else if (sortValue === 'price-high') {
+                    currentFilters.sort = 'price';
+                    currentFilters.order = 'desc';
+                } else if (sortValue === 'newest') {
+                    currentFilters.sort = 'createdAt';
+                    currentFilters.order = 'desc';
+                } else if (sortValue === 'popular') {
+                    currentFilters.sort = 'views';
+                    currentFilters.order = 'desc';
+                }
+            }
+            
+            currentPage = 1;
+            loadProducts();
+        }
+
+        async function loadProducts() {
+            showLoading();
+            
+            try {
+                const params = new URLSearchParams({
+                    page: currentPage,
+                    limit: 12,
+                    ...currentFilters
+                });
+
+                const response = await fetch(`${API_BASE}/products?${params}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    displayProducts(data.data);
+                    displayPagination(data.pagination);
+                } else {
+                    showError('Failed to load products');
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+                showError('Failed to connect to server');
+            }
+        }
+
+        function showLoading() {
+            loadingMessage.style.display = 'block';
+            noProductsMessage.style.display = 'none';
+            productsGrid.innerHTML = '';
+            paginationContainer.innerHTML = '';
+        }
+
+        function displayProducts(products) {
+            loadingMessage.style.display = 'none';
+            
+            if (products.length === 0) {
+                noProductsMessage.style.display = 'block';
+                productsGrid.innerHTML = '';
+                return;
+            }
+
+            noProductsMessage.style.display = 'none';
+            
+            productsGrid.innerHTML = products.map(product => `
+                <div class="product-card" onclick="viewProduct('${product._id}')">
+                    <div class="product-image">
+                        <img src="${product.images[0] || 'https://via.placeholder.com/300x300?text=No+Image'}" 
+                             alt="${product.name}" loading="lazy">
+                        <div class="product-category">${product.category}</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-description">${product.description.substring(0, 80)}...</p>
+                        <div class="product-price">$${product.price.toFixed(2)}</div>
+                        <div class="product-seller">
+                            <span>Seller: ${product.sellerName}</span>
+                            <span class="product-stock">Stock: ${product.stock}</span>
+                        </div>
+                        <div class="product-stats">
+                            <span>👁️ ${product.views} views</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displayPagination(pagination) {
+            if (pagination.totalPages <= 1) {
+                paginationContainer.innerHTML = '';
+                return;
+            }
+
+            const { currentPage, totalPages, hasPrevPage, hasNextPage } = pagination;
+            
+            let paginationHTML = '<div class="pagination-controls">';
+            
+            if (hasPrevPage) {
+                paginationHTML += `<button class="btn-pagination" onclick="changePage(${currentPage - 1})">Previous</button>`;
+            }
+            
+            // Show page numbers (simplified)
+            const startPage = Math.max(1, currentPage - 2);
+            const endPage = Math.min(totalPages, currentPage + 2);
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const activeClass = i === currentPage ? 'active' : '';
+                paginationHTML += `<button class="btn-pagination ${activeClass}" onclick="changePage(${i})">${i}</button>`;
+            }
+            
+            if (hasNextPage) {
+                paginationHTML += `<button class="btn-pagination" onclick="changePage(${currentPage + 1})">Next</button>`;
+            }
+            
+            paginationHTML += '</div>';
+            paginationContainer.innerHTML = paginationHTML;
+        }
+
+        function changePage(page) {
+            currentPage = page;
+            loadProducts();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function viewProduct(productId) {
+            // For now, just show an alert. Later this can navigate to a product detail page
+            alert(`View product details for ID: ${productId}`);
+        }
+
+        function showError(message) {
+            loadingMessage.style.display = 'none';
+            productsGrid.innerHTML = `
+                <div class="error-message">
+                    <h3>❌ Error</h3>
+                    <p>${message}</p>
+                    <button class="btn-primary" onclick="loadProducts()">Retry</button>
+                </div>
+            `;
+        }
+    </script>
 </body>
 </html>

@@ -90,5 +90,61 @@
             <p>&copy; 2025 LIB MARKETPLACE. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            const token = localStorage.getItem('auth_token');
+            if (token) {
+                window.location.href = 'marketplace.html';
+            }
+
+            // Setup form handler
+            document.querySelector('.auth-form').addEventListener('submit', handleRegister);
+        });
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const registerData = {
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                email: formData.get('email'),
+                password: formData.get('password'),
+                userType: formData.get('userType')
+            };
+
+            // Basic validation
+            if (registerData.password.length < 6) {
+                alert('Password must be at least 6 characters long');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(registerData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Registration successful! Please login with your credentials.');
+                    window.location.href = 'login.html';
+                } else {
+                    alert('Registration failed: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                alert('Registration failed. Please check your connection and try again.');
+            }
+        }
+    </script>
 </body>
 </html>
