@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from typing import List, Optional
 from datetime import datetime
 import uuid
+from pydantic import BaseModel
 from models.shipping import (
     ShippingRateRequest, ShippingRateResponse, Address, Package, 
     ShippingCarrier, CustomsInfo, TrackingInfo
@@ -9,6 +10,15 @@ from models.shipping import (
 from services.shipping_service import ShippingManager
 from database import get_database
 from server import get_current_user
+
+class ShippingEstimateRequest(BaseModel):
+    origin_city: str
+    destination_state: str
+    weight: float
+    length: float = 10.0
+    width: float = 10.0
+    height: float = 10.0
+    value: float = 100.0
 
 router = APIRouter()
 
