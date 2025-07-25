@@ -11,6 +11,9 @@ import DashboardPage from './pages/DashboardPage';
 import AddProductPage from './pages/AddProductPage';
 import ShippingPage from './pages/ShippingPage';
 import ChatPage from './pages/ChatPage';
+import CheckoutPage from './pages/CheckoutPage';
+import PaymentSuccessPage from './pages/PaymentSuccessPage';
+import OrdersPage from './pages/OrdersPage';
 
 function App() {
   return (
