@@ -53,17 +53,14 @@ const ShippingCalculator = ({ product, onShippingCalculated }) => {
     try {
       const response = await axios.post(
         `${API_BASE}/api/shipping/estimate`,
-        null,
         {
-          params: {
-            origin_city: 'Monrovia',
-            destination_state: shippingData.destination_state,
-            weight: parseFloat(shippingData.weight),
-            length: parseFloat(shippingData.length),
-            width: parseFloat(shippingData.width), 
-            height: parseFloat(shippingData.height),
-            value: parseFloat(shippingData.value)
-          }
+          origin_city: 'Monrovia',
+          destination_state: shippingData.destination_state,
+          weight: parseFloat(shippingData.weight),
+          length: parseFloat(shippingData.length),
+          width: parseFloat(shippingData.width), 
+          height: parseFloat(shippingData.height),
+          value: parseFloat(shippingData.value)
         }
       );
       
