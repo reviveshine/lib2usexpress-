@@ -898,7 +898,16 @@ class BackendTester:
             self.test_get_single_product,
             self.test_get_seller_products,
             self.test_buyer_cannot_create_product,
-            self.test_unauthorized_access
+            self.test_unauthorized_access,
+            # New multimedia upload tests
+            self.test_media_upload_images,
+            self.test_media_upload_video,
+            self.test_media_upload_authentication,
+            self.test_media_upload_size_limits,
+            self.test_media_upload_count_limits,
+            self.test_create_product_with_multimedia,
+            self.test_get_product_with_multimedia,
+            self.test_media_upload_invalid_files
         ]
         
         passed = 0
