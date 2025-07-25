@@ -26,6 +26,30 @@ class BackendTester:
         self.chat_id = None
         self.message_id = None
         self.test_results = []
+    
+    def _set_buyer_id(self):
+        """Helper method to set buyer_id from token"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.get(f"{self.base_url}/api/auth/me", headers=headers, timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and data.get("user"):
+                    self.buyer_id = data["user"]["id"]
+        except Exception:
+            pass
+    
+    def _set_seller_id(self):
+        """Helper method to set seller_id from token"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            response = requests.get(f"{self.base_url}/api/auth/me", headers=headers, timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and data.get("user"):
+                    self.seller_id = data["user"]["id"]
+        except Exception:
+            pass
         
     def log_test(self, test_name, success, message, details=None):
         """Log test results"""
