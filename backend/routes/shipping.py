@@ -97,15 +97,7 @@ async def calculate_customs_duties(
         )
 
 @router.post("/estimate", response_model=dict)
-async def get_shipping_estimate(
-    origin_city: str,
-    destination_state: str,
-    weight: float,
-    length: float = 10.0,
-    width: float = 10.0,
-    height: float = 10.0,
-    value: float = 100.0
-):
+async def get_shipping_estimate(request: ShippingEstimateRequest):
     """Get quick shipping estimate without authentication"""
     
     try:
@@ -113,7 +105,7 @@ async def get_shipping_estimate(
         origin = Address(
             name="Seller",
             address_line_1="Sample Address",
-            city=origin_city,
+            city=request.origin_city,
             state="Montserrado",
             postal_code="1000", 
             country="LR"
@@ -123,17 +115,17 @@ async def get_shipping_estimate(
             name="Buyer",
             address_line_1="Sample Address",
             city="Sample City",
-            state=destination_state,
+            state=request.destination_state,
             postal_code="12345",
             country="US"
         )
         
         package = Package(
-            length=length,
-            width=width,
-            height=height,
-            weight=weight,
-            value=value,
+            length=request.length,
+            width=request.width,
+            height=request.height,
+            weight=request.weight,
+            value=request.value,
             description="Sample product"
         )
         
