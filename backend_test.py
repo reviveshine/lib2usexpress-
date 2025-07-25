@@ -1048,9 +1048,10 @@ class BackendTester:
                 }
             ]
             
+            # Send packages as a list directly
             response = requests.post(
                 f"{self.base_url}/api/shipping/calculate-customs",
-                json={"packages": packages_data, "destination_country": "US"},
+                json=packages_data,
                 headers=headers,
                 timeout=10
             )
