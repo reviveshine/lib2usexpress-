@@ -235,7 +235,6 @@ const MarketplacePage = () => {
                     e.currentTarget.style.transform = 'translateY(0)';
                     e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
                   }}
-                  onClick={() => alert(`View product: ${product.name}`)}
                 >
                   <div style={{ position: 'relative' }}>
                     {product.video ? (
