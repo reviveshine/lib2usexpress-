@@ -1470,7 +1470,7 @@ class BackendTester:
                     "quantity": 2,
                     "unit_price": 45.99,
                     "total_price": 91.98,
-                    "seller_id": self.seller_id,
+                    "seller_id": self.seller_id or "test-seller-id",
                     "seller_name": "Mary Johnson"
                 },
                 {
@@ -1479,7 +1479,7 @@ class BackendTester:
                     "quantity": 1,
                     "unit_price": 25.50,
                     "total_price": 25.50,
-                    "seller_id": self.seller_id,
+                    "seller_id": self.seller_id or "test-seller-id",
                     "seller_name": "Mary Johnson"
                 }
             ]
