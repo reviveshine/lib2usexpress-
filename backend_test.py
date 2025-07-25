@@ -1642,14 +1642,9 @@ class BackendTester:
         """Test package checkout with invalid package ID"""
         try:
             headers = {"Authorization": f"Bearer {self.buyer_token}"}
-            request_data = {
-                "package_id": "invalid_package_id",
-                "origin_url": self.base_url
-            }
             
             response = requests.post(
-                f"{self.base_url}/api/payments/package/checkout",
-                json=request_data,
+                f"{self.base_url}/api/payments/package/checkout?package_id=invalid_package_id&origin_url={self.base_url}",
                 headers=headers,
                 timeout=10
             )
