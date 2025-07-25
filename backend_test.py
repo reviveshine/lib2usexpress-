@@ -1611,14 +1611,9 @@ class BackendTester:
         """Test POST /api/payments/package/checkout endpoint"""
         try:
             headers = {"Authorization": f"Bearer {self.buyer_token}"}
-            request_data = {
-                "package_id": "express_shipping",
-                "origin_url": self.base_url
-            }
             
             response = requests.post(
-                f"{self.base_url}/api/payments/package/checkout",
-                json=request_data,
+                f"{self.base_url}/api/payments/package/checkout?package_id=express_shipping&origin_url={self.base_url}",
                 headers=headers,
                 timeout=15
             )
