@@ -15,29 +15,26 @@ from models.chat import (
 class ChatEncryption:
     """Handle message encryption/decryption"""
     
+    def _generate_key(self) -> bytes:
+        """Generate a new encryption key"""
+        return Fernet.generate_key()
+    
     def __init__(self):
         # In production, use a secure key management system
         key_env = os.getenv('CHAT_ENCRYPTION_KEY')
         if key_env:
-            self.key = key_env
-        else:
-            self.key = self._generate_key()
-        
-        # Ensure key is properly formatted for Fernet
-        try:
-            if isinstance(self.key, str):
-                # If it's a string, try to use it as base64
-                self.cipher = Fernet(self.key.encode())
-            else:
+            try:
+                # Try to use the key from environment as base64
+                self.key = base64.urlsafe_b64decode(key_env.encode())
+                self.cipher = Fernet(base64.urlsafe_b64encode(self.key))
+            except Exception:
+                # If invalid, generate new key
+                self.key = self._generate_key()
                 self.cipher = Fernet(self.key)
-        except ValueError:
-            # If the key is invalid, generate a new one
+        else:
+            # Generate new key
             self.key = self._generate_key()
-            self.cipher = Fernet(self.key.encode())
-    
-    def _generate_key(self) -> str:
-        """Generate a new encryption key"""
-        return base64.urlsafe_b64encode(Fernet.generate_key()).decode()
+            self.cipher = Fernet(self.key)
     
     def encrypt_message(self, message: str) -> str:
         """Encrypt a message"""
