@@ -15,20 +15,34 @@ const ShippingPage = () => {
   
   const loadShippingInfo = async () => {
     try {
+      console.log('Loading shipping info from:', API_BASE);
       const [carriersResponse, zonesResponse] = await Promise.all([
         axios.get(`${API_BASE}/api/shipping/carriers`),
         axios.get(`${API_BASE}/api/shipping/zones`)
       ]);
       
+      console.log('Carriers response:', carriersResponse.data);
+      console.log('Zones response:', zonesResponse.data);
+      
       if (carriersResponse.data.success) {
         setCarriers(Object.entries(carriersResponse.data.carriers));
+      } else {
+        console.error('Invalid carriers response:', carriersResponse.data);
       }
       
       if (zonesResponse.data.success) {
         setZones(zonesResponse.data);
+      } else {
+        console.error('Invalid zones response:', zonesResponse.data);
       }
     } catch (error) {
       console.error('Failed to load shipping information:', error);
+      // Set empty data to allow page to render
+      setCarriers([]);
+      setZones({
+        origin_zones: { country: 'Liberia', major_cities: [] },
+        destination_zones: { country: 'United States', states: [] }
+      });
     } finally {
       setLoading(false);
     }
