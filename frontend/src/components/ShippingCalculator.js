@@ -21,7 +21,7 @@ const ShippingCalculator = ({ product, onShippingCalculated }) => {
   
   useEffect(() => {
     loadStates();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   
   const loadStates = async () => {
     setStatesLoading(true);
