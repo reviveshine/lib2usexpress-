@@ -4,118 +4,174 @@
     "success": true,
     "message": "API is running and database connected",
     "details": null,
-    "timestamp": "2025-07-25T07:00:21.240095"
+    "timestamp": "2025-07-25T08:13:34.250372"
   },
   {
     "test": "Buyer Registration",
-    "success": true,
-    "message": "Buyer registered successfully",
-    "details": null,
-    "timestamp": "2025-07-25T07:00:21.557545"
+    "success": false,
+    "message": "HTTP 400",
+    "details": "{\"detail\":\"Email already registered\"}",
+    "timestamp": "2025-07-25T08:13:34.264587"
   },
   {
     "test": "Seller Registration",
-    "success": true,
-    "message": "Seller registered successfully",
-    "details": null,
-    "timestamp": "2025-07-25T07:00:21.794250"
+    "success": false,
+    "message": "HTTP 400",
+    "details": "{\"detail\":\"Email already registered\"}",
+    "timestamp": "2025-07-25T08:13:34.267996"
   },
   {
     "test": "Location Validation",
     "success": true,
     "message": "Location validation working - buyer with Liberia location rejected",
     "details": null,
-    "timestamp": "2025-07-25T07:00:21.797206"
+    "timestamp": "2025-07-25T08:13:34.270317"
   },
   {
     "test": "Buyer Login",
     "success": true,
     "message": "Buyer login successful",
     "details": null,
-    "timestamp": "2025-07-25T07:00:22.034250"
+    "timestamp": "2025-07-25T08:13:34.530359"
   },
   {
     "test": "Seller Login",
     "success": true,
     "message": "Seller login successful",
     "details": null,
-    "timestamp": "2025-07-25T07:00:22.278973"
+    "timestamp": "2025-07-25T08:13:34.767040"
   },
   {
     "test": "Auth Me Endpoint",
     "success": true,
     "message": "User info retrieved successfully",
     "details": null,
-    "timestamp": "2025-07-25T07:00:22.283014"
+    "timestamp": "2025-07-25T08:13:34.770964"
   },
   {
     "test": "Get User Profile",
     "success": true,
     "message": "User profile retrieved successfully",
     "details": null,
-    "timestamp": "2025-07-25T07:00:22.286670"
+    "timestamp": "2025-07-25T08:13:34.774287"
   },
   {
     "test": "Update User Profile",
     "success": true,
     "message": "User profile updated successfully",
     "details": null,
-    "timestamp": "2025-07-25T07:00:22.291284"
+    "timestamp": "2025-07-25T08:13:34.780419"
   },
   {
     "test": "Get Sellers",
     "success": true,
     "message": "Retrieved 0 sellers",
     "details": null,
-    "timestamp": "2025-07-25T07:00:22.293881"
+    "timestamp": "2025-07-25T08:13:34.782985"
   },
   {
     "test": "Create Product",
     "success": true,
     "message": "Product created successfully",
     "details": null,
-    "timestamp": "2025-07-25T07:00:22.311335"
+    "timestamp": "2025-07-25T08:13:34.789796"
   },
   {
     "test": "Get Products",
     "success": true,
-    "message": "Retrieved 1 products with pagination",
+    "message": "Retrieved 2 products with pagination",
     "details": null,
-    "timestamp": "2025-07-25T07:00:22.317047"
+    "timestamp": "2025-07-25T08:13:34.795075"
   },
   {
     "test": "Get Products with Filters",
     "success": true,
     "message": "Products filtered successfully",
     "details": null,
-    "timestamp": "2025-07-25T07:00:22.322298"
+    "timestamp": "2025-07-25T08:13:34.800186"
   },
   {
     "test": "Get Single Product",
     "success": true,
     "message": "Product retrieved successfully",
     "details": null,
-    "timestamp": "2025-07-25T07:00:22.325708"
+    "timestamp": "2025-07-25T08:13:34.803478"
   },
   {
     "test": "Get Seller Products",
     "success": true,
-    "message": "Retrieved 1 seller products",
+    "message": "Retrieved 2 seller products",
     "details": null,
-    "timestamp": "2025-07-25T07:00:22.330115"
+    "timestamp": "2025-07-25T08:13:34.813016"
   },
   {
     "test": "Buyer Product Creation Block",
     "success": true,
     "message": "Buyers correctly blocked from creating products",
     "details": null,
-    "timestamp": "2025-07-25T07:00:22.334147"
+    "timestamp": "2025-07-25T08:13:34.817262"
   },
   {
     "test": "Unauthorized Access Block",
     "success": true,
     "message": "Protected endpoints correctly require authentication",
     "details": null,
-    "timestamp": "2025-07-25T07:00:22.336073"
+    "timestamp": "2025-07-25T08:13:34.818904"
+  },
+  {
+    "test": "Media Upload - Images",
+    "success": true,
+    "message": "Images uploaded and base64 encoded successfully",
+    "details": null,
+    "timestamp": "2025-07-25T08:13:34.888841"
+  },
+  {
+    "test": "Media Upload - Video",
+    "success": true,
+    "message": "Video uploaded and base64 encoded successfully",
+    "details": null,
+    "timestamp": "2025-07-25T08:13:35.034520"
+  },
+  {
+    "test": "Media Upload Authentication",
+    "success": true,
+    "message": "Media upload correctly requires seller authentication",
+    "details": null,
+    "timestamp": "2025-07-25T08:13:35.042120"
+  },
+  {
+    "test": "Media Upload Size Limits",
+    "success": true,
+    "message": "File size limits correctly enforced",
+    "details": null,
+    "timestamp": "2025-07-25T08:13:36.365109"
+  },
+  {
+    "test": "Media Upload Count Limits",
+    "success": true,
+    "message": "File count limits correctly enforced",
+    "details": null,
+    "timestamp": "2025-07-25T08:13:36.388111"
+  },
+  {
+    "test": "Create Product with Multimedia",
+    "success": true,
+    "message": "Product with multimedia created successfully",
+    "details": null,
+    "timestamp": "2025-07-25T08:13:36.505173"
+  },
+  {
+    "test": "Get Product with Multimedia",
+    "success": true,
+    "message": "Product with multimedia retrieved successfully",
+    "details": null,
+    "timestamp": "2025-07-25T08:13:36.542974"
+  },
+  {
+    "test": "Media Upload Invalid Files",
+    "success": true,
+    "message": "Invalid file types correctly ignored",
+    "details": null,
+    "timestamp": "2025-07-25T08:13:36.546801"
   }
 ]
