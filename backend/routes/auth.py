@@ -108,7 +108,6 @@ async def login_user(login_data: UserLogin):
 @router.get("/me", response_model=dict)
 async def get_current_user_info(current_user_id: str = Depends(get_current_user)):
     """Get current user information"""
-    from server import get_current_user
     
     # Find user by ID
     user = await database.users.find_one({"id": current_user_id})
