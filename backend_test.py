@@ -205,6 +205,7 @@ class BackendTester:
                 if data.get("success") and data.get("token"):
                     # Update token in case it's different
                     self.buyer_token = data["token"]
+                    self._set_buyer_id()
                     self.log_test("Buyer Login", True, "Buyer login successful")
                     return True
                 else:
