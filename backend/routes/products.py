@@ -180,7 +180,7 @@ async def get_product(product_id: str):
         price=product["price"],
         category=product["category"],
         images=product["images"],
-        video_url=product.get("video_url"),
+        video=product.get("video"),
         stock=product["stock"],
         tags=product["tags"],
         weight=product.get("weight"),
