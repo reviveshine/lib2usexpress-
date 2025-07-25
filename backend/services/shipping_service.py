@@ -103,8 +103,9 @@ class FedExProvider(ShippingServiceProvider):
     
     async def get_rates(self, request: ShippingRateRequest) -> List[ShippingRate]:
         """Get FedEx shipping rates"""
-        if not self.api_key:
-            return []
+        # For development/testing, provide mock rates even without API key
+        # if not self.api_key:
+        #     return []
         
         rates = []
         
