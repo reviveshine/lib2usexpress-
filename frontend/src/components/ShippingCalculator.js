@@ -15,6 +15,7 @@ const ShippingCalculator = ({ product, onShippingCalculated }) => {
   const [estimates, setEstimates] = useState([]);
   const [error, setError] = useState('');
   const [states, setStates] = useState([]);
+  const [statesLoading, setStatesLoading] = useState(true);
   
   const API_BASE = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
   
