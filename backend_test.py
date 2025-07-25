@@ -1454,7 +1454,19 @@ class BackendTester:
             self.test_media_upload_count_limits,
             self.test_create_product_with_multimedia,
             self.test_get_product_with_multimedia,
-            self.test_media_upload_invalid_files
+            self.test_media_upload_invalid_files,
+            # New shipping API tests
+            self.test_get_shipping_carriers,
+            self.test_get_shipping_zones,
+            self.test_shipping_estimate_no_auth,
+            self.test_shipping_estimate_different_states,
+            self.test_calculate_customs_duties,
+            self.test_calculate_customs_duties_no_auth,
+            self.test_shipping_rates_full_request,
+            self.test_shipping_rates_multiple_packages,
+            self.test_shipping_rates_origin_validation,
+            self.test_shipping_rates_destination_validation,
+            self.test_shipping_rates_no_auth
         ]
         
         passed = 0
