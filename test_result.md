@@ -170,6 +170,78 @@ backend:
         agent: "testing"
         comment: "Product retrieval endpoints working correctly with multimedia content - GET /api/products and GET /api/products/{id} properly return base64 encoded images and video data formatted for frontend consumption"
 
+  - task: "Shipping Rate Calculation API"
+    implemented: true
+    working: true
+    file: "backend/routes/shipping.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "POST /api/shipping/rates endpoint working correctly - requires authentication, validates Liberia→USA routes, returns rates from all 4 carriers (DHL, FedEx, UPS, Aramex) with proper rate calculation, transit times, and service details. Supports multiple packages and stores rate requests in database."
+
+  - task: "Quick Shipping Estimate API"
+    implemented: true
+    working: true
+    file: "backend/routes/shipping.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "POST /api/shipping/estimate endpoint working correctly - no authentication required, accepts package dimensions/weight/value, returns estimates from all 4 carriers with customs duties included, supports different US destination states. Provides comprehensive cost breakdown including shipping + customs."
+
+  - task: "Customs Duties Calculator API"
+    implemented: true
+    working: true
+    file: "backend/routes/shipping.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "POST /api/shipping/calculate-customs endpoint working correctly - requires authentication, calculates estimated duties and taxes for US imports (5% duty + 8% tax rates), supports multiple packages, returns detailed breakdown with disclaimer about estimates."
+
+  - task: "Shipping Carriers Information API"
+    implemented: true
+    working: true
+    file: "backend/routes/shipping.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "GET /api/shipping/carriers endpoint working correctly - returns detailed information about all 4 carriers (DHL, FedEx, UPS, Aramex) including services, transit times, coverage areas, tracking and insurance capabilities."
+
+  - task: "Shipping Zones Information API"
+    implemented: true
+    working: true
+    file: "backend/routes/shipping.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "GET /api/shipping/zones endpoint working correctly - returns comprehensive shipping zones with Liberia origin cities and all 50 US states + DC as destinations. Provides proper country codes and state information."
+
+  - task: "Shipping API Authentication and Validation"
+    implemented: true
+    working: true
+    file: "backend/routes/shipping.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Shipping API authentication and validation working correctly - rate calculation and customs calculation require seller authentication, origin validation enforces Liberia (LR) only, destination validation enforces USA (US) only, proper 400/403 error responses for invalid requests."
+
 frontend:
   - task: "React Frontend Setup"
     implemented: true
