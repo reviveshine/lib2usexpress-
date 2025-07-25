@@ -1098,7 +1098,7 @@ class BackendTester:
             
             response = requests.post(
                 f"{self.base_url}/api/shipping/calculate-customs",
-                json={"packages": packages_data},
+                json=packages_data,  # Send as list directly
                 timeout=10
             )
             
