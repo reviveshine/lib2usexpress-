@@ -1484,14 +1484,10 @@ class BackendTester:
                 }
             ]
             
-            request_data = {
-                "cart_items": cart_items,
-                "shipping_cost": 15.00
-            }
-            
+            # Send as JSON body with shipping_cost as query parameter
             response = requests.post(
-                f"{self.base_url}/api/payments/calculate-total",
-                json=request_data,
+                f"{self.base_url}/api/payments/calculate-total?shipping_cost=15.00",
+                json=cart_items,
                 headers=headers,
                 timeout=10
             )
