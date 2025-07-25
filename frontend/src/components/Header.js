@@ -43,6 +43,7 @@ const Header = () => {
         <nav className="nav">
           <Link to="/">Home</Link>
           <Link to="/marketplace">Marketplace</Link>
+          <Link to="/shipping">Shipping</Link>
           {user ? (
             <>
               {user.userType === 'seller' && (
