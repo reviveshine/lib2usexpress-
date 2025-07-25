@@ -1419,6 +1419,427 @@ class BackendTester:
             self.log_test("Chat Authentication Required", False, "Request failed", str(e))
             return False
     
+    # ==================== PAYMENT API TESTS ====================
+    
+    def test_get_payment_packages(self):
+        """Test GET /api/payments/packages endpoint"""
+        try:
+            response = requests.get(
+                f"{self.base_url}/api/payments/packages",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "packages" in data and
+                    len(data["packages"]) > 0):
+                    
+                    # Verify package structure
+                    package = data["packages"][0]
+                    if (package.get("package_id") and 
+                        package.get("name") and
+                        package.get("amount") and
+                        package.get("currency") and
+                        package.get("features")):
+                        self.log_test("Get Payment Packages", True, f"Retrieved {len(data['packages'])} payment packages")
+                        return True
+                    else:
+                        self.log_test("Get Payment Packages", False, "Invalid package structure", package)
+                        return False
+                else:
+                    self.log_test("Get Payment Packages", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Get Payment Packages", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Get Payment Packages", False, "Request failed", str(e))
+            return False
+    
+    def test_calculate_order_total(self):
+        """Test POST /api/payments/calculate-total endpoint"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            cart_items = [
+                {
+                    "product_id": "test-product-1",
+                    "product_name": "Traditional Liberian Craft",
+                    "quantity": 2,
+                    "unit_price": 45.99,
+                    "total_price": 91.98,
+                    "seller_id": self.seller_id,
+                    "seller_name": "Mary Johnson"
+                },
+                {
+                    "product_id": "test-product-2", 
+                    "product_name": "Handmade Jewelry",
+                    "quantity": 1,
+                    "unit_price": 25.50,
+                    "total_price": 25.50,
+                    "seller_id": self.seller_id,
+                    "seller_name": "Mary Johnson"
+                }
+            ]
+            
+            request_data = {
+                "cart_items": cart_items,
+                "shipping_cost": 15.00
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/payments/calculate-total",
+                json=request_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "breakdown" in data and
+                    data.get("currency") == "USD"):
+                    
+                    breakdown = data["breakdown"]
+                    if (breakdown.get("subtotal") == 117.48 and  # 91.98 + 25.50
+                        breakdown.get("shipping_cost") == 15.00 and
+                        breakdown.get("tax_amount") and  # Should have tax calculated
+                        breakdown.get("total_amount")):
+                        self.log_test("Calculate Order Total", True, f"Order total calculated: ${breakdown['total_amount']}")
+                        return True
+                    else:
+                        self.log_test("Calculate Order Total", False, "Invalid calculation breakdown", breakdown)
+                        return False
+                else:
+                    self.log_test("Calculate Order Total", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Calculate Order Total", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Calculate Order Total", False, "Request failed", str(e))
+            return False
+    
+    def test_calculate_total_requires_auth(self):
+        """Test that calculate total requires authentication"""
+        try:
+            cart_items = [
+                {
+                    "product_id": "test-product-1",
+                    "product_name": "Test Product",
+                    "quantity": 1,
+                    "unit_price": 10.00,
+                    "total_price": 10.00,
+                    "seller_id": "test-seller",
+                    "seller_name": "Test Seller"
+                }
+            ]
+            
+            request_data = {
+                "cart_items": cart_items,
+                "shipping_cost": 5.00
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/payments/calculate-total",
+                json=request_data,
+                timeout=10
+            )
+            
+            if response.status_code == 403:  # Should require authentication
+                self.log_test("Calculate Total Auth Required", True, "Calculate total correctly requires authentication")
+                return True
+            else:
+                self.log_test("Calculate Total Auth Required", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Calculate Total Auth Required", False, "Request failed", str(e))
+            return False
+    
+    def test_create_checkout_session(self):
+        """Test POST /api/payments/checkout/session endpoint"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            checkout_data = {
+                "cart_items": [
+                    {
+                        "product_id": self.product_id or "test-product-1",
+                        "product_name": "Traditional Liberian Craft",
+                        "quantity": 1,
+                        "unit_price": 45.99,
+                        "total_price": 45.99,
+                        "seller_id": self.seller_id,
+                        "seller_name": "Mary Johnson"
+                    }
+                ],
+                "shipping_details": {
+                    "carrier": "DHL",
+                    "service": "Express",
+                    "cost": 25.00,
+                    "estimated_days": 3
+                },
+                "buyer_info": {
+                    "name": "John Smith",
+                    "email": "john.smith@email.com",
+                    "address": "456 Broadway, New York, NY 10001"
+                },
+                "payment_method": "stripe",
+                "origin_url": self.base_url
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/payments/checkout/session",
+                json=checkout_data,
+                headers=headers,
+                timeout=15
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("payment_id") and
+                    data.get("checkout_url") and
+                    data.get("session_id")):
+                    self.log_test("Create Checkout Session", True, f"Checkout session created with ID: {data['session_id']}")
+                    # Store session_id for status check test
+                    self.checkout_session_id = data["session_id"]
+                    return True
+                else:
+                    self.log_test("Create Checkout Session", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Create Checkout Session", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Create Checkout Session", False, "Request failed", str(e))
+            return False
+    
+    def test_create_package_checkout(self):
+        """Test POST /api/payments/package/checkout endpoint"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            request_data = {
+                "package_id": "express_shipping",
+                "origin_url": self.base_url
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/payments/package/checkout",
+                json=request_data,
+                headers=headers,
+                timeout=15
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("payment_id") and
+                    data.get("checkout_url") and
+                    data.get("session_id")):
+                    self.log_test("Create Package Checkout", True, f"Package checkout session created with ID: {data['session_id']}")
+                    # Store session_id for status check test
+                    self.package_session_id = data["session_id"]
+                    return True
+                else:
+                    self.log_test("Create Package Checkout", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Create Package Checkout", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Create Package Checkout", False, "Request failed", str(e))
+            return False
+    
+    def test_create_package_checkout_invalid_package(self):
+        """Test package checkout with invalid package ID"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            request_data = {
+                "package_id": "invalid_package_id",
+                "origin_url": self.base_url
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/payments/package/checkout",
+                json=request_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 400:  # Should reject invalid package
+                self.log_test("Package Checkout Invalid Package", True, "Invalid package ID correctly rejected")
+                return True
+            else:
+                self.log_test("Package Checkout Invalid Package", False, f"Expected 400, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Package Checkout Invalid Package", False, "Request failed", str(e))
+            return False
+    
+    def test_check_payment_status(self):
+        """Test GET /api/payments/status/{session_id} endpoint"""
+        if not hasattr(self, 'checkout_session_id') or not self.checkout_session_id:
+            self.log_test("Check Payment Status", False, "No checkout session ID available", "Checkout session creation may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/payments/status/{self.checkout_session_id}",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("payment_status") and
+                    data.get("session_status") and
+                    data.get("amount") and
+                    data.get("currency")):
+                    self.log_test("Check Payment Status", True, f"Payment status retrieved: {data['payment_status']}")
+                    return True
+                else:
+                    self.log_test("Check Payment Status", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Check Payment Status", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Check Payment Status", False, "Request failed", str(e))
+            return False
+    
+    def test_get_user_transactions(self):
+        """Test GET /api/payments/transactions endpoint"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/payments/transactions?limit=10&skip=0",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "transactions" in data and
+                    "total_count" in data and
+                    "has_more" in data):
+                    
+                    # If we have transactions, verify structure
+                    if len(data["transactions"]) > 0:
+                        transaction = data["transactions"][0]
+                        if (transaction.get("id") and 
+                            transaction.get("amount") and
+                            transaction.get("currency") and
+                            transaction.get("payment_status")):
+                            self.log_test("Get User Transactions", True, f"Retrieved {len(data['transactions'])} transactions")
+                            return True
+                        else:
+                            self.log_test("Get User Transactions", False, "Invalid transaction structure", transaction)
+                            return False
+                    else:
+                        self.log_test("Get User Transactions", True, "No transactions found (valid for new user)")
+                        return True
+                else:
+                    self.log_test("Get User Transactions", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Get User Transactions", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Get User Transactions", False, "Request failed", str(e))
+            return False
+    
+    def test_transactions_require_auth(self):
+        """Test that transactions endpoint requires authentication"""
+        try:
+            response = requests.get(
+                f"{self.base_url}/api/payments/transactions",
+                timeout=10
+            )
+            
+            if response.status_code == 403:  # Should require authentication
+                self.log_test("Transactions Auth Required", True, "Transactions endpoint correctly requires authentication")
+                return True
+            else:
+                self.log_test("Transactions Auth Required", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Transactions Auth Required", False, "Request failed", str(e))
+            return False
+    
+    def test_payment_status_access_control(self):
+        """Test that users can only check their own payment status"""
+        if not hasattr(self, 'checkout_session_id') or not self.checkout_session_id:
+            self.log_test("Payment Status Access Control", False, "No checkout session ID available", "Checkout session creation may have failed")
+            return False
+            
+        try:
+            # Try to access payment status with seller token (should fail)
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/payments/status/{self.checkout_session_id}",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 404:  # Should be denied access
+                self.log_test("Payment Status Access Control", True, "Users correctly blocked from accessing other users' payment status")
+                return True
+            else:
+                self.log_test("Payment Status Access Control", False, f"Expected 404, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Payment Status Access Control", False, "Request failed", str(e))
+            return False
+    
+    def test_checkout_requires_auth(self):
+        """Test that checkout endpoints require authentication"""
+        try:
+            checkout_data = {
+                "cart_items": [
+                    {
+                        "product_id": "test-product",
+                        "product_name": "Test Product",
+                        "quantity": 1,
+                        "unit_price": 10.00,
+                        "total_price": 10.00,
+                        "seller_id": "test-seller",
+                        "seller_name": "Test Seller"
+                    }
+                ],
+                "shipping_details": {
+                    "carrier": "DHL",
+                    "service": "Standard",
+                    "cost": 10.00,
+                    "estimated_days": 5
+                },
+                "buyer_info": {
+                    "name": "Test User",
+                    "email": "test@email.com",
+                    "address": "Test Address"
+                },
+                "payment_method": "stripe",
+                "origin_url": self.base_url
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/payments/checkout/session",
+                json=checkout_data,
+                timeout=10
+            )
+            
+            if response.status_code == 403:  # Should require authentication
+                self.log_test("Checkout Auth Required", True, "Checkout endpoints correctly require authentication")
+                return True
+            else:
+                self.log_test("Checkout Auth Required", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Checkout Auth Required", False, "Request failed", str(e))
+            return False
+
     # ==================== SHIPPING API TESTS ====================
     
     def test_get_shipping_carriers(self):
