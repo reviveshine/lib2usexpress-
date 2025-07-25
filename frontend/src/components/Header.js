@@ -44,6 +44,7 @@ const Header = () => {
           <Link to="/">Home</Link>
           <Link to="/marketplace">Marketplace</Link>
           <Link to="/shipping">Shipping</Link>
+          {user && <Link to="/chat">Messages</Link>}
           {user ? (
             <>
               {user.userType === 'seller' && (
