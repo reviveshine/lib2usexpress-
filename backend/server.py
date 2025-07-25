@@ -4,39 +4,20 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from contextlib import asynccontextmanager
 import os
 from dotenv import load_dotenv
-import motor.motor_asyncio
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 import uvicorn
+from database import connect_to_mongo, close_mongo_connection, get_database
 
 # Load environment variables
 load_dotenv()
 
-# Database configuration
-MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017/liberia2usa_express")
+# JWT configuration
 JWT_SECRET = os.getenv("JWT_SECRET", "your_super_secure_jwt_secret_key_here_2025")
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRE_HOURS = 24
 
-# Global variables for database
-database = None
-client = None
-
 security = HTTPBearer()
-
-async def connect_to_mongo():
-    """Create database connection"""
-    global client, database
-    client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URL)
-    database = client.get_database()
-    print(f"✓ Connected to MongoDB: {database.name}")
-
-async def close_mongo_connection():
-    """Close database connection"""
-    global client
-    if client:
-        client.close()
-        print("✓ MongoDB connection closed")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -93,6 +74,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
 # Health check endpoint
 @app.get("/api/health")
 async def health_check():
+    database = get_database()
     return {
         "status": "OK",
         "message": "Liberia2USA Express API is running",
