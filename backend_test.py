@@ -874,6 +874,553 @@ class BackendTester:
             self.log_test("Media Upload Invalid Files", False, "Request failed", str(e))
             return False
     
+    # ==================== SHIPPING API TESTS ====================
+    
+    def test_get_shipping_carriers(self):
+        """Test GET /api/shipping/carriers endpoint"""
+        try:
+            response = requests.get(
+                f"{self.base_url}/api/shipping/carriers",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "carriers" in data and
+                    len(data["carriers"]) == 4 and  # DHL, FedEx, UPS, Aramex
+                    "dhl" in data["carriers"] and
+                    "fedex" in data["carriers"] and
+                    "ups" in data["carriers"] and
+                    "aramex" in data["carriers"]):
+                    self.log_test("Get Shipping Carriers", True, "All 4 carriers (DHL, FedEx, UPS, Aramex) returned with service details")
+                    return True
+                else:
+                    self.log_test("Get Shipping Carriers", False, "Invalid response format or missing carriers", data)
+                    return False
+            else:
+                self.log_test("Get Shipping Carriers", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Get Shipping Carriers", False, "Request failed", str(e))
+            return False
+    
+    def test_get_shipping_zones(self):
+        """Test GET /api/shipping/zones endpoint"""
+        try:
+            response = requests.get(
+                f"{self.base_url}/api/shipping/zones",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "origin_zones" in data and
+                    "destination_zones" in data and
+                    data["origin_zones"]["country"] == "Liberia" and
+                    data["destination_zones"]["country"] == "United States" and
+                    len(data["destination_zones"]["states"]) == 51):  # 50 states + DC
+                    self.log_test("Get Shipping Zones", True, "Shipping zones returned with Liberia origins and all US states")
+                    return True
+                else:
+                    self.log_test("Get Shipping Zones", False, "Invalid response format or missing zones", data)
+                    return False
+            else:
+                self.log_test("Get Shipping Zones", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Get Shipping Zones", False, "Request failed", str(e))
+            return False
+    
+    def test_shipping_estimate_no_auth(self):
+        """Test POST /api/shipping/estimate endpoint without authentication"""
+        try:
+            estimate_data = {
+                "origin_city": "Monrovia",
+                "destination_state": "New York",
+                "weight": 2.5,
+                "length": 30.0,
+                "width": 20.0,
+                "height": 15.0,
+                "value": 150.0
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/shipping/estimate",
+                json=estimate_data,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "estimates" in data and
+                    "customs_breakdown" in data and
+                    len(data["estimates"]) >= 4):  # Should have rates from all 4 carriers
+                    
+                    # Verify each estimate has required fields
+                    valid_estimates = True
+                    for estimate in data["estimates"]:
+                        if not all(key in estimate for key in ["carrier", "service", "shipping_cost", "customs_duties", "total_cost", "transit_days"]):
+                            valid_estimates = False
+                            break
+                    
+                    if valid_estimates:
+                        self.log_test("Shipping Estimate (No Auth)", True, f"Got {len(data['estimates'])} shipping estimates with customs duties included")
+                        return True
+                    else:
+                        self.log_test("Shipping Estimate (No Auth)", False, "Estimates missing required fields", data["estimates"])
+                        return False
+                else:
+                    self.log_test("Shipping Estimate (No Auth)", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Shipping Estimate (No Auth)", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Shipping Estimate (No Auth)", False, "Request failed", str(e))
+            return False
+    
+    def test_shipping_estimate_different_states(self):
+        """Test shipping estimates to different US states"""
+        try:
+            states_to_test = ["California", "Texas", "Florida", "New York"]
+            all_passed = True
+            
+            for state in states_to_test:
+                estimate_data = {
+                    "origin_city": "Monrovia",
+                    "destination_state": state,
+                    "weight": 1.0,
+                    "length": 20.0,
+                    "width": 15.0,
+                    "height": 10.0,
+                    "value": 100.0
+                }
+                
+                response = requests.post(
+                    f"{self.base_url}/api/shipping/estimate",
+                    json=estimate_data,
+                    timeout=10
+                )
+                
+                if response.status_code != 200:
+                    all_passed = False
+                    break
+                
+                data = response.json()
+                if not (data.get("success") and len(data.get("estimates", [])) >= 4):
+                    all_passed = False
+                    break
+            
+            if all_passed:
+                self.log_test("Shipping Estimate Different States", True, f"Successfully got estimates for {len(states_to_test)} different US states")
+                return True
+            else:
+                self.log_test("Shipping Estimate Different States", False, f"Failed to get estimates for all states")
+                return False
+        except Exception as e:
+            self.log_test("Shipping Estimate Different States", False, "Request failed", str(e))
+            return False
+    
+    def test_calculate_customs_duties(self):
+        """Test POST /api/shipping/calculate-customs endpoint (requires auth)"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            packages_data = [
+                {
+                    "length": 30.0,
+                    "width": 20.0,
+                    "height": 15.0,
+                    "weight": 2.0,
+                    "value": 200.0,
+                    "description": "Traditional Liberian craft item"
+                },
+                {
+                    "length": 25.0,
+                    "width": 15.0,
+                    "height": 10.0,
+                    "weight": 1.5,
+                    "value": 150.0,
+                    "description": "Handmade jewelry"
+                }
+            ]
+            
+            response = requests.post(
+                f"{self.base_url}/api/shipping/calculate-customs",
+                json={"packages": packages_data, "destination_country": "US"},
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "customs_info" in data and
+                    "disclaimer" in data):
+                    
+                    customs_info = data["customs_info"]
+                    if (customs_info.get("declared_value") == 350.0 and  # 200 + 150
+                        "estimated_duties" in customs_info and
+                        "estimated_taxes" in customs_info and
+                        "total_charges" in customs_info):
+                        self.log_test("Calculate Customs Duties", True, f"Customs duties calculated: ${customs_info['total_charges']} total charges")
+                        return True
+                    else:
+                        self.log_test("Calculate Customs Duties", False, "Invalid customs calculation", customs_info)
+                        return False
+                else:
+                    self.log_test("Calculate Customs Duties", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Calculate Customs Duties", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Calculate Customs Duties", False, "Request failed", str(e))
+            return False
+    
+    def test_calculate_customs_duties_no_auth(self):
+        """Test that customs calculation requires authentication"""
+        try:
+            packages_data = [
+                {
+                    "length": 20.0,
+                    "width": 15.0,
+                    "height": 10.0,
+                    "weight": 1.0,
+                    "value": 100.0,
+                    "description": "Test item"
+                }
+            ]
+            
+            response = requests.post(
+                f"{self.base_url}/api/shipping/calculate-customs",
+                json={"packages": packages_data},
+                timeout=10
+            )
+            
+            if response.status_code == 403:  # Should require authentication
+                self.log_test("Customs Calculation Auth Required", True, "Customs calculation correctly requires authentication")
+                return True
+            else:
+                self.log_test("Customs Calculation Auth Required", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Customs Calculation Auth Required", False, "Request failed", str(e))
+            return False
+    
+    def test_shipping_rates_full_request(self):
+        """Test POST /api/shipping/rates with full shipping request (requires auth)"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            rate_request = {
+                "origin": {
+                    "name": "Mary Johnson",
+                    "address_line_1": "123 Main Street",
+                    "city": "Monrovia",
+                    "state": "Montserrado",
+                    "postal_code": "1000",
+                    "country": "LR",
+                    "phone": "+231-555-0456"
+                },
+                "destination": {
+                    "name": "John Smith",
+                    "address_line_1": "456 Broadway",
+                    "city": "New York",
+                    "state": "New York",
+                    "postal_code": "10001",
+                    "country": "US",
+                    "phone": "+1-555-0123"
+                },
+                "packages": [
+                    {
+                        "length": 30.0,
+                        "width": 20.0,
+                        "height": 15.0,
+                        "weight": 2.5,
+                        "value": 250.0,
+                        "description": "Traditional Liberian craft"
+                    }
+                ],
+                "currency": "USD"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/shipping/rates",
+                json=rate_request,
+                headers=headers,
+                timeout=15
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "rates" in data and
+                    "request_id" in data and
+                    "timestamp" in data and
+                    len(data["rates"]) >= 4):  # Should have rates from all 4 carriers
+                    
+                    # Verify rate structure
+                    valid_rates = True
+                    carriers_found = set()
+                    for rate in data["rates"]:
+                        if not all(key in rate for key in ["carrier", "service", "service_name", "rate", "currency", "transit_days"]):
+                            valid_rates = False
+                            break
+                        carriers_found.add(rate["carrier"])
+                    
+                    expected_carriers = {"dhl", "fedex", "ups", "aramex"}
+                    if valid_rates and carriers_found == expected_carriers:
+                        self.log_test("Shipping Rates Full Request", True, f"Got {len(data['rates'])} rates from all 4 carriers (DHL, FedEx, UPS, Aramex)")
+                        return True
+                    else:
+                        self.log_test("Shipping Rates Full Request", False, f"Invalid rates or missing carriers. Found: {carriers_found}", data["rates"])
+                        return False
+                else:
+                    self.log_test("Shipping Rates Full Request", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Shipping Rates Full Request", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Shipping Rates Full Request", False, "Request failed", str(e))
+            return False
+    
+    def test_shipping_rates_multiple_packages(self):
+        """Test shipping rates with multiple packages"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            rate_request = {
+                "origin": {
+                    "name": "Seller",
+                    "address_line_1": "123 Main St",
+                    "city": "Monrovia",
+                    "state": "Montserrado",
+                    "postal_code": "1000",
+                    "country": "LR"
+                },
+                "destination": {
+                    "name": "Buyer",
+                    "address_line_1": "456 Oak Ave",
+                    "city": "Los Angeles",
+                    "state": "California",
+                    "postal_code": "90210",
+                    "country": "US"
+                },
+                "packages": [
+                    {
+                        "length": 25.0,
+                        "width": 20.0,
+                        "height": 15.0,
+                        "weight": 1.5,
+                        "value": 150.0,
+                        "description": "Package 1"
+                    },
+                    {
+                        "length": 30.0,
+                        "width": 25.0,
+                        "height": 20.0,
+                        "weight": 2.0,
+                        "value": 200.0,
+                        "description": "Package 2"
+                    },
+                    {
+                        "length": 20.0,
+                        "width": 15.0,
+                        "height": 10.0,
+                        "weight": 1.0,
+                        "value": 100.0,
+                        "description": "Package 3"
+                    }
+                ]
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/shipping/rates",
+                json=rate_request,
+                headers=headers,
+                timeout=15
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    len(data.get("rates", [])) >= 4):
+                    
+                    # Verify rates are calculated based on total weight (4.5kg)
+                    total_weight = 4.5
+                    rates_reasonable = True
+                    for rate in data["rates"]:
+                        # Rates should be higher for multiple packages
+                        if rate["rate"] < (total_weight * 15):  # Minimum reasonable rate
+                            rates_reasonable = False
+                            break
+                    
+                    if rates_reasonable:
+                        self.log_test("Shipping Rates Multiple Packages", True, f"Rates calculated correctly for 3 packages (total weight: {total_weight}kg)")
+                        return True
+                    else:
+                        self.log_test("Shipping Rates Multiple Packages", False, "Rates seem unreasonably low for multiple packages", data["rates"])
+                        return False
+                else:
+                    self.log_test("Shipping Rates Multiple Packages", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Shipping Rates Multiple Packages", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Shipping Rates Multiple Packages", False, "Request failed", str(e))
+            return False
+    
+    def test_shipping_rates_origin_validation(self):
+        """Test that shipping rates reject non-Liberia origins"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            rate_request = {
+                "origin": {
+                    "name": "Invalid Seller",
+                    "address_line_1": "123 Main St",
+                    "city": "Lagos",
+                    "state": "Lagos",
+                    "postal_code": "100001",
+                    "country": "NG"  # Nigeria - should be rejected
+                },
+                "destination": {
+                    "name": "Buyer",
+                    "address_line_1": "456 Oak Ave",
+                    "city": "New York",
+                    "state": "New York",
+                    "postal_code": "10001",
+                    "country": "US"
+                },
+                "packages": [
+                    {
+                        "length": 20.0,
+                        "width": 15.0,
+                        "height": 10.0,
+                        "weight": 1.0,
+                        "value": 100.0,
+                        "description": "Test package"
+                    }
+                ]
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/shipping/rates",
+                json=rate_request,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 400:  # Should reject non-Liberia origin
+                self.log_test("Shipping Rates Origin Validation", True, "Non-Liberia origins correctly rejected")
+                return True
+            else:
+                self.log_test("Shipping Rates Origin Validation", False, f"Expected 400 for non-Liberia origin, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Shipping Rates Origin Validation", False, "Request failed", str(e))
+            return False
+    
+    def test_shipping_rates_destination_validation(self):
+        """Test that shipping rates reject non-USA destinations"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            rate_request = {
+                "origin": {
+                    "name": "Seller",
+                    "address_line_1": "123 Main St",
+                    "city": "Monrovia",
+                    "state": "Montserrado",
+                    "postal_code": "1000",
+                    "country": "LR"
+                },
+                "destination": {
+                    "name": "Invalid Buyer",
+                    "address_line_1": "456 Oak Ave",
+                    "city": "Toronto",
+                    "state": "Ontario",
+                    "postal_code": "M5V 3A8",
+                    "country": "CA"  # Canada - should be rejected
+                },
+                "packages": [
+                    {
+                        "length": 20.0,
+                        "width": 15.0,
+                        "height": 10.0,
+                        "weight": 1.0,
+                        "value": 100.0,
+                        "description": "Test package"
+                    }
+                ]
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/shipping/rates",
+                json=rate_request,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 400:  # Should reject non-USA destination
+                self.log_test("Shipping Rates Destination Validation", True, "Non-USA destinations correctly rejected")
+                return True
+            else:
+                self.log_test("Shipping Rates Destination Validation", False, f"Expected 400 for non-USA destination, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Shipping Rates Destination Validation", False, "Request failed", str(e))
+            return False
+    
+    def test_shipping_rates_no_auth(self):
+        """Test that shipping rates require authentication"""
+        try:
+            rate_request = {
+                "origin": {
+                    "name": "Seller",
+                    "address_line_1": "123 Main St",
+                    "city": "Monrovia",
+                    "state": "Montserrado",
+                    "postal_code": "1000",
+                    "country": "LR"
+                },
+                "destination": {
+                    "name": "Buyer",
+                    "address_line_1": "456 Oak Ave",
+                    "city": "New York",
+                    "state": "New York",
+                    "postal_code": "10001",
+                    "country": "US"
+                },
+                "packages": [
+                    {
+                        "length": 20.0,
+                        "width": 15.0,
+                        "height": 10.0,
+                        "weight": 1.0,
+                        "value": 100.0,
+                        "description": "Test package"
+                    }
+                ]
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/shipping/rates",
+                json=rate_request,
+                timeout=10
+            )
+            
+            if response.status_code == 403:  # Should require authentication
+                self.log_test("Shipping Rates Auth Required", True, "Shipping rates correctly require authentication")
+                return True
+            else:
+                self.log_test("Shipping Rates Auth Required", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Shipping Rates Auth Required", False, "Request failed", str(e))
+            return False
+    
     def run_all_tests(self):
         """Run all backend tests in sequence"""
         print(f"\n🚀 Starting Backend API Tests for Liberia2USA Express")
