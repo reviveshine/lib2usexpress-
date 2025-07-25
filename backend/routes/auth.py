@@ -3,13 +3,16 @@ from passlib.hash import bcrypt
 from datetime import datetime
 import uuid
 from models.user import UserCreate, UserLogin, UserResponse
-from server import database, create_access_token, get_current_user
+from database import get_database
+from server import create_access_token, get_current_user
 
 router = APIRouter()
 
 @router.post("/register", response_model=dict)
 async def register_user(user_data: UserCreate):
     """Register a new user (buyer or seller)"""
+    
+    database = get_database()
     
     # Check if user already exists
     existing_user = await database.users.find_one({"email": user_data.email})
@@ -67,6 +70,8 @@ async def register_user(user_data: UserCreate):
 async def login_user(login_data: UserLogin):
     """Login user and return access token"""
     
+    database = get_database()
+    
     # Find user by email
     user = await database.users.find_one({"email": login_data.email})
     if not user:
@@ -108,6 +113,8 @@ async def login_user(login_data: UserLogin):
 @router.get("/me", response_model=dict)
 async def get_current_user_info(current_user_id: str = Depends(get_current_user)):
     """Get current user information"""
+    
+    database = get_database()
     
     # Find user by ID
     user = await database.users.find_one({"id": current_user_id})

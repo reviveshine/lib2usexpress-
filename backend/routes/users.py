@@ -2,13 +2,16 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from typing import List
 from datetime import datetime
 from models.user import UserResponse
-from server import database, get_current_user
+from database import get_database
+from server import get_current_user
 
 router = APIRouter()
 
 @router.get("/profile", response_model=dict)
 async def get_user_profile(current_user_id: str = Depends(get_current_user)):
     """Get current user's profile"""
+    
+    database = get_database()
     
     user = await database.users.find_one({"id": current_user_id})
     if not user:
@@ -40,6 +43,8 @@ async def update_user_profile(
     current_user_id: str = Depends(get_current_user)
 ):
     """Update current user's profile"""
+    
+    database = get_database()
     
     # Find user
     user = await database.users.find_one({"id": current_user_id})
@@ -83,6 +88,8 @@ async def update_user_profile(
 @router.get("/sellers", response_model=dict)
 async def get_sellers():
     """Get list of verified sellers"""
+    
+    database = get_database()
     
     sellers_cursor = database.users.find(
         {"userType": "seller", "isVerified": True},

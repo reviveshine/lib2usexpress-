@@ -3,7 +3,8 @@ from typing import List, Optional
 from datetime import datetime
 import uuid
 from models.product import ProductCreate, ProductUpdate, ProductResponse
-from server import database, get_current_user
+from database import get_database
+from server import get_current_user
 
 router = APIRouter()
 
@@ -13,6 +14,8 @@ async def create_product(
     current_user_id: str = Depends(get_current_user)
 ):
     """Create a new product (sellers only)"""
+    
+    database = get_database()
     
     # Verify user is a seller
     user = await database.users.find_one({"id": current_user_id})
@@ -84,6 +87,8 @@ async def get_products(
 ):
     """Get products with pagination and filtering"""
     
+    database = get_database()
+    
     # Build query
     query = {"is_active": True}
     
@@ -153,6 +158,8 @@ async def get_products(
 async def get_product(product_id: str):
     """Get a single product by ID"""
     
+    database = get_database()
+    
     product = await database.products.find_one({"id": product_id, "is_active": True})
     if not product:
         raise HTTPException(
@@ -198,6 +205,8 @@ async def get_seller_products(
     limit: int = Query(10, ge=1, le=50)
 ):
     """Get products for the current seller"""
+    
+    database = get_database()
     
     # Verify user is a seller
     user = await database.users.find_one({"id": current_user_id})
