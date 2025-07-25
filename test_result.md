@@ -261,6 +261,54 @@ frontend:
         agent: "testing"
         comment: "Fixed API integration - all endpoints now correctly use REACT_APP_BACKEND_URL and point to FastAPI backend. Registration, login, and product loading all working with backend APIs."
 
+  - task: "MediaUploader Component"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/components/MediaUploader.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "New multimedia upload component with drag-and-drop functionality, progress bars, image/video preview, and file validation - needs comprehensive testing"
+
+  - task: "AddProductPage with Multimedia Support"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/pages/AddProductPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Complete product creation form with MediaUploader integration - needs testing for form submission, validation, and multimedia handling"
+
+  - task: "Enhanced Marketplace with Video Preview"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/pages/MarketplacePage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Marketplace enhanced with video preview on hover functionality and video badges - needs testing for video playback and UI interactions"
+
+  - task: "Dashboard Integration with Add Product Links"
+    implemented: true
+    working: "NA"
+    file: "frontend/src/pages/DashboardPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Dashboard updated with Add New Product buttons linking to /add-product - needs testing for navigation and seller-only access"
+
 metadata:
   created_by: "testing_agent"
   version: "1.0"
