@@ -1533,14 +1533,9 @@ class BackendTester:
                 }
             ]
             
-            request_data = {
-                "cart_items": cart_items,
-                "shipping_cost": 5.00
-            }
-            
             response = requests.post(
-                f"{self.base_url}/api/payments/calculate-total",
-                json=request_data,
+                f"{self.base_url}/api/payments/calculate-total?shipping_cost=5.00",
+                json=cart_items,
                 timeout=10
             )
             
