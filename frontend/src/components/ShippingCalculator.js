@@ -126,16 +126,21 @@ const ShippingCalculator = ({ product, onShippingCalculated }) => {
             value={shippingData.destination_state}
             onChange={handleInputChange}
             required
+            disabled={statesLoading}
             style={{
               width: '100%',
               padding: '0.5rem',
               border: '1px solid #d1d5db',
               borderRadius: '5px',
-              fontSize: '0.9rem'
+              fontSize: '0.9rem',
+              backgroundColor: statesLoading ? '#f3f4f6' : 'white',
+              cursor: statesLoading ? 'not-allowed' : 'pointer'
             }}
           >
-            <option value="">Select State</option>
-            {states.map((state) => (
+            <option value="">
+              {statesLoading ? 'Loading states...' : 'Select State'}
+            </option>
+            {!statesLoading && states.map((state) => (
               <option key={state.code} value={state.code}>
                 {state.name}
               </option>
