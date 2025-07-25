@@ -946,10 +946,10 @@ class BackendTester:
                 "value": 150.0
             }
             
-            # Use form data instead of JSON
+            # Use JSON data with the new request model
             response = requests.post(
                 f"{self.base_url}/api/shipping/estimate",
-                data=estimate_data,
+                json=estimate_data,
                 timeout=10
             )
             
