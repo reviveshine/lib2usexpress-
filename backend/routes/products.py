@@ -57,7 +57,7 @@ async def create_product(
         price=product_doc["price"],
         category=product_doc["category"],
         images=product_doc["images"],
-        video_url=product_doc["video_url"],
+        video=product_doc["video"],
         stock=product_doc["stock"],
         tags=product_doc["tags"],
         weight=product_doc["weight"],
