@@ -100,10 +100,12 @@ async def root():
 from routes.auth import router as auth_router
 from routes.users import router as users_router
 from routes.products import router as products_router
+from routes.shipping import router as shipping_router
 
 app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(users_router, prefix="/api/users", tags=["Users"])
 app.include_router(products_router, prefix="/api/products", tags=["Products"])
+app.include_router(shipping_router, prefix="/api/shipping", tags=["Shipping"])
 
 if __name__ == "__main__":
     uvicorn.run(
