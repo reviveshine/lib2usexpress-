@@ -317,7 +317,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Frontend Testing Complete"
+    - "MediaUploader Component"
+    - "AddProductPage with Multimedia Support"
+    - "Enhanced Marketplace with Video Preview"
+    - "Dashboard Integration with Add Product Links"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
