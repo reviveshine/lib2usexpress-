@@ -17,8 +17,23 @@ class ChatEncryption:
     
     def __init__(self):
         # In production, use a secure key management system
-        self.key = os.getenv('CHAT_ENCRYPTION_KEY', self._generate_key())
-        self.cipher = Fernet(self.key.encode() if isinstance(self.key, str) else self.key)
+        key_env = os.getenv('CHAT_ENCRYPTION_KEY')
+        if key_env:
+            self.key = key_env
+        else:
+            self.key = self._generate_key()
+        
+        # Ensure key is properly formatted for Fernet
+        try:
+            if isinstance(self.key, str):
+                # If it's a string, try to use it as base64
+                self.cipher = Fernet(self.key.encode())
+            else:
+                self.cipher = Fernet(self.key)
+        except ValueError:
+            # If the key is invalid, generate a new one
+            self.key = self._generate_key()
+            self.cipher = Fernet(self.key.encode())
     
     def _generate_key(self) -> str:
         """Generate a new encryption key"""
