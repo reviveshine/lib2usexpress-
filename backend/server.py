@@ -1,0 +1,132 @@
+from fastapi import FastAPI, HTTPException, Depends, status
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from contextlib import asynccontextmanager
+import os
+from dotenv import load_dotenv
+import motor.motor_asyncio
+from datetime import datetime, timedelta
+from jose import JWTError, jwt
+import uvicorn
+
+# Load environment variables
+load_dotenv()
+
+# Database configuration
+MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017/liberia2usa_express")
+JWT_SECRET = os.getenv("JWT_SECRET", "your_super_secure_jwt_secret_key_here_2025")
+JWT_ALGORITHM = "HS256"
+JWT_EXPIRE_HOURS = 24
+
+# Global variables for database
+database = None
+client = None
+
+security = HTTPBearer()
+
+async def connect_to_mongo():
+    """Create database connection"""
+    global client, database
+    client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URL)
+    database = client.get_database()
+    print(f"✓ Connected to MongoDB: {database.name}")
+
+async def close_mongo_connection():
+    """Close database connection"""
+    global client
+    if client:
+        client.close()
+        print("✓ MongoDB connection closed")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    await connect_to_mongo()
+    yield
+    # Shutdown
+    await close_mongo_connection()
+
+# Create FastAPI application
+app = FastAPI(
+    title="Liberia2USA Express API",
+    description="International shipping platform API from Liberia to USA",
+    version="1.0.0",
+    lifespan=lifespan
+)
+
+# CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://localhost:8001"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Utility functions
+def create_access_token(data: dict):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(hours=JWT_EXPIRE_HOURS)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, JWT_SECRET, algorithm=JWT_ALGORITHM)
+    return encoded_jwt
+
+async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        token = credentials.credentials
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        user_id: str = payload.get("sub")
+        if user_id is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Could not validate credentials",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        return user_id
+    except JWTError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+# Health check endpoint
+@app.get("/api/health")
+async def health_check():
+    return {
+        "status": "OK",
+        "message": "Liberia2USA Express API is running",
+        "timestamp": datetime.utcnow().isoformat(),
+        "database_connected": database is not None
+    }
+
+# Root endpoint
+@app.get("/")
+async def root():
+    return {
+        "message": "Welcome to Liberia2USA Express API",
+        "version": "1.0.0",
+        "endpoints": {
+            "health": "/api/health",
+            "auth": "/api/auth",
+            "users": "/api/users",
+            "products": "/api/products"
+        }
+    }
+
+# Import routes (we'll create these next)
+from routes.auth import router as auth_router
+from routes.users import router as users_router
+from routes.products import router as products_router
+
+app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
+app.include_router(users_router, prefix="/api/users", tags=["Users"])
+app.include_router(products_router, prefix="/api/products", tags=["Products"])
+
+if __name__ == "__main__":
+    uvicorn.run(
+        "server:app",
+        host="0.0.0.0",
+        port=int(os.getenv("PORT", 8001)),
+        reload=True
+    )
