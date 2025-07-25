@@ -263,3 +263,88 @@ async def get_seller_products(
             "hasPrevPage": page > 1
         }
     }
+
+@router.post("/upload-media", response_model=dict)
+async def upload_media(
+    files: List[UploadFile] = File(...),
+    current_user_id: str = Depends(get_current_user)
+):
+    """Upload images and video for products"""
+    
+    database = get_database()
+    
+    # Verify user is a seller
+    user = await database.users.find_one({"id": current_user_id})
+    if not user or user["userType"] != "seller":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only sellers can upload media"
+        )
+    
+    uploaded_files = []
+    images = []
+    video = None
+    
+    for file in files:
+        # Validate file type
+        if not file.content_type:
+            continue
+            
+        if file.content_type.startswith('image/'):
+            if len(images) >= 10:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Maximum 10 images allowed"
+                )
+            
+            # Read and encode image
+            content = await file.read()
+            if len(content) > 10 * 1024 * 1024:  # 10MB limit per image
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Image {file.filename} is too large (max 10MB)"
+                )
+            
+            encoded_image = base64.b64encode(content).decode('utf-8')
+            image_data = f"data:{file.content_type};base64,{encoded_image}"
+            images.append(image_data)
+            
+            uploaded_files.append({
+                "filename": file.filename,
+                "type": "image",
+                "size": len(content),
+                "content_type": file.content_type
+            })
+            
+        elif file.content_type.startswith('video/'):
+            if video:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Only one video allowed per product"
+                )
+            
+            # Read and encode video
+            content = await file.read()
+            if len(content) > 100 * 1024 * 1024:  # 100MB limit for video
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Video file is too large (max 100MB)"
+                )
+            
+            encoded_video = base64.b64encode(content).decode('utf-8')
+            video = f"data:{file.content_type};base64,{encoded_video}"
+            
+            uploaded_files.append({
+                "filename": file.filename,
+                "type": "video",
+                "size": len(content),
+                "content_type": file.content_type
+            })
+    
+    return {
+        "success": True,
+        "message": "Media uploaded successfully",
+        "images": images,
+        "video": video,
+        "uploaded_files": uploaded_files
+    }
