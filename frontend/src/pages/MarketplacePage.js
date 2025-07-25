@@ -11,11 +11,14 @@ const MarketplacePage = () => {
     category: '',
     sort: 'newest'
   });
+  const [user, setUser] = useState(null);
 
   const API_BASE = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadProducts();
+    checkAuthStatus();
   }, [currentPage, filters]);
 
   const loadProducts = async () => {
