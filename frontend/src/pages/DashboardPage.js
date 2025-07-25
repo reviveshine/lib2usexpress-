@@ -99,13 +99,13 @@ const DashboardPage = () => {
                 Here you can manage your products, track orders, view analytics, and communicate with buyers.
               </p>
               <div style={{ marginTop: '1.5rem' }}>
-                <button 
-                  onClick={() => setActiveTab('products')} 
+                <Link 
+                  to="/add-product"
                   className="btn-primary"
-                  style={{ marginRight: '1rem' }}
+                  style={{ marginRight: '1rem', textDecoration: 'none' }}
                 >
                   Add Your First Product
-                </button>
+                </Link>
                 <button 
                   onClick={() => setActiveTab('shipping')} 
                   className="btn-secondary"
