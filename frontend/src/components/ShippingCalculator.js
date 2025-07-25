@@ -24,12 +24,20 @@ const ShippingCalculator = ({ product, onShippingCalculated }) => {
   
   const loadStates = async () => {
     try {
+      console.log('Loading states from:', `${API_BASE}/api/shipping/zones`);
       const response = await axios.get(`${API_BASE}/api/shipping/zones`);
-      if (response.data.success) {
+      console.log('States API response:', response.data);
+      
+      if (response.data.success && response.data.destination_zones && response.data.destination_zones.states) {
         setStates(response.data.destination_zones.states);
+        console.log('States loaded successfully:', response.data.destination_zones.states.length, 'states');
+      } else {
+        console.error('Invalid response format:', response.data);
+        setError('Failed to load destination states');
       }
     } catch (error) {
       console.error('Failed to load states:', error);
+      setError('Failed to load destination states. Please try again.');
     }
   };
   
