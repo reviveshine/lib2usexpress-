@@ -4,7 +4,9 @@ import ShoppingCart, { useShoppingCart } from './ShoppingCart';
 
 const Header = () => {
   const [user, setUser] = useState(null);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const navigate = useNavigate();
+  const { getTotalItems } = useShoppingCart();
 
   useEffect(() => {
     checkAuthStatus();
