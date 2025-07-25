@@ -24,8 +24,8 @@ const LoginPage = () => {
     setError('');
 
     try {
-      // For now, connect to the existing Node.js API
-      const response = await axios.post('http://localhost:5000/api/auth/login', formData);
+      const API_BASE = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+      const response = await axios.post(`${API_BASE}/api/auth/login`, formData);
       
       if (response.data.success) {
         localStorage.setItem('auth_token', response.data.token);
