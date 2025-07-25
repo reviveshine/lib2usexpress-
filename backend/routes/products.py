@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException, status, Depends, Query
+from fastapi import APIRouter, HTTPException, status, Depends, Query, File, UploadFile
 from typing import List, Optional
 from datetime import datetime
 import uuid
+import base64
 from models.product import ProductCreate, ProductUpdate, ProductResponse
 from database import get_database
 from server import get_current_user
