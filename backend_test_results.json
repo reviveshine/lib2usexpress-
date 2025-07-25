@@ -1,0 +1,121 @@
+[
+  {
+    "test": "Health Check",
+    "success": true,
+    "message": "API is running and database connected",
+    "details": null,
+    "timestamp": "2025-07-25T06:57:59.066420"
+  },
+  {
+    "test": "Buyer Registration",
+    "success": false,
+    "message": "HTTP 500",
+    "details": "Internal Server Error",
+    "timestamp": "2025-07-25T06:57:59.078206"
+  },
+  {
+    "test": "Seller Registration",
+    "success": false,
+    "message": "HTTP 500",
+    "details": "Internal Server Error",
+    "timestamp": "2025-07-25T06:57:59.081964"
+  },
+  {
+    "test": "Location Validation",
+    "success": true,
+    "message": "Location validation working - buyer with Liberia location rejected",
+    "details": null,
+    "timestamp": "2025-07-25T06:57:59.084974"
+  },
+  {
+    "test": "Buyer Login",
+    "success": false,
+    "message": "HTTP 500",
+    "details": "Internal Server Error",
+    "timestamp": "2025-07-25T06:57:59.088153"
+  },
+  {
+    "test": "Seller Login",
+    "success": false,
+    "message": "HTTP 500",
+    "details": "Internal Server Error",
+    "timestamp": "2025-07-25T06:57:59.091386"
+  },
+  {
+    "test": "Auth Me Endpoint",
+    "success": false,
+    "message": "HTTP 401",
+    "details": "{\"detail\":\"Could not validate credentials\"}",
+    "timestamp": "2025-07-25T06:57:59.093529"
+  },
+  {
+    "test": "Get User Profile",
+    "success": false,
+    "message": "HTTP 401",
+    "details": "{\"detail\":\"Could not validate credentials\"}",
+    "timestamp": "2025-07-25T06:57:59.096006"
+  },
+  {
+    "test": "Update User Profile",
+    "success": false,
+    "message": "HTTP 401",
+    "details": "{\"detail\":\"Could not validate credentials\"}",
+    "timestamp": "2025-07-25T06:57:59.097993"
+  },
+  {
+    "test": "Get Sellers",
+    "success": false,
+    "message": "HTTP 500",
+    "details": "Internal Server Error",
+    "timestamp": "2025-07-25T06:57:59.100953"
+  },
+  {
+    "test": "Create Product",
+    "success": false,
+    "message": "HTTP 401",
+    "details": "{\"detail\":\"Could not validate credentials\"}",
+    "timestamp": "2025-07-25T06:57:59.104428"
+  },
+  {
+    "test": "Get Products",
+    "success": false,
+    "message": "HTTP 500",
+    "details": "Internal Server Error",
+    "timestamp": "2025-07-25T06:57:59.112000"
+  },
+  {
+    "test": "Get Products with Filters",
+    "success": false,
+    "message": "HTTP 500",
+    "details": "Internal Server Error",
+    "timestamp": "2025-07-25T06:57:59.116688"
+  },
+  {
+    "test": "Get Single Product",
+    "success": false,
+    "message": "No product ID available",
+    "details": "Product creation may have failed",
+    "timestamp": "2025-07-25T06:57:59.116827"
+  },
+  {
+    "test": "Get Seller Products",
+    "success": false,
+    "message": "HTTP 401",
+    "details": "{\"detail\":\"Could not validate credentials\"}",
+    "timestamp": "2025-07-25T06:57:59.118754"
+  },
+  {
+    "test": "Buyer Product Creation Block",
+    "success": false,
+    "message": "Expected 403, got HTTP 401",
+    "details": "{\"detail\":\"Could not validate credentials\"}",
+    "timestamp": "2025-07-25T06:57:59.121986"
+  },
+  {
+    "test": "Unauthorized Access Block",
+    "success": true,
+    "message": "Protected endpoints correctly require authentication",
+    "details": null,
+    "timestamp": "2025-07-25T06:57:59.123702"
+  }
+]
