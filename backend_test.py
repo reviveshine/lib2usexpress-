@@ -1759,8 +1759,42 @@ class BackendTester:
             return False
             
         try:
-            # Try to access payment status with seller token (should fail)
-            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            # Create a second user to test access control
+            second_user_data = {
+                "firstName": "Second",
+                "lastName": "User",
+                "email": "second.user.access.test@email.com",
+                "password": "SecurePass789!",
+                "userType": "buyer",
+                "location": "Los Angeles, USA",
+                "phone": "+1-555-0777"
+            }
+            
+            # Register second user
+            response = requests.post(
+                f"{self.base_url}/api/auth/register",
+                json=second_user_data,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                second_user_token = response.json()["token"]
+            else:
+                # Try to login if user already exists
+                login_data = {"email": "second.user.access.test@email.com", "password": "SecurePass789!"}
+                response = requests.post(
+                    f"{self.base_url}/api/auth/login",
+                    json=login_data,
+                    timeout=10
+                )
+                if response.status_code == 200:
+                    second_user_token = response.json()["token"]
+                else:
+                    self.log_test("Payment Status Access Control", False, "Failed to create/login second user", response.text)
+                    return False
+            
+            # Try to access payment status with second user's token (should fail)
+            headers = {"Authorization": f"Bearer {second_user_token}"}
             response = requests.get(
                 f"{self.base_url}/api/payments/status/{self.checkout_session_id}",
                 headers=headers,
