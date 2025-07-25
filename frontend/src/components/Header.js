@@ -31,6 +31,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user_data');
+    localStorage.removeItem('cart');
     setUser(null);
     navigate('/');
   };
