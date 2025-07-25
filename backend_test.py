@@ -1987,7 +1987,22 @@ class BackendTester:
             self.test_shipping_rates_multiple_packages,
             self.test_shipping_rates_origin_validation,
             self.test_shipping_rates_destination_validation,
-            self.test_shipping_rates_no_auth
+            self.test_shipping_rates_no_auth,
+            # New chat system tests
+            self.test_create_chat_between_users,
+            self.test_create_chat_without_product,
+            self.test_create_duplicate_chat,
+            self.test_get_user_chat_list,
+            self.test_send_text_message,
+            self.test_send_reply_message,
+            self.test_get_chat_messages,
+            self.test_mark_messages_read,
+            self.test_verify_unread_count_update,
+            self.test_chat_report_functionality,
+            self.test_get_online_users,
+            self.test_chat_access_control,
+            self.test_message_encryption_in_database,
+            self.test_chat_authentication_required
         ]
         
         passed = 0
