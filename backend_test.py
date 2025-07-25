@@ -23,6 +23,8 @@ class BackendTester:
         self.buyer_id = None
         self.seller_id = None
         self.product_id = None
+        self.chat_id = None
+        self.message_id = None
         self.test_results = []
         
     def log_test(self, test_name, success, message, details=None):
