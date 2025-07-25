@@ -4,174 +4,263 @@
     "success": true,
     "message": "API is running and database connected",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.250372"
+    "timestamp": "2025-07-25T08:35:46.339936"
   },
   {
     "test": "Buyer Registration",
     "success": false,
     "message": "HTTP 400",
     "details": "{\"detail\":\"Email already registered\"}",
-    "timestamp": "2025-07-25T08:13:34.264587"
+    "timestamp": "2025-07-25T08:35:46.396083"
   },
   {
     "test": "Seller Registration",
     "success": false,
     "message": "HTTP 400",
     "details": "{\"detail\":\"Email already registered\"}",
-    "timestamp": "2025-07-25T08:13:34.267996"
+    "timestamp": "2025-07-25T08:35:46.399699"
   },
   {
     "test": "Location Validation",
     "success": true,
     "message": "Location validation working - buyer with Liberia location rejected",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.270317"
+    "timestamp": "2025-07-25T08:35:46.402076"
   },
   {
     "test": "Buyer Login",
     "success": true,
     "message": "Buyer login successful",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.530359"
+    "timestamp": "2025-07-25T08:35:46.661083"
   },
   {
     "test": "Seller Login",
     "success": true,
     "message": "Seller login successful",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.767040"
+    "timestamp": "2025-07-25T08:35:46.900747"
   },
   {
     "test": "Auth Me Endpoint",
     "success": true,
     "message": "User info retrieved successfully",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.770964"
+    "timestamp": "2025-07-25T08:35:46.904698"
   },
   {
     "test": "Get User Profile",
     "success": true,
     "message": "User profile retrieved successfully",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.774287"
+    "timestamp": "2025-07-25T08:35:46.908257"
   },
   {
     "test": "Update User Profile",
     "success": true,
     "message": "User profile updated successfully",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.780419"
+    "timestamp": "2025-07-25T08:35:46.914091"
   },
   {
     "test": "Get Sellers",
     "success": true,
     "message": "Retrieved 0 sellers",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.782985"
+    "timestamp": "2025-07-25T08:35:46.916652"
   },
   {
     "test": "Create Product",
     "success": true,
     "message": "Product created successfully",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.789796"
+    "timestamp": "2025-07-25T08:35:46.925940"
   },
   {
     "test": "Get Products",
     "success": true,
-    "message": "Retrieved 2 products with pagination",
+    "message": "Retrieved 4 products with pagination",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.795075"
+    "timestamp": "2025-07-25T08:35:46.979484"
   },
   {
     "test": "Get Products with Filters",
     "success": true,
     "message": "Products filtered successfully",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.800186"
+    "timestamp": "2025-07-25T08:35:46.986124"
   },
   {
     "test": "Get Single Product",
     "success": true,
     "message": "Product retrieved successfully",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.803478"
+    "timestamp": "2025-07-25T08:35:46.989600"
   },
   {
     "test": "Get Seller Products",
     "success": true,
-    "message": "Retrieved 2 seller products",
+    "message": "Retrieved 4 seller products",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.813016"
+    "timestamp": "2025-07-25T08:35:47.034284"
   },
   {
     "test": "Buyer Product Creation Block",
     "success": true,
     "message": "Buyers correctly blocked from creating products",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.817262"
+    "timestamp": "2025-07-25T08:35:47.039939"
   },
   {
     "test": "Unauthorized Access Block",
     "success": true,
     "message": "Protected endpoints correctly require authentication",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.818904"
+    "timestamp": "2025-07-25T08:35:47.041757"
   },
   {
     "test": "Media Upload - Images",
     "success": true,
     "message": "Images uploaded and base64 encoded successfully",
     "details": null,
-    "timestamp": "2025-07-25T08:13:34.888841"
+    "timestamp": "2025-07-25T08:35:47.114934"
   },
   {
     "test": "Media Upload - Video",
     "success": true,
     "message": "Video uploaded and base64 encoded successfully",
     "details": null,
-    "timestamp": "2025-07-25T08:13:35.034520"
+    "timestamp": "2025-07-25T08:35:47.247743"
   },
   {
     "test": "Media Upload Authentication",
     "success": true,
     "message": "Media upload correctly requires seller authentication",
     "details": null,
-    "timestamp": "2025-07-25T08:13:35.042120"
+    "timestamp": "2025-07-25T08:35:47.255531"
   },
   {
     "test": "Media Upload Size Limits",
     "success": true,
     "message": "File size limits correctly enforced",
     "details": null,
-    "timestamp": "2025-07-25T08:13:36.365109"
+    "timestamp": "2025-07-25T08:35:48.585347"
   },
   {
     "test": "Media Upload Count Limits",
     "success": true,
     "message": "File count limits correctly enforced",
     "details": null,
-    "timestamp": "2025-07-25T08:13:36.388111"
+    "timestamp": "2025-07-25T08:35:48.602531"
   },
   {
     "test": "Create Product with Multimedia",
     "success": true,
     "message": "Product with multimedia created successfully",
     "details": null,
-    "timestamp": "2025-07-25T08:13:36.505173"
+    "timestamp": "2025-07-25T08:35:48.719049"
   },
   {
     "test": "Get Product with Multimedia",
     "success": true,
     "message": "Product with multimedia retrieved successfully",
     "details": null,
-    "timestamp": "2025-07-25T08:13:36.542974"
+    "timestamp": "2025-07-25T08:35:48.755940"
   },
   {
     "test": "Media Upload Invalid Files",
     "success": true,
     "message": "Invalid file types correctly ignored",
     "details": null,
-    "timestamp": "2025-07-25T08:13:36.546801"
+    "timestamp": "2025-07-25T08:35:48.760027"
+  },
+  {
+    "test": "Get Shipping Carriers",
+    "success": true,
+    "message": "All 4 carriers (DHL, FedEx, UPS, Aramex) returned with service details",
+    "details": null,
+    "timestamp": "2025-07-25T08:35:48.762023"
+  },
+  {
+    "test": "Get Shipping Zones",
+    "success": true,
+    "message": "Shipping zones returned with Liberia origins and all US states",
+    "details": null,
+    "timestamp": "2025-07-25T08:35:48.763997"
+  },
+  {
+    "test": "Shipping Estimate (No Auth)",
+    "success": false,
+    "message": "HTTP 422",
+    "details": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"query\",\"origin_city\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.5/v/missing\"},{\"type\":\"missing\",\"loc\":[\"query\",\"destination_state\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.5/v/missing\"},{\"type\":\"missing\",\"loc\":[\"query\",\"weight\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.5/v/missing\"}]}",
+    "timestamp": "2025-07-25T08:35:48.765970"
+  },
+  {
+    "test": "Shipping Estimate Different States",
+    "success": false,
+    "message": "Failed to get estimates for all states",
+    "details": null,
+    "timestamp": "2025-07-25T08:35:48.767796"
+  },
+  {
+    "test": "Calculate Customs Duties",
+    "success": false,
+    "message": "HTTP 422",
+    "details": "{\"detail\":[{\"type\":\"list_type\",\"loc\":[\"body\"],\"msg\":\"Input should be a valid list\",\"input\":{\"packages\":[{\"length\":30.0,\"width\":20.0,\"height\":15.0,\"weight\":2.0,\"value\":200.0,\"description\":\"Traditional Liberian craft item\"},{\"length\":25.0,\"width\":15.0,\"height\":10.0,\"weight\":1.5,\"value\":150.0,\"description\":\"Handmade jewelry\"}],\"destination_country\":\"US\"},\"url\":\"https://errors.pydantic.dev/2.5/v/list_type\"}]}",
+    "timestamp": "2025-07-25T08:35:48.769966"
+  },
+  {
+    "test": "Customs Calculation Auth Required",
+    "success": true,
+    "message": "Customs calculation correctly requires authentication",
+    "details": null,
+    "timestamp": "2025-07-25T08:35:48.771737"
+  },
+  {
+    "test": "Shipping Rates Full Request",
+    "success": false,
+    "message": "Invalid response format",
+    "details": {
+      "success": false,
+      "rates": [],
+      "errors": [],
+      "request_id": "7e38195e-3b80-431f-8aff-9d721a5baa06",
+      "timestamp": "2025-07-25T08:35:48.780050"
+    },
+    "timestamp": "2025-07-25T08:35:48.794776"
+  },
+  {
+    "test": "Shipping Rates Multiple Packages",
+    "success": false,
+    "message": "Invalid response format",
+    "details": {
+      "success": false,
+      "rates": [],
+      "errors": [],
+      "request_id": "96c946c7-3c11-4748-92e8-f70514eb0321",
+      "timestamp": "2025-07-25T08:35:48.796647"
+    },
+    "timestamp": "2025-07-25T08:35:48.798246"
+  },
+  {
+    "test": "Shipping Rates Origin Validation",
+    "success": false,
+    "message": "Expected 400 for non-Liberia origin, got HTTP 500",
+    "details": "{\"detail\":\"Failed to get shipping rates: \"}",
+    "timestamp": "2025-07-25T08:35:48.800329"
+  },
+  {
+    "test": "Shipping Rates Destination Validation",
+    "success": false,
+    "message": "Expected 400 for non-USA destination, got HTTP 500",
+    "details": "{\"detail\":\"Failed to get shipping rates: \"}",
+    "timestamp": "2025-07-25T08:35:48.802347"
+  },
+  {
+    "test": "Shipping Rates Auth Required",
+    "success": true,
+    "message": "Shipping rates correctly require authentication",
+    "details": null,
+    "timestamp": "2025-07-25T08:35:48.804190"
   }
 ]
