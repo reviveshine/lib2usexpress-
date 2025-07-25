@@ -385,6 +385,25 @@ const AddProductPage = () => {
               existingVideo={media.video}
             />
             
+            {/* Shipping Calculator */}
+            <div style={{ marginBottom: '2rem' }}>
+              <h3 style={{ marginBottom: '1rem', color: '#1f2937' }}>Shipping Information</h3>
+              <p style={{ color: '#6b7280', marginBottom: '1rem', fontSize: '0.9rem' }}>
+                Preview shipping costs for potential buyers. This helps customers understand total costs before purchasing.
+              </p>
+              <ShippingCalculator 
+                product={{
+                  weight: parseFloat(formData.weight) || 1.0,
+                  dimensions: {
+                    length: parseFloat(formData.dimensions.length) || 10,
+                    width: parseFloat(formData.dimensions.width) || 10,
+                    height: parseFloat(formData.dimensions.height) || 10
+                  },
+                  price: parseFloat(formData.price) || 100
+                }}
+              />
+            </div>
+            
             {/* Submit Button */}
             <div style={{ textAlign: 'center', marginTop: '2rem' }}>
               <button
