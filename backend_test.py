@@ -8,6 +8,8 @@ import requests
 import json
 import sys
 import os
+import base64
+import io
 from datetime import datetime
 
 # Get backend URL from frontend .env
