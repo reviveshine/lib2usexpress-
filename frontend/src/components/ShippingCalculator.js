@@ -19,11 +19,7 @@ const ShippingCalculator = ({ product, onShippingCalculated }) => {
   
   const API_BASE = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
   
-  useEffect(() => {
-    loadStates();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  
-  const loadStates = async () => {
+  const loadStates = React.useCallback(async () => {
     setStatesLoading(true);
     try {
       console.log('Loading states from:', `${API_BASE}/api/shipping/zones`);
@@ -43,7 +39,11 @@ const ShippingCalculator = ({ product, onShippingCalculated }) => {
     } finally {
       setStatesLoading(false);
     }
-  };
+  }, [API_BASE]);
+
+  useEffect(() => {
+    loadStates();
+  }, [loadStates]);
   
   const handleInputChange = (e) => {
     const { name, value } = e.target;
