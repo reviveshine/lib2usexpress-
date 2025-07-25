@@ -185,15 +185,30 @@ const MarketplacePage = () => {
                   onClick={() => alert(`View product: ${product.name}`)}
                 >
                   <div style={{ position: 'relative' }}>
-                    <img
-                      src={product.images[0] || 'https://via.placeholder.com/300x300?text=No+Image'}
-                      alt={product.name}
-                      style={{
-                        width: '100%',
-                        height: '200px',
-                        objectFit: 'cover'
-                      }}
-                    />
+                    {product.video ? (
+                      <video
+                        src={product.video}
+                        style={{
+                          width: '100%',
+                          height: '200px',
+                          objectFit: 'cover'
+                        }}
+                        muted
+                        loop
+                        onMouseEnter={(e) => e.target.play()}
+                        onMouseLeave={(e) => e.target.pause()}
+                      />
+                    ) : (
+                      <img
+                        src={product.images[0] || 'https://via.placeholder.com/300x300?text=No+Image'}
+                        alt={product.name}
+                        style={{
+                          width: '100%',
+                          height: '200px',
+                          objectFit: 'cover'
+                        }}
+                      />
+                    )}
                     <div style={{
                       position: 'absolute',
                       top: '10px',
@@ -207,6 +222,20 @@ const MarketplacePage = () => {
                     }}>
                       {product.category}
                     </div>
+                    {product.video && (
+                      <div style={{
+                        position: 'absolute',
+                        top: '10px',
+                        left: '10px',
+                        background: 'rgba(0,0,0,0.7)',
+                        color: 'white',
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '5px',
+                        fontSize: '0.75rem'
+                      }}>
+                        🎥 Video
+                      </div>
+                    )}
                   </div>
                   <div style={{ padding: '1rem' }}>
                     <h3 style={{ 
