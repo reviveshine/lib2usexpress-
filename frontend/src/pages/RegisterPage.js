@@ -50,9 +50,9 @@ const RegisterPage = () => {
     }
 
     try {
-      // For now, connect to the existing Node.js API
+      const API_BASE = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
       const { confirmPassword, ...registrationData } = formData;
-      const response = await axios.post('http://localhost:5000/api/auth/register', registrationData);
+      const response = await axios.post(`${API_BASE}/api/auth/register`, registrationData);
       
       if (response.data.success) {
         localStorage.setItem('auth_token', response.data.token);
