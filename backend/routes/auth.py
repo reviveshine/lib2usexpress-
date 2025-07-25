@@ -3,7 +3,7 @@ from passlib.hash import bcrypt
 from datetime import datetime
 import uuid
 from models.user import UserCreate, UserLogin, UserResponse
-from server import database, create_access_token
+from server import database, create_access_token, get_current_user
 
 router = APIRouter()
 
