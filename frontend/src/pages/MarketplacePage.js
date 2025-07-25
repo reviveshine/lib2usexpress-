@@ -26,8 +26,8 @@ const MarketplacePage = () => {
         ...filters
       };
 
-      // For now, connect to the existing Node.js API
-      const response = await axios.get('http://localhost:5000/api/products', { params });
+      // Connect to FastAPI backend
+      const response = await axios.get(`${API_BASE}/api/products`, { params });
       
       if (response.data.success) {
         setProducts(response.data.data || []);
