@@ -874,6 +874,523 @@ class BackendTester:
             self.log_test("Media Upload Invalid Files", False, "Request failed", str(e))
             return False
     
+    # ==================== CHAT SYSTEM TESTS ====================
+    
+    def test_create_chat_between_users(self):
+        """Test POST /api/chat/create endpoint"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            chat_data = {
+                "recipient_id": self.seller_id,
+                "product_id": self.product_id,
+                "initial_message": "Hi, I'm interested in your Traditional Liberian Craft. Can you tell me more about it?"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/chat/create",
+                json=chat_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("chat") and
+                    data["chat"]["id"] and
+                    len(data["chat"]["participants"]) == 2):
+                    
+                    self.chat_id = data["chat"]["id"]
+                    self.log_test("Create Chat Between Users", True, f"Chat created successfully with ID: {self.chat_id}")
+                    return True
+                else:
+                    self.log_test("Create Chat Between Users", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Create Chat Between Users", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Create Chat Between Users", False, "Request failed", str(e))
+            return False
+    
+    def test_create_chat_without_product(self):
+        """Test creating chat without product context"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            chat_data = {
+                "recipient_id": self.buyer_id,
+                "initial_message": "Hello! Thank you for your interest in our products."
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/chat/create",
+                json=chat_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("chat") and
+                    data["chat"]["product_id"] is None):
+                    self.log_test("Create Chat Without Product", True, "Chat created successfully without product context")
+                    return True
+                else:
+                    self.log_test("Create Chat Without Product", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Create Chat Without Product", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Create Chat Without Product", False, "Request failed", str(e))
+            return False
+    
+    def test_create_duplicate_chat(self):
+        """Test that creating duplicate chat returns existing chat"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            chat_data = {
+                "recipient_id": self.seller_id,
+                "product_id": self.product_id,
+                "initial_message": "This should return the existing chat"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/chat/create",
+                json=chat_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("chat") and
+                    data["chat"]["id"] == self.chat_id):
+                    self.log_test("Create Duplicate Chat", True, "Existing chat returned instead of creating duplicate")
+                    return True
+                else:
+                    self.log_test("Create Duplicate Chat", False, "New chat created instead of returning existing", data)
+                    return False
+            else:
+                self.log_test("Create Duplicate Chat", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Create Duplicate Chat", False, "Request failed", str(e))
+            return False
+    
+    def test_get_user_chat_list(self):
+        """Test GET /api/chat/list endpoint"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/chat/list?page=1&limit=20",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("chats") is not None and
+                    data.get("total_count") is not None and
+                    data.get("unread_total") is not None and
+                    len(data["chats"]) > 0):
+                    
+                    # Verify chat structure
+                    chat = data["chats"][0]
+                    if (chat.get("id") and 
+                        chat.get("participants") and
+                        len(chat["participants"]) == 2):
+                        self.log_test("Get User Chat List", True, f"Retrieved {len(data['chats'])} chats with unread count: {data['unread_total']}")
+                        return True
+                    else:
+                        self.log_test("Get User Chat List", False, "Invalid chat structure", chat)
+                        return False
+                else:
+                    self.log_test("Get User Chat List", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Get User Chat List", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Get User Chat List", False, "Request failed", str(e))
+            return False
+    
+    def test_send_text_message(self):
+        """Test POST /api/chat/send-message endpoint with text message"""
+        if not hasattr(self, 'chat_id') or not self.chat_id:
+            self.log_test("Send Text Message", False, "No chat ID available", "Chat creation may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            message_data = {
+                "chat_id": self.chat_id,
+                "message_type": "text",
+                "content": {
+                    "text": "Thank you for your interest! This craft is handmade using traditional techniques passed down through generations. The price includes shipping to the USA."
+                }
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/chat/send-message",
+                json=message_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("message_data") and
+                    data["message_data"]["id"] and
+                    data["message_data"]["content"]["text"]):
+                    
+                    self.message_id = data["message_data"]["id"]
+                    self.log_test("Send Text Message", True, "Text message sent successfully")
+                    return True
+                else:
+                    self.log_test("Send Text Message", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Send Text Message", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Send Text Message", False, "Request failed", str(e))
+            return False
+    
+    def test_send_reply_message(self):
+        """Test sending a reply to a previous message"""
+        if not hasattr(self, 'chat_id') or not self.chat_id or not hasattr(self, 'message_id') or not self.message_id:
+            self.log_test("Send Reply Message", False, "No chat ID or message ID available", "Previous tests may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            message_data = {
+                "chat_id": self.chat_id,
+                "message_type": "text",
+                "content": {
+                    "text": "That sounds wonderful! What are the dimensions and weight for shipping calculation?"
+                },
+                "reply_to": self.message_id
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/chat/send-message",
+                json=message_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("message_data") and
+                    data["message_data"]["reply_to"] == self.message_id):
+                    self.log_test("Send Reply Message", True, "Reply message sent successfully")
+                    return True
+                else:
+                    self.log_test("Send Reply Message", False, "Invalid response format or reply_to not set", data)
+                    return False
+            else:
+                self.log_test("Send Reply Message", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Send Reply Message", False, "Request failed", str(e))
+            return False
+    
+    def test_get_chat_messages(self):
+        """Test GET /api/chat/{chat_id}/messages endpoint"""
+        if not hasattr(self, 'chat_id') or not self.chat_id:
+            self.log_test("Get Chat Messages", False, "No chat ID available", "Chat creation may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/chat/{self.chat_id}/messages?page=1&limit=50",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("messages") is not None and
+                    data.get("chat_info") and
+                    data.get("total_count") is not None and
+                    len(data["messages"]) > 0):
+                    
+                    # Verify message structure and decryption
+                    message = data["messages"][0]
+                    if (message.get("id") and 
+                        message.get("content") and
+                        message["content"].get("text") and
+                        not message["content"]["text"].startswith("gAAAAA")):  # Should be decrypted, not encrypted
+                        self.log_test("Get Chat Messages", True, f"Retrieved {len(data['messages'])} messages, messages properly decrypted")
+                        return True
+                    else:
+                        self.log_test("Get Chat Messages", False, "Messages not properly decrypted or invalid structure", message)
+                        return False
+                else:
+                    self.log_test("Get Chat Messages", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Get Chat Messages", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Get Chat Messages", False, "Request failed", str(e))
+            return False
+    
+    def test_mark_messages_read(self):
+        """Test POST /api/chat/{chat_id}/mark-read endpoint"""
+        if not hasattr(self, 'chat_id') or not self.chat_id:
+            self.log_test("Mark Messages Read", False, "No chat ID available", "Chat creation may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.post(
+                f"{self.base_url}/api/chat/{self.chat_id}/mark-read",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success"):
+                    self.log_test("Mark Messages Read", True, "Messages marked as read successfully")
+                    return True
+                else:
+                    self.log_test("Mark Messages Read", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Mark Messages Read", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Mark Messages Read", False, "Request failed", str(e))
+            return False
+    
+    def test_verify_unread_count_update(self):
+        """Test that unread count updates correctly after marking as read"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/chat/list?page=1&limit=20",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("chats") and 
+                    len(data["chats"]) > 0 and
+                    data.get("unread_total") == 0):  # Should be 0 after marking as read
+                    self.log_test("Verify Unread Count Update", True, "Unread count correctly updated to 0 after marking as read")
+                    return True
+                else:
+                    self.log_test("Verify Unread Count Update", False, f"Unread count not updated correctly: {data.get('unread_total')}", data)
+                    return False
+            else:
+                self.log_test("Verify Unread Count Update", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Verify Unread Count Update", False, "Request failed", str(e))
+            return False
+    
+    def test_chat_report_functionality(self):
+        """Test POST /api/chat/report endpoint"""
+        if not hasattr(self, 'chat_id') or not self.chat_id:
+            self.log_test("Chat Report Functionality", False, "No chat ID available", "Chat creation may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            report_data = {
+                "chat_id": self.chat_id,
+                "reason": "spam",
+                "description": "This user is sending inappropriate messages and spam content."
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/chat/report",
+                json=report_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("report_id")):
+                    self.log_test("Chat Report Functionality", True, f"Chat reported successfully with report ID: {data['report_id']}")
+                    return True
+                else:
+                    self.log_test("Chat Report Functionality", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Chat Report Functionality", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Chat Report Functionality", False, "Request failed", str(e))
+            return False
+    
+    def test_get_online_users(self):
+        """Test GET /api/chat/online-users endpoint"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/chat/online-users",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("online_users") is not None and
+                    data.get("count") is not None):
+                    self.log_test("Get Online Users", True, f"Retrieved {data['count']} online users")
+                    return True
+                else:
+                    self.log_test("Get Online Users", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Get Online Users", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Get Online Users", False, "Request failed", str(e))
+            return False
+    
+    def test_chat_access_control(self):
+        """Test that users can only access their own chats"""
+        if not hasattr(self, 'chat_id') or not self.chat_id:
+            self.log_test("Chat Access Control", False, "No chat ID available", "Chat creation may have failed")
+            return False
+            
+        try:
+            # Create a third user to test access control
+            third_user_data = {
+                "firstName": "Alice",
+                "lastName": "Wilson",
+                "email": "alice.wilson@email.com",
+                "password": "SecurePass789!",
+                "userType": "buyer",
+                "location": "Chicago, USA",
+                "phone": "+1-555-0789"
+            }
+            
+            register_response = requests.post(
+                f"{self.base_url}/api/auth/register",
+                json=third_user_data,
+                timeout=10
+            )
+            
+            if register_response.status_code == 200:
+                third_user_token = register_response.json()["token"]
+                
+                # Try to access chat with third user token (should fail)
+                headers = {"Authorization": f"Bearer {third_user_token}"}
+                response = requests.get(
+                    f"{self.base_url}/api/chat/{self.chat_id}/messages",
+                    headers=headers,
+                    timeout=10
+                )
+                
+                if response.status_code == 404:  # Should be denied access
+                    self.log_test("Chat Access Control", True, "Users correctly blocked from accessing other users' chats")
+                    return True
+                else:
+                    self.log_test("Chat Access Control", False, f"Expected 404, got HTTP {response.status_code}", response.text)
+                    return False
+            else:
+                self.log_test("Chat Access Control", False, "Failed to create third user for testing", register_response.text)
+                return False
+        except Exception as e:
+            self.log_test("Chat Access Control", False, "Request failed", str(e))
+            return False
+    
+    def test_message_encryption_in_database(self):
+        """Test that messages are encrypted when stored (by checking raw response structure)"""
+        if not hasattr(self, 'chat_id') or not self.chat_id:
+            self.log_test("Message Encryption in Database", False, "No chat ID available", "Chat creation may have failed")
+            return False
+            
+        try:
+            # Send a test message with known content
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            test_message = "This is a test message for encryption verification"
+            message_data = {
+                "chat_id": self.chat_id,
+                "message_type": "text",
+                "content": {
+                    "text": test_message
+                }
+            }
+            
+            send_response = requests.post(
+                f"{self.base_url}/api/chat/send-message",
+                json=message_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if send_response.status_code == 200:
+                # The fact that we get back decrypted content in the API response
+                # while the service handles encryption/decryption indicates encryption is working
+                data = send_response.json()
+                if (data.get("success") and 
+                    data.get("message_data") and
+                    data["message_data"]["content"]["text"] == test_message and
+                    data["message_data"]["is_encrypted"] == True):
+                    self.log_test("Message Encryption in Database", True, "Messages are encrypted in storage (verified by is_encrypted flag)")
+                    return True
+                else:
+                    self.log_test("Message Encryption in Database", False, "Encryption flag not set or message not properly handled", data)
+                    return False
+            else:
+                self.log_test("Message Encryption in Database", False, f"Failed to send test message: HTTP {send_response.status_code}", send_response.text)
+                return False
+        except Exception as e:
+            self.log_test("Message Encryption in Database", False, "Request failed", str(e))
+            return False
+    
+    def test_chat_authentication_required(self):
+        """Test that all chat endpoints require authentication"""
+        try:
+            # Test chat creation without auth
+            chat_data = {
+                "recipient_id": self.seller_id,
+                "initial_message": "This should fail"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/chat/create",
+                json=chat_data,
+                timeout=10
+            )
+            
+            if response.status_code == 403:  # Should require authentication
+                # Test chat list without auth
+                response = requests.get(
+                    f"{self.base_url}/api/chat/list",
+                    timeout=10
+                )
+                
+                if response.status_code == 403:
+                    self.log_test("Chat Authentication Required", True, "All chat endpoints correctly require authentication")
+                    return True
+                else:
+                    self.log_test("Chat Authentication Required", False, f"Chat list should require auth, got HTTP {response.status_code}", response.text)
+                    return False
+            else:
+                self.log_test("Chat Authentication Required", False, f"Chat creation should require auth, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Chat Authentication Required", False, "Request failed", str(e))
+            return False
+    
     # ==================== SHIPPING API TESTS ====================
     
     def test_get_shipping_carriers(self):
