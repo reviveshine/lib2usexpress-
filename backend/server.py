@@ -101,11 +101,13 @@ from routes.auth import router as auth_router
 from routes.users import router as users_router
 from routes.products import router as products_router
 from routes.shipping import router as shipping_router
+from routes.chat import router as chat_router
 
 app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(users_router, prefix="/api/users", tags=["Users"])
 app.include_router(products_router, prefix="/api/products", tags=["Products"])
 app.include_router(shipping_router, prefix="/api/shipping", tags=["Shipping"])
+app.include_router(chat_router, prefix="/api/chat", tags=["Chat"])
 
 if __name__ == "__main__":
     uvicorn.run(
