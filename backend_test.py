@@ -1002,7 +1002,7 @@ class BackendTester:
                 
                 response = requests.post(
                     f"{self.base_url}/api/shipping/estimate",
-                    json=estimate_data,
+                    data=estimate_data,  # Use form data
                     timeout=10
                 )
                 
