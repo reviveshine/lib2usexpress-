@@ -26,6 +26,9 @@ function App() {
             <Route path="/marketplace" element={<MarketplacePage />} />
             <Route path="/shipping" element={<ShippingPage />} />
             <Route path="/chat" element={<ChatPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/payment-success" element={<PaymentSuccessPage />} />
+            <Route path="/orders" element={<OrdersPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
