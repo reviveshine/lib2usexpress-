@@ -122,7 +122,9 @@ const DashboardPage = () => {
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
               <h3 style={{ color: '#1f2937' }}>My Products</h3>
-              <button className="btn-primary">Add New Product</button>
+              <Link to="/add-product" className="btn-primary" style={{ textDecoration: 'none' }}>
+                Add New Product
+              </Link>
             </div>
             
             <div style={{
@@ -136,7 +138,9 @@ const DashboardPage = () => {
               <p style={{ color: '#9ca3af', marginBottom: '2rem' }}>
                 Start by adding your first product to begin selling internationally.
               </p>
-              <button className="btn-primary">Create Your First Product</button>
+              <Link to="/add-product" className="btn-primary" style={{ textDecoration: 'none' }}>
+                Create Your First Product
+              </Link>
             </div>
           </div>
         );
