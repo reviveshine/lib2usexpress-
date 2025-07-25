@@ -72,6 +72,39 @@ const MarketplacePage = () => {
     }
   };
 
+  const handleAddToCart = (product) => {
+    if (!user) {
+      alert('Please login to add items to cart');
+      navigate('/login');
+      return;
+    }
+
+    if (user.userType !== 'buyer') {
+      alert('Only buyers can add items to cart');
+      return;
+    }
+
+    if (user.id === product.seller_id) {
+      alert('You cannot buy your own products!');
+      return;
+    }
+
+    // Transform product data for cart
+    const cartItem = {
+      id: product._id,
+      name: product.name,
+      price: product.price,
+      image_urls: product.images,
+      seller_id: product.seller_id,
+      seller_name: product.sellerName,
+      stock: product.stock,
+      category: product.category
+    };
+
+    addToCart(cartItem);
+    alert('Product added to cart!');
+  };
+
   const loadProducts = async () => {
     setLoading(true);
     try {
