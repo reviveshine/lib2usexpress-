@@ -368,15 +368,42 @@ const MarketplacePage = () => {
                       <span>👁️ {product.views} views</span>
                     </div>
                     
-                    {/* Contact Seller Button */}
-                    <div style={{ marginTop: '1rem' }}>
+                    {/* Action Buttons */}
+                    <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem' }}>
+                      {user && user.userType === 'buyer' && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToCart(product);
+                          }}
+                          style={{
+                            flex: '1',
+                            padding: '0.5rem',
+                            backgroundColor: '#16a34a',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '5px',
+                            fontSize: '0.8rem',
+                            cursor: 'pointer',
+                            transition: 'background-color 0.3s'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = '#15803d';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = '#16a34a';
+                          }}
+                        >
+                          🛒 Add to Cart
+                        </button>
+                      )}
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           contactSeller(product);
                         }}
                         style={{
-                          width: '100%',
+                          flex: '1',
                           padding: '0.5rem',
                           backgroundColor: '#dc2626',
                           color: 'white',
