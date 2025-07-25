@@ -332,6 +332,35 @@ const MarketplacePage = () => {
                       <span>Seller: {product.sellerName}</span>
                       <span>👁️ {product.views} views</span>
                     </div>
+                    
+                    {/* Contact Seller Button */}
+                    <div style={{ marginTop: '1rem' }}>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          contactSeller(product);
+                        }}
+                        style={{
+                          width: '100%',
+                          padding: '0.5rem',
+                          backgroundColor: '#dc2626',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '5px',
+                          fontSize: '0.8rem',
+                          cursor: 'pointer',
+                          transition: 'background-color 0.3s'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.backgroundColor = '#b91c1c';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.backgroundColor = '#dc2626';
+                        }}
+                      >
+                        💬 Contact Seller
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
