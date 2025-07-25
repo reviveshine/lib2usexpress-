@@ -24,6 +24,7 @@ const ShippingCalculator = ({ product, onShippingCalculated }) => {
   }, []);
   
   const loadStates = async () => {
+    setStatesLoading(true);
     try {
       console.log('Loading states from:', `${API_BASE}/api/shipping/zones`);
       const response = await axios.get(`${API_BASE}/api/shipping/zones`);
@@ -39,6 +40,8 @@ const ShippingCalculator = ({ product, onShippingCalculated }) => {
     } catch (error) {
       console.error('Failed to load states:', error);
       setError('Failed to load destination states. Please try again.');
+    } finally {
+      setStatesLoading(false);
     }
   };
   
