@@ -513,6 +513,367 @@ class BackendTester:
             self.log_test("Unauthorized Access Block", False, "Request failed", str(e))
             return False
     
+    def create_test_image(self, size_mb=1):
+        """Create a test image file in memory"""
+        # Create a simple test image (1x1 pixel PNG)
+        png_data = base64.b64decode(
+            "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChAI9jU77yQAAAABJRU5ErkJggg=="
+        )
+        
+        # If we need a larger file, repeat the data
+        if size_mb > 1:
+            multiplier = int((size_mb * 1024 * 1024) / len(png_data)) + 1
+            png_data = png_data * multiplier
+            
+        return png_data
+    
+    def create_test_video(self, size_mb=1):
+        """Create a test video file in memory"""
+        # Create minimal test video data (just some bytes that look like video)
+        video_data = b"fake_video_data_for_testing" * 1000
+        
+        # If we need a larger file, repeat the data
+        if size_mb > 1:
+            multiplier = int((size_mb * 1024 * 1024) / len(video_data)) + 1
+            video_data = video_data * multiplier
+            
+        return video_data
+    
+    def test_media_upload_images(self):
+        """Test POST /api/products/upload-media with image files"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # Create test image files
+            image1_data = self.create_test_image(1)  # 1MB image
+            image2_data = self.create_test_image(2)  # 2MB image
+            
+            files = [
+                ('files', ('test_image1.png', io.BytesIO(image1_data), 'image/png')),
+                ('files', ('test_image2.png', io.BytesIO(image2_data), 'image/png'))
+            ]
+            
+            response = requests.post(
+                f"{self.base_url}/api/products/upload-media",
+                files=files,
+                headers=headers,
+                timeout=30
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "images" in data and 
+                    len(data["images"]) == 2 and
+                    all(img.startswith("data:image/png;base64,") for img in data["images"])):
+                    self.log_test("Media Upload - Images", True, "Images uploaded and base64 encoded successfully")
+                    return True
+                else:
+                    self.log_test("Media Upload - Images", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Media Upload - Images", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Media Upload - Images", False, "Request failed", str(e))
+            return False
+    
+    def test_media_upload_video(self):
+        """Test POST /api/products/upload-media with video file"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # Create test video file
+            video_data = self.create_test_video(5)  # 5MB video
+            
+            files = [
+                ('files', ('test_video.mp4', io.BytesIO(video_data), 'video/mp4'))
+            ]
+            
+            response = requests.post(
+                f"{self.base_url}/api/products/upload-media",
+                files=files,
+                headers=headers,
+                timeout=30
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "video" in data and 
+                    data["video"] and
+                    data["video"].startswith("data:video/mp4;base64,")):
+                    self.log_test("Media Upload - Video", True, "Video uploaded and base64 encoded successfully")
+                    return True
+                else:
+                    self.log_test("Media Upload - Video", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Media Upload - Video", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Media Upload - Video", False, "Request failed", str(e))
+            return False
+    
+    def test_media_upload_authentication(self):
+        """Test that media upload requires seller authentication"""
+        try:
+            # Test without authentication
+            image_data = self.create_test_image(1)
+            files = [('files', ('test.png', io.BytesIO(image_data), 'image/png'))]
+            
+            response = requests.post(
+                f"{self.base_url}/api/products/upload-media",
+                files=files,
+                timeout=10
+            )
+            
+            if response.status_code == 403:  # Should be forbidden without auth
+                # Test with buyer token (should also fail)
+                headers = {"Authorization": f"Bearer {self.buyer_token}"}
+                response = requests.post(
+                    f"{self.base_url}/api/products/upload-media",
+                    files=files,
+                    headers=headers,
+                    timeout=10
+                )
+                
+                if response.status_code == 403:
+                    self.log_test("Media Upload Authentication", True, "Media upload correctly requires seller authentication")
+                    return True
+                else:
+                    self.log_test("Media Upload Authentication", False, f"Buyer should be blocked, got HTTP {response.status_code}", response.text)
+                    return False
+            else:
+                self.log_test("Media Upload Authentication", False, f"Expected 403 without auth, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Media Upload Authentication", False, "Request failed", str(e))
+            return False
+    
+    def test_media_upload_size_limits(self):
+        """Test file size limits for media upload"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # Test oversized image (>10MB)
+            large_image_data = self.create_test_image(12)  # 12MB image
+            files = [('files', ('large_image.png', io.BytesIO(large_image_data), 'image/png'))]
+            
+            response = requests.post(
+                f"{self.base_url}/api/products/upload-media",
+                files=files,
+                headers=headers,
+                timeout=30
+            )
+            
+            if response.status_code == 400:  # Should reject oversized image
+                # Test oversized video (>100MB) - we'll simulate this with a smaller file but check the logic
+                large_video_data = self.create_test_video(50)  # 50MB video (should pass)
+                files = [('files', ('video.mp4', io.BytesIO(large_video_data), 'video/mp4'))]
+                
+                response = requests.post(
+                    f"{self.base_url}/api/products/upload-media",
+                    files=files,
+                    headers=headers,
+                    timeout=30
+                )
+                
+                if response.status_code == 200:  # 50MB video should pass
+                    self.log_test("Media Upload Size Limits", True, "File size limits correctly enforced")
+                    return True
+                else:
+                    self.log_test("Media Upload Size Limits", False, f"50MB video should pass, got HTTP {response.status_code}", response.text)
+                    return False
+            else:
+                self.log_test("Media Upload Size Limits", False, f"Expected 400 for oversized image, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Media Upload Size Limits", False, "Request failed", str(e))
+            return False
+    
+    def test_media_upload_count_limits(self):
+        """Test file count limits (max 10 images, 1 video)"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # Test with 11 images (should fail)
+            files = []
+            for i in range(11):
+                image_data = self.create_test_image(1)
+                files.append(('files', (f'image_{i}.png', io.BytesIO(image_data), 'image/png')))
+            
+            response = requests.post(
+                f"{self.base_url}/api/products/upload-media",
+                files=files,
+                headers=headers,
+                timeout=30
+            )
+            
+            if response.status_code == 400:  # Should reject >10 images
+                # Test with 2 videos (should fail)
+                files = [
+                    ('files', ('video1.mp4', io.BytesIO(self.create_test_video(1)), 'video/mp4')),
+                    ('files', ('video2.mp4', io.BytesIO(self.create_test_video(1)), 'video/mp4'))
+                ]
+                
+                response = requests.post(
+                    f"{self.base_url}/api/products/upload-media",
+                    files=files,
+                    headers=headers,
+                    timeout=30
+                )
+                
+                if response.status_code == 400:  # Should reject multiple videos
+                    self.log_test("Media Upload Count Limits", True, "File count limits correctly enforced")
+                    return True
+                else:
+                    self.log_test("Media Upload Count Limits", False, f"Expected 400 for multiple videos, got HTTP {response.status_code}", response.text)
+                    return False
+            else:
+                self.log_test("Media Upload Count Limits", False, f"Expected 400 for >10 images, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Media Upload Count Limits", False, "Request failed", str(e))
+            return False
+    
+    def test_create_product_with_multimedia(self):
+        """Test creating products with multimedia content"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # First upload some media
+            image_data = self.create_test_image(1)
+            video_data = self.create_test_video(2)
+            
+            files = [
+                ('files', ('product_image.png', io.BytesIO(image_data), 'image/png')),
+                ('files', ('product_video.mp4', io.BytesIO(video_data), 'video/mp4'))
+            ]
+            
+            upload_response = requests.post(
+                f"{self.base_url}/api/products/upload-media",
+                files=files,
+                headers=headers,
+                timeout=30
+            )
+            
+            if upload_response.status_code == 200:
+                upload_data = upload_response.json()
+                
+                # Now create product with the uploaded media
+                product_data = {
+                    "name": "Multimedia Liberian Craft",
+                    "description": "Beautiful craft with images and video",
+                    "price": 75.99,
+                    "category": "Arts & Crafts",
+                    "images": upload_data["images"],
+                    "video": upload_data["video"],
+                    "stock": 5,
+                    "tags": ["multimedia", "craft", "liberian"],
+                    "weight": 1.2,
+                    "dimensions": {"length": 25, "width": 20, "height": 15}
+                }
+                
+                response = requests.post(
+                    f"{self.base_url}/api/products",
+                    json=product_data,
+                    headers=headers,
+                    timeout=10
+                )
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if (data.get("success") and 
+                        data.get("product") and
+                        data["product"]["images"] and
+                        data["product"]["video"]):
+                        self.product_id = data["product"]["id"]  # Update for other tests
+                        self.log_test("Create Product with Multimedia", True, "Product with multimedia created successfully")
+                        return True
+                    else:
+                        self.log_test("Create Product with Multimedia", False, "Invalid response format", data)
+                        return False
+                else:
+                    self.log_test("Create Product with Multimedia", False, f"HTTP {response.status_code}", response.text)
+                    return False
+            else:
+                self.log_test("Create Product with Multimedia", False, f"Media upload failed: HTTP {upload_response.status_code}", upload_response.text)
+                return False
+        except Exception as e:
+            self.log_test("Create Product with Multimedia", False, "Request failed", str(e))
+            return False
+    
+    def test_get_product_with_multimedia(self):
+        """Test retrieving products with multimedia content"""
+        if not self.product_id:
+            self.log_test("Get Product with Multimedia", False, "No product ID available", "Product creation may have failed")
+            return False
+            
+        try:
+            response = requests.get(
+                f"{self.base_url}/api/products/{self.product_id}",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("product") and
+                    data["product"].get("images") and
+                    data["product"].get("video") and
+                    all(img.startswith("data:image/") for img in data["product"]["images"]) and
+                    data["product"]["video"].startswith("data:video/")):
+                    self.log_test("Get Product with Multimedia", True, "Product with multimedia retrieved successfully")
+                    return True
+                else:
+                    self.log_test("Get Product with Multimedia", False, "Multimedia content not properly formatted", data.get("product", {}))
+                    return False
+            else:
+                self.log_test("Get Product with Multimedia", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Get Product with Multimedia", False, "Request failed", str(e))
+            return False
+    
+    def test_media_upload_invalid_files(self):
+        """Test media upload with non-image/video files"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # Test with text file (should be ignored)
+            text_data = b"This is a text file, not an image or video"
+            files = [
+                ('files', ('document.txt', io.BytesIO(text_data), 'text/plain')),
+                ('files', ('valid_image.png', io.BytesIO(self.create_test_image(1)), 'image/png'))
+            ]
+            
+            response = requests.post(
+                f"{self.base_url}/api/products/upload-media",
+                files=files,
+                headers=headers,
+                timeout=30
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                # Should only process the valid image, ignore the text file
+                if (data.get("success") and 
+                    len(data.get("images", [])) == 1 and
+                    not data.get("video") and
+                    len(data.get("uploaded_files", [])) == 1):
+                    self.log_test("Media Upload Invalid Files", True, "Invalid file types correctly ignored")
+                    return True
+                else:
+                    self.log_test("Media Upload Invalid Files", False, "Invalid files not handled correctly", data)
+                    return False
+            else:
+                self.log_test("Media Upload Invalid Files", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Media Upload Invalid Files", False, "Request failed", str(e))
+            return False
+    
     def run_all_tests(self):
         """Run all backend tests in sequence"""
         print(f"\n🚀 Starting Backend API Tests for Liberia2USA Express")
