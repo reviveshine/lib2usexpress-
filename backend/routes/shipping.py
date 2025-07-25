@@ -32,21 +32,21 @@ async def get_shipping_rates(
 ):
     """Get shipping rates from all carriers"""
     
+    # Validate that origin is in Liberia
+    if rate_request.origin.country.upper() != "LR":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Origin must be in Liberia (LR)"
+        )
+    
+    # Validate that destination is in USA
+    if rate_request.destination.country.upper() != "US":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Destination must be in USA (US)"
+        )
+    
     try:
-        # Validate that origin is in Liberia
-        if rate_request.origin.country.upper() != "LR":
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Origin must be in Liberia (LR)"
-            )
-        
-        # Validate that destination is in USA
-        if rate_request.destination.country.upper() != "US":
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Destination must be in USA (US)"
-            )
-        
         # Get rates from shipping manager
         rates_response = await shipping_manager.get_shipping_rates(rate_request)
         
