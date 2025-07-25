@@ -1,254 +1,352 @@
 [
   {
     "test": "Health Check",
-    "success": true,
-    "message": "API is running and database connected",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:28.678413"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:49.808191"
   },
   {
     "test": "Buyer Registration",
     "success": false,
-    "message": "HTTP 400",
-    "details": "{\"detail\":\"Email already registered\"}",
-    "timestamp": "2025-07-25T08:40:28.734757"
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:49.828883"
   },
   {
     "test": "Seller Registration",
     "success": false,
-    "message": "HTTP 400",
-    "details": "{\"detail\":\"Email already registered\"}",
-    "timestamp": "2025-07-25T08:40:28.739047"
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:49.848000"
   },
   {
     "test": "Location Validation",
-    "success": true,
-    "message": "Location validation working - buyer with Liberia location rejected",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:28.744429"
+    "success": false,
+    "message": "Expected validation error, got HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:49.864470"
   },
   {
     "test": "Buyer Login",
-    "success": true,
-    "message": "Buyer login successful",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.012030"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:49.884335"
   },
   {
     "test": "Seller Login",
-    "success": true,
-    "message": "Seller login successful",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.253145"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:49.901584"
   },
   {
     "test": "Auth Me Endpoint",
-    "success": true,
-    "message": "User info retrieved successfully",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.257311"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:49.918426"
   },
   {
     "test": "Get User Profile",
-    "success": true,
-    "message": "User profile retrieved successfully",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.260998"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:49.936037"
   },
   {
     "test": "Update User Profile",
-    "success": true,
-    "message": "User profile updated successfully",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.266011"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:49.953365"
   },
   {
     "test": "Get Sellers",
-    "success": true,
-    "message": "Retrieved 0 sellers",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.268782"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:49.971558"
   },
   {
     "test": "Create Product",
-    "success": true,
-    "message": "Product created successfully",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.274205"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:49.995343"
   },
   {
     "test": "Get Products",
-    "success": true,
-    "message": "Retrieved 8 products with pagination",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.409205"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.013803"
   },
   {
     "test": "Get Products with Filters",
-    "success": true,
-    "message": "Products filtered successfully",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.417909"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.030019"
   },
   {
     "test": "Get Single Product",
-    "success": true,
-    "message": "Product retrieved successfully",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.422956"
+    "success": false,
+    "message": "No product ID available",
+    "details": "Product creation may have failed",
+    "timestamp": "2025-07-25T12:08:50.030354"
   },
   {
     "test": "Get Seller Products",
-    "success": true,
-    "message": "Retrieved 8 seller products",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.547666"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.048895"
   },
   {
     "test": "Buyer Product Creation Block",
-    "success": true,
-    "message": "Buyers correctly blocked from creating products",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.554137"
+    "success": false,
+    "message": "Expected 403, got HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.063672"
   },
   {
     "test": "Unauthorized Access Block",
-    "success": true,
-    "message": "Protected endpoints correctly require authentication",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.555940"
+    "success": false,
+    "message": "Expected 403, got HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.079280"
   },
   {
     "test": "Media Upload - Images",
-    "success": true,
-    "message": "Images uploaded and base64 encoded successfully",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.624588"
+    "success": false,
+    "message": "Request failed",
+    "details": "HTTPSConnectionPool(host='219ae93f-f1be-4022-b811-2f547c40bc7a.preview.emergentagent.com', port=443): Max retries exceeded with url: /api/products/upload-media (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:2437)')))",
+    "timestamp": "2025-07-25T12:08:50.099910"
   },
   {
     "test": "Media Upload - Video",
-    "success": true,
-    "message": "Video uploaded and base64 encoded successfully",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.750755"
+    "success": false,
+    "message": "Request failed",
+    "details": "HTTPSConnectionPool(host='219ae93f-f1be-4022-b811-2f547c40bc7a.preview.emergentagent.com', port=443): Max retries exceeded with url: /api/products/upload-media (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:2437)')))",
+    "timestamp": "2025-07-25T12:08:50.127607"
   },
   {
     "test": "Media Upload Authentication",
-    "success": true,
-    "message": "Media upload correctly requires seller authentication",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:29.758976"
+    "success": false,
+    "message": "Expected 403 without auth, got HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.144944"
   },
   {
     "test": "Media Upload Size Limits",
-    "success": true,
-    "message": "File size limits correctly enforced",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.087183"
+    "success": false,
+    "message": "Request failed",
+    "details": "HTTPSConnectionPool(host='219ae93f-f1be-4022-b811-2f547c40bc7a.preview.emergentagent.com', port=443): Max retries exceeded with url: /api/products/upload-media (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:2437)')))",
+    "timestamp": "2025-07-25T12:08:50.174807"
   },
   {
     "test": "Media Upload Count Limits",
-    "success": true,
-    "message": "File count limits correctly enforced",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.106283"
+    "success": false,
+    "message": "Expected 400 for >10 images, got HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.189603"
   },
   {
     "test": "Create Product with Multimedia",
-    "success": true,
-    "message": "Product with multimedia created successfully",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.218816"
+    "success": false,
+    "message": "Request failed",
+    "details": "HTTPSConnectionPool(host='219ae93f-f1be-4022-b811-2f547c40bc7a.preview.emergentagent.com', port=443): Max retries exceeded with url: /api/products/upload-media (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:2437)')))",
+    "timestamp": "2025-07-25T12:08:50.214315"
   },
   {
     "test": "Get Product with Multimedia",
-    "success": true,
-    "message": "Product with multimedia retrieved successfully",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.255598"
+    "success": false,
+    "message": "No product ID available",
+    "details": "Product creation may have failed",
+    "timestamp": "2025-07-25T12:08:50.214367"
   },
   {
     "test": "Media Upload Invalid Files",
-    "success": true,
-    "message": "Invalid file types correctly ignored",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.259690"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.237124"
   },
   {
     "test": "Get Shipping Carriers",
-    "success": true,
-    "message": "All 4 carriers (DHL, FedEx, UPS, Aramex) returned with service details",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.261604"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.254265"
   },
   {
     "test": "Get Shipping Zones",
-    "success": true,
-    "message": "Shipping zones returned with Liberia origins and all US states",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.263479"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.272064"
   },
   {
     "test": "Shipping Estimate (No Auth)",
-    "success": true,
-    "message": "Got 11 shipping estimates with customs duties included",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.265950"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.289150"
   },
   {
     "test": "Shipping Estimate Different States",
-    "success": true,
-    "message": "Successfully got estimates for 4 different US states",
+    "success": false,
+    "message": "Failed to get estimates for all states",
     "details": null,
-    "timestamp": "2025-07-25T08:40:31.279781"
+    "timestamp": "2025-07-25T12:08:50.310075"
   },
   {
     "test": "Calculate Customs Duties",
-    "success": true,
-    "message": "Customs duties calculated: $45.5 total charges",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.282089"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.323782"
   },
   {
     "test": "Customs Calculation Auth Required",
-    "success": true,
-    "message": "Customs calculation correctly requires authentication",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.283865"
+    "success": false,
+    "message": "Expected 403, got HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.339340"
   },
   {
     "test": "Shipping Rates Full Request",
-    "success": true,
-    "message": "Got 11 rates from all 4 carriers (DHL, FedEx, UPS, Aramex)",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.287709"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.356336"
   },
   {
     "test": "Shipping Rates Multiple Packages",
-    "success": true,
-    "message": "Rates calculated correctly for 3 packages (total weight: 4.5kg)",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.291350"
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.372669"
   },
   {
     "test": "Shipping Rates Origin Validation",
-    "success": true,
-    "message": "Non-Liberia origins correctly rejected",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.293426"
+    "success": false,
+    "message": "Expected 400 for non-Liberia origin, got HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.388061"
   },
   {
     "test": "Shipping Rates Destination Validation",
-    "success": true,
-    "message": "Non-USA destinations correctly rejected",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.295468"
+    "success": false,
+    "message": "Expected 400 for non-USA destination, got HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.401416"
   },
   {
     "test": "Shipping Rates Auth Required",
-    "success": true,
-    "message": "Shipping rates correctly require authentication",
-    "details": null,
-    "timestamp": "2025-07-25T08:40:31.297314"
+    "success": false,
+    "message": "Expected 403, got HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.429886"
+  },
+  {
+    "test": "Create Chat Between Users",
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.444565"
+  },
+  {
+    "test": "Create Chat Without Product",
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.462119"
+  },
+  {
+    "test": "Create Duplicate Chat",
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.480822"
+  },
+  {
+    "test": "Get User Chat List",
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.498238"
+  },
+  {
+    "test": "Send Text Message",
+    "success": false,
+    "message": "No chat ID available",
+    "details": "Chat creation may have failed",
+    "timestamp": "2025-07-25T12:08:50.498625"
+  },
+  {
+    "test": "Send Reply Message",
+    "success": false,
+    "message": "No chat ID or message ID available",
+    "details": "Previous tests may have failed",
+    "timestamp": "2025-07-25T12:08:50.498642"
+  },
+  {
+    "test": "Get Chat Messages",
+    "success": false,
+    "message": "No chat ID available",
+    "details": "Chat creation may have failed",
+    "timestamp": "2025-07-25T12:08:50.498651"
+  },
+  {
+    "test": "Mark Messages Read",
+    "success": false,
+    "message": "No chat ID available",
+    "details": "Chat creation may have failed",
+    "timestamp": "2025-07-25T12:08:50.498659"
+  },
+  {
+    "test": "Verify Unread Count Update",
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.513246"
+  },
+  {
+    "test": "Chat Report Functionality",
+    "success": false,
+    "message": "No chat ID available",
+    "details": "Chat creation may have failed",
+    "timestamp": "2025-07-25T12:08:50.513579"
+  },
+  {
+    "test": "Get Online Users",
+    "success": false,
+    "message": "HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.529084"
+  },
+  {
+    "test": "Chat Access Control",
+    "success": false,
+    "message": "No chat ID available",
+    "details": "Chat creation may have failed",
+    "timestamp": "2025-07-25T12:08:50.529401"
+  },
+  {
+    "test": "Message Encryption in Database",
+    "success": false,
+    "message": "No chat ID available",
+    "details": "Chat creation may have failed",
+    "timestamp": "2025-07-25T12:08:50.529418"
+  },
+  {
+    "test": "Chat Authentication Required",
+    "success": false,
+    "message": "Chat creation should require auth, got HTTP 502",
+    "details": "",
+    "timestamp": "2025-07-25T12:08:50.541982"
   }
 ]
