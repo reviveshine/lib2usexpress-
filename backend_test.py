@@ -25,6 +25,8 @@ class BackendTester:
         self.product_id = None
         self.chat_id = None
         self.message_id = None
+        self.checkout_session_id = None
+        self.package_session_id = None
         self.test_results = []
     
     def _set_buyer_id(self):
