@@ -21,6 +21,55 @@ const MarketplacePage = () => {
     checkAuthStatus();
   }, [currentPage, filters]);
 
+  const checkAuthStatus = () => {
+    const token = localStorage.getItem('auth_token');
+    const userData = localStorage.getItem('user_data');
+    
+    if (token && userData) {
+      try {
+        const parsedUser = JSON.parse(userData);
+        setUser(parsedUser);
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+      }
+    }
+  };
+
+  const contactSeller = async (product) => {
+    if (!user) {
+      alert('Please login to contact sellers');
+      navigate('/login');
+      return;
+    }
+
+    if (user.id === product.seller_id) {
+      alert('You cannot contact yourself!');
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('auth_token');
+      const response = await axios.post(
+        `${API_BASE}/api/chat/create`,
+        {
+          recipient_id: product.seller_id,
+          product_id: product.id,
+          initial_message: `Hi! I'm interested in your product: ${product.name}`
+        },
+        {
+          headers: { 'Authorization': `Bearer ${token}` }
+        }
+      );
+
+      if (response.data.success) {
+        navigate('/chat');
+      }
+    } catch (error) {
+      console.error('Error creating chat:', error);
+      alert('Failed to start conversation. Please try again.');
+    }
+  };
+
   const loadProducts = async () => {
     setLoading(true);
     try {
