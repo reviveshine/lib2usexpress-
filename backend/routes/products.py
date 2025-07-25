@@ -33,7 +33,7 @@ async def create_product(
         "price": product_data.price,
         "category": product_data.category,
         "images": product_data.images,
-        "video_url": product_data.video_url,
+        "video": product_data.video,
         "stock": product_data.stock,
         "tags": product_data.tags,
         "weight": product_data.weight,
