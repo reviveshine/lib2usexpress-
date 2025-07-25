@@ -2449,7 +2449,19 @@ class BackendTester:
             self.test_get_online_users,
             self.test_chat_access_control,
             self.test_message_encryption_in_database,
-            self.test_chat_authentication_required
+            self.test_chat_authentication_required,
+            # New payment API tests
+            self.test_get_payment_packages,
+            self.test_calculate_order_total,
+            self.test_calculate_total_requires_auth,
+            self.test_create_checkout_session,
+            self.test_create_package_checkout,
+            self.test_create_package_checkout_invalid_package,
+            self.test_check_payment_status,
+            self.test_get_user_transactions,
+            self.test_transactions_require_auth,
+            self.test_payment_status_access_control,
+            self.test_checkout_requires_auth
         ]
         
         passed = 0
