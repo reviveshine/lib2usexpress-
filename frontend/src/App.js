@@ -10,6 +10,7 @@ import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import AddProductPage from './pages/AddProductPage';
 import ShippingPage from './pages/ShippingPage';
+import ChatPage from './pages/ChatPage';
 
 function App() {
   return (
