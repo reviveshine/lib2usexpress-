@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Test</title>
+</head>
+<body>
+    <h1>Shopping Cart Test</h1>
+    
+    <div id="cart-info">
+        <p>Cart Items: <span id="cart-count">0</span></p>
+        <button onclick="testAddToCart()">Add Test Product</button>
+        <button onclick="viewCart()">View Cart</button>
+        <button onclick="clearCart()">Clear Cart</button>
+    </div>
+    
+    <div id="cart-contents"></div>
+    
+    <script>
+        // Simulate cart functionality
+        function testAddToCart() {
+            const testProduct = {
+                id: 'test-product-1',
+                name: 'Test Product',
+                price: 25.99,
+                seller_id: 'seller123',
+                seller_name: 'Test Seller',
+                image_urls: ['https://via.placeholder.com/150'],
+                stock: 10,
+                category: 'test',
+                quantity: 1
+            };
+            
+            console.log('🛒 Adding test product to cart:', testProduct);
+            
+            // Get current cart
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            console.log('🛒 Current cart:', cart);
+            
+            // Check if item exists
+            const existingItem = cart.find(item => item.id === testProduct.id);
+            
+            if (existingItem) {
+                // Update quantity
+                cart = cart.map(item =>
+                    item.id === testProduct.id
+                        ? { ...item, quantity: item.quantity + 1 }
+                        : item
+                );
+                console.log('🛒 Updated existing item');
+            } else {
+                // Add new item
+                cart.push(testProduct);
+                console.log('🛒 Added new item');
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            console.log('🛒 Cart saved to localStorage');
+            
+            // Update display
+            updateCartDisplay();
+            
+            alert('Product added to cart! Check console for details.');
+        }
+        
+        function viewCart() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            console.log('🛒 Current cart contents:', cart);
+            
+            const cartContents = document.getElementById('cart-contents');
+            cartContents.innerHTML = '<h3>Cart Contents:</h3>';
+            
+            if (cart.length === 0) {
+                cartContents.innerHTML += '<p>Cart is empty</p>';
+            } else {
+                cart.forEach(item => {
+                    cartContents.innerHTML += `
+                        <div style="border: 1px solid #ccc; padding: 10px; margin: 5px;">
+                            <h4>${item.name}</h4>
+                            <p>Price: $${item.price}</p>
+                            <p>Quantity: ${item.quantity}</p>
+                            <p>Seller: ${item.seller_name}</p>
+                        </div>
+                    `;
+                });
+            }
+        }
+        
+        function clearCart() {
+            localStorage.removeItem('cart');
+            updateCartDisplay();
+            document.getElementById('cart-contents').innerHTML = '';
+            console.log('🛒 Cart cleared');
+            alert('Cart cleared!');
+        }
+        
+        function updateCartDisplay() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        }
+        
+        // Initialize display
+        updateCartDisplay();
+        
+        // Test on page load
+        console.log('🛒 Cart test page loaded');
+        console.log('🛒 Current localStorage cart:', localStorage.getItem('cart'));
+    </script>
+</body>
+</html>
