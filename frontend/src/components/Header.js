@@ -46,9 +46,9 @@ const Header = () => {
                 <Link to="/dashboard">Dashboard</Link>
               )}
               {user.userType === 'buyer' && (
-                <div style={{ position: 'relative', display: 'inline-block' }}>
+                <div className="cart-dropdown-container" style={{ position: 'relative', display: 'inline-block' }}>
                   <button
-                    onClick={() => setIsCartOpen(true)}
+                    onClick={() => setIsCartOpen(!isCartOpen)}
                     className="btn-secondary"
                     style={{ cursor: 'pointer', position: 'relative' }}
                   >
