@@ -250,7 +250,9 @@ export const useShoppingCart = () => {
   };
 
   const getTotalItems = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0);
+    const total = cartItems.reduce((total, item) => total + item.quantity, 0);
+    console.log('🛒 Cart total items:', total, 'from items:', cartItems);
+    return total;
   };
 
   const getTotalPrice = () => {
