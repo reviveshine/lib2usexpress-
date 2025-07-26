@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ShoppingCart, { useShoppingCart } from './ShoppingCart';
 import { useAuth } from '../AuthContext';
@@ -8,6 +8,18 @@ const Header = () => {
   const navigate = useNavigate();
   const { getTotalItems } = useShoppingCart();
   const { user, logout } = useAuth();
+
+  // Close cart when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isCartOpen && !event.target.closest('.cart-dropdown-container')) {
+        setIsCartOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isCartOpen]);
 
   const handleLogout = () => {
     logout();
