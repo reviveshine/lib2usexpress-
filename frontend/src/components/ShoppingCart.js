@@ -1,74 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 
 const ShoppingCart = ({ isOpen, onClose }) => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [cart, setCart] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (isOpen) {
-      loadCart();
-    }
-  }, [isOpen]);
-
-  const loadCart = () => {
-    const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
-    setCart(savedCart);
-  };
-
-  const updateCart = (newCart) => {
-    setCart(newCart);
-    localStorage.setItem('cart', JSON.stringify(newCart));
-  };
-
-  const removeFromCart = (productId) => {
-    const newCart = cart.filter(item => item.id !== productId);
-    updateCart(newCart);
-  };
-
-  const updateQuantity = (productId, newQuantity) => {
-    if (newQuantity <= 0) {
-      removeFromCart(productId);
-      return;
-    }
-
-    const newCart = cart.map(item => 
-      item.id === productId 
-        ? { ...item, quantity: newQuantity, total_price: item.price * newQuantity }
-        : item
-    );
-    updateCart(newCart);
-  };
-
-  const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-  };
-
-  const getTotalItems = () => {
-    return cart.reduce((total, item) => total + item.quantity, 0);
-  };
-
-  const handleCheckout = () => {
-    if (!user) {
-      navigate('/login');
-      return;
-    }
-
-    if (cart.length === 0) {
-      return;
-    }
-
-    // Navigate to checkout with cart data
-    navigate('/checkout', { state: { cart } });
-    onClose();
-  };
-
-  const clearCart = () => {
-    updateCart([]);
-  };
+  const { 
+    cartItems: cart, 
+    removeFromCart, 
+    updateQuantity, 
+    clearCart,
+    getTotalPrice,
+    getTotalItems
+  } = useShoppingCart();
 
   if (!isOpen) return null;
 
