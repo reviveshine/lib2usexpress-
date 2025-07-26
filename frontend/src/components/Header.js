@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import ShoppingCart, { useShoppingCart } from './ShoppingCart';
+import { useAuth } from '../AuthContext';
 
 const Header = () => {
-  const [user, setUser] = useState(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const navigate = useNavigate();
   const { getTotalItems } = useShoppingCart();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     checkAuthStatus();
