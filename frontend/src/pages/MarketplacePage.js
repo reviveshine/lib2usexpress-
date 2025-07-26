@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useShoppingCart } from '../components/ShoppingCart';
+import { useAuth } from '../AuthContext';
 
 const MarketplacePage = () => {
   const [products, setProducts] = useState([]);
