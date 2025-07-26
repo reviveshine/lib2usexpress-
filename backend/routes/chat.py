@@ -24,7 +24,7 @@ async def create_chat(
         database = get_database()
         
         # Verify recipient exists
-        recipient = await database.users.find_one({"_id": chat_data.recipient_id})
+        recipient = await database.users.find_one({"id": chat_data.recipient_id})
         if not recipient:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
