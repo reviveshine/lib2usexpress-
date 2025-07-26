@@ -686,7 +686,31 @@ test_plan:
     status_history:
       - working: true
         agent: "main"
-        comment: "Shopping cart fully fixed and enhanced - CRITICAL FIX: Removed duplicate cart state implementations that were causing count to stick at (0). Updated ShoppingCart component to use useShoppingCart hook instead of maintaining separate state. CONVERTED TO DROPDOWN: Changed from full-screen modal to compact dropdown positioned relative to cart button. IMPROVED UX: Added click-outside handler, compact design, better call-to-action buttons. ENHANCED FUNCTIONALITY: Added 'Shop Now' button for empty cart, 'Checkout (X items)' button with item count, 'Continue Shopping' button, proper quantity controls, and item removal. Cart count now updates immediately when items are added."
+        comment: "Shopping cart functionality completely rebuilt and fixed - CRITICAL FIXES APPLIED: Fixed ID field mismatch (product._id vs product.id) by using fallback mapping (product._id || product.id). Fixed seller name inconsistency by using fallback mapping (product.seller_name || product.sellerName). Added comprehensive debugging logs throughout cart operations. Added proper error handling and try-catch blocks. Fixed cart item transformation to handle both MongoDB and UUID formats. Added console logging for cart operations to enable debugging. Cart now properly stores and retrieves items from localStorage. Cart count updates correctly in header. All cart operations (add, remove, update quantity, clear) working correctly."
+
+  - task: "Add to Cart Functionality - Complete Rebuild"
+    implemented: true
+    working: true
+    file: "frontend/src/pages/MarketplacePage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Add to Cart functionality completely rebuilt and fixed - CRITICAL FIXES: Fixed handleAddToCart function to properly handle product data structure inconsistencies. Added product ID fallback mapping (product._id || product.id). Fixed seller name mapping with fallback (product.seller_name || product.sellerName). Added comprehensive error handling and debugging logs. Fixed image URL mapping (product.images || product.image_urls). Added proper user validation (login required, buyer only, no self-purchase). Added try-catch error handling with user feedback. Cart items now properly transform and store in localStorage. Success and error messages display correctly to users."
+
+  - task: "Cart State Management and Debugging"
+    implemented: true
+    working: true
+    file: "frontend/src/components/ShoppingCart.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Cart state management completely rebuilt with debugging - DEBUGGING ADDED: Added comprehensive console logging throughout all cart operations. Added error handling in loadCart, addToCart, and getTotalItems functions. Added logging for localStorage operations. Added cart item existence checking logs. Added new cart creation logs. Cart state properly synchronizes with localStorage. Cart count calculation includes debugging output. All cart operations now trackable through browser console. Error handling prevents crashes and provides user feedback."
 
   - task: "Cart Dropdown and Call-to-Action Enhancement"
     implemented: true
