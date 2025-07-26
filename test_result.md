@@ -686,7 +686,19 @@ test_plan:
     status_history:
       - working: true
         agent: "main"
-        comment: "Shopping cart functionality fully working - Fixed context mismatch between MarketplacePage and ShoppingCart components. Updated all components to use AuthContext consistently. Fixed product ID mapping between database (_id) and cart (id). Updated seller_name field mapping. Cart persistence in localStorage working correctly. Add to Cart buttons now functional with proper authentication validation."
+        comment: "Shopping cart fully fixed and enhanced - CRITICAL FIX: Removed duplicate cart state implementations that were causing count to stick at (0). Updated ShoppingCart component to use useShoppingCart hook instead of maintaining separate state. CONVERTED TO DROPDOWN: Changed from full-screen modal to compact dropdown positioned relative to cart button. IMPROVED UX: Added click-outside handler, compact design, better call-to-action buttons. ENHANCED FUNCTIONALITY: Added 'Shop Now' button for empty cart, 'Checkout (X items)' button with item count, 'Continue Shopping' button, proper quantity controls, and item removal. Cart count now updates immediately when items are added."
+
+  - task: "Cart Dropdown and Call-to-Action Enhancement"
+    implemented: true
+    working: true
+    file: "frontend/src/components/Header.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Cart dropdown functionality implemented successfully - Updated Header component to position cart dropdown correctly relative to cart button. Added click-outside handler to close dropdown when clicking elsewhere. Enhanced cart button with toggle functionality and proper positioning. Added cart emoji icon and improved visual design. Cart dropdown now appears as requested instead of full-screen modal."
 
   - task: "Enhanced User Authentication Context"
     implemented: true
