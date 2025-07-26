@@ -14,6 +14,21 @@ const ShoppingCart = ({ isOpen, onClose }) => {
     getTotalItems
   } = useShoppingCart();
 
+  const handleCheckout = () => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
+    if (cart.length === 0) {
+      return;
+    }
+
+    // Navigate to checkout with cart data
+    navigate('/checkout', { state: { cart } });
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   return (
