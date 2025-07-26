@@ -42,7 +42,7 @@ const MarketplacePage = () => {
         `${API_BASE}/api/chat/create`,
         {
           recipient_id: product.seller_id,
-          product_id: product.id,
+          product_id: product._id,
           initial_message: `Hi! I'm interested in your product: ${product.name}`
         },
         {
