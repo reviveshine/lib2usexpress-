@@ -181,26 +181,45 @@ export const useShoppingCart = () => {
   }, []);
 
   const loadCart = () => {
-    const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
-    setCartItems(savedCart);
+    try {
+      const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+      console.log('🛒 Loading cart from localStorage:', savedCart);
+      setCartItems(savedCart);
+    } catch (error) {
+      console.error('🛒 Error loading cart:', error);
+      setCartItems([]);
+    }
   };
 
   const addToCart = (product, quantity = 1) => {
-    const existingItem = cartItems.find(item => item.id === product.id);
-    
-    let newCart;
-    if (existingItem) {
-      newCart = cartItems.map(item =>
-        item.id === product.id
-          ? { ...item, quantity: item.quantity + quantity }
-          : item
-      );
-    } else {
-      newCart = [...cartItems, { ...product, quantity }];
-    }
+    try {
+      console.log('🛒 Adding to cart:', product);
+      console.log('🛒 Current cart items:', cartItems);
+      
+      const existingItem = cartItems.find(item => item.id === product.id);
+      console.log('🛒 Existing item found:', existingItem);
+      
+      let newCart;
+      if (existingItem) {
+        console.log('🛒 Updating existing item quantity');
+        newCart = cartItems.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      } else {
+        console.log('🛒 Adding new item to cart');
+        newCart = [...cartItems, { ...product, quantity }];
+      }
 
-    setCartItems(newCart);
-    localStorage.setItem('cart', JSON.stringify(newCart));
+      console.log('🛒 New cart:', newCart);
+      setCartItems(newCart);
+      localStorage.setItem('cart', JSON.stringify(newCart));
+      console.log('🛒 Cart saved to localStorage');
+    } catch (error) {
+      console.error('🛒 Error adding to cart:', error);
+      throw error;
+    }
   };
 
   const removeFromCart = (productId) => {
