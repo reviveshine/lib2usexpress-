@@ -83,7 +83,7 @@ const MarketplacePage = () => {
       price: product.price,
       image_urls: product.images,
       seller_id: product.seller_id,
-      seller_name: product.sellerName,
+      seller_name: product.seller_name,
       stock: product.stock,
       category: product.category
     };
