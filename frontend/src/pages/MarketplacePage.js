@@ -60,6 +60,8 @@ const MarketplacePage = () => {
   };
 
   const handleAddToCart = (product) => {
+    console.log('🛒 Add to Cart clicked for product:', product.name);
+    
     if (!user) {
       alert('Please login to add items to cart');
       navigate('/login');
@@ -76,20 +78,28 @@ const MarketplacePage = () => {
       return;
     }
 
-    // Transform product data for cart
+    // Transform product data for cart with proper field mapping
     const cartItem = {
-      id: product._id,
+      id: product._id || product.id, // Handle both MongoDB _id and UUID id
       name: product.name,
       price: product.price,
-      image_urls: product.images,
+      image_urls: product.images || product.image_urls || [],
       seller_id: product.seller_id,
-      seller_name: product.seller_name,
-      stock: product.stock,
-      category: product.category
+      seller_name: product.seller_name || product.sellerName || 'Unknown Seller',
+      stock: product.stock || 1,
+      category: product.category,
+      quantity: 1
     };
 
-    addToCart(cartItem);
-    alert('Product added to cart!');
+    console.log('🛒 Cart item to add:', cartItem);
+
+    try {
+      addToCart(cartItem);
+      alert('Product added to cart successfully!');
+    } catch (error) {
+      console.error('🛒 Error adding to cart:', error);
+      alert('Failed to add product to cart. Please try again.');
+    }
   };
 
   const loadProducts = async () => {
