@@ -33,7 +33,7 @@ async def create_chat(
         
         # Verify product exists if provided
         if chat_data.product_id:
-            product = await database.products.find_one({"_id": chat_data.product_id})
+            product = await database.products.find_one({"id": chat_data.product_id})
             if not product:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
