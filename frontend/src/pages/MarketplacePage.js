@@ -13,15 +13,14 @@ const MarketplacePage = () => {
     category: '',
     sort: 'newest'
   });
-  const [user, setUser] = useState(null);
 
   const API_BASE = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
   const navigate = useNavigate();
   const { addToCart } = useShoppingCart();
+  const { user } = useAuth();
 
   useEffect(() => {
     loadProducts();
-    checkAuthStatus();
   }, [currentPage, filters]);
 
   const checkAuthStatus = () => {
