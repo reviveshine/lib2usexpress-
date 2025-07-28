@@ -178,8 +178,12 @@ class PaymentTester:
             cart_items = [
                 {
                     "product_id": self.product_id,
+                    "product_name": self.product_name,
                     "quantity": 2,
-                    "price": 49.99
+                    "unit_price": self.product_price,
+                    "total_price": self.product_price * 2,
+                    "seller_id": self.seller_id,
+                    "seller_name": self.seller_name
                 }
             ]
             
