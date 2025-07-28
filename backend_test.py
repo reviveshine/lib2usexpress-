@@ -1421,6 +1421,256 @@ class BackendTester:
             self.log_test("Chat Authentication Required", False, "Request failed", str(e))
             return False
     
+    # ==================== ADMIN API TESTS ====================
+    
+    def test_admin_login(self):
+        """Test POST /api/admin/login - Admin authentication with default credentials"""
+        try:
+            login_data = {
+                "email": "admin@liberia2usa.com",
+                "password": "Admin@2025!"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/admin/login",
+                json=login_data,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("token") and
+                    data.get("admin") and
+                    data["admin"].get("role") and
+                    data["admin"].get("permissions")):
+                    
+                    self.admin_token = data["token"]
+                    self.log_test("Admin Login", True, f"Admin login successful - Role: {data['admin']['role']}")
+                    return True
+                else:
+                    self.log_test("Admin Login", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Admin Login", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Login", False, "Request failed", str(e))
+            return False
+    
+    def test_admin_me_endpoint(self):
+        """Test GET /api/admin/me - Get current admin information"""
+        if not hasattr(self, 'admin_token') or not self.admin_token:
+            self.log_test("Admin Me Endpoint", False, "No admin token available", "Admin login may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/admin/me",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("admin") and
+                    data["admin"].get("id") and
+                    data["admin"].get("email") and
+                    data["admin"].get("role") and
+                    data["admin"].get("permissions")):
+                    self.log_test("Admin Me Endpoint", True, f"Admin info retrieved - {data['admin']['firstName']} {data['admin']['lastName']}")
+                    return True
+                else:
+                    self.log_test("Admin Me Endpoint", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Admin Me Endpoint", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Me Endpoint", False, "Request failed", str(e))
+            return False
+    
+    def test_admin_dashboard_stats(self):
+        """Test GET /api/admin/dashboard/stats - Get dashboard statistics"""
+        if not hasattr(self, 'admin_token') or not self.admin_token:
+            self.log_test("Admin Dashboard Stats", False, "No admin token available", "Admin login may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/admin/dashboard/stats",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("stats") and
+                    "total_users" in data["stats"] and
+                    "total_products" in data["stats"] and
+                    "total_transactions" in data["stats"]):
+                    
+                    stats = data["stats"]
+                    self.log_test("Admin Dashboard Stats", True, 
+                                f"Stats retrieved - Users: {stats['total_users']}, Products: {stats['total_products']}, Transactions: {stats['total_transactions']}")
+                    return True
+                else:
+                    self.log_test("Admin Dashboard Stats", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Admin Dashboard Stats", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Dashboard Stats", False, "Request failed", str(e))
+            return False
+    
+    def test_admin_get_users(self):
+        """Test GET /api/admin/users - Get all users with pagination"""
+        if not hasattr(self, 'admin_token') or not self.admin_token:
+            self.log_test("Admin Get Users", False, "No admin token available", "Admin login may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/admin/users?page=1&limit=20",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "users" in data and
+                    "pagination" in data and
+                    data["pagination"].get("totalCount") is not None):
+                    
+                    user_count = len(data["users"])
+                    total_count = data["pagination"]["totalCount"]
+                    self.log_test("Admin Get Users", True, 
+                                f"Retrieved {user_count} users (Total: {total_count}) with pagination")
+                    return True
+                else:
+                    self.log_test("Admin Get Users", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Admin Get Users", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Get Users", False, "Request failed", str(e))
+            return False
+    
+    def test_admin_get_products(self):
+        """Test GET /api/admin/products - Get all products for admin review"""
+        if not hasattr(self, 'admin_token') or not self.admin_token:
+            self.log_test("Admin Get Products", False, "No admin token available", "Admin login may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/admin/products?page=1&limit=20",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "products" in data and
+                    "pagination" in data and
+                    data["pagination"].get("totalCount") is not None):
+                    
+                    product_count = len(data["products"])
+                    total_count = data["pagination"]["totalCount"]
+                    self.log_test("Admin Get Products", True, 
+                                f"Retrieved {product_count} products (Total: {total_count}) for admin review")
+                    return True
+                else:
+                    self.log_test("Admin Get Products", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Admin Get Products", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Get Products", False, "Request failed", str(e))
+            return False
+    
+    def test_admin_get_activities(self):
+        """Test GET /api/admin/activities - Get admin activity logs"""
+        if not hasattr(self, 'admin_token') or not self.admin_token:
+            self.log_test("Admin Get Activities", False, "No admin token available", "Admin login may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/admin/activities?page=1&limit=50",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "activities" in data and
+                    "pagination" in data and
+                    data["pagination"].get("totalCount") is not None):
+                    
+                    activity_count = len(data["activities"])
+                    total_count = data["pagination"]["totalCount"]
+                    self.log_test("Admin Get Activities", True, 
+                                f"Retrieved {activity_count} activities (Total: {total_count}) from admin logs")
+                    return True
+                else:
+                    self.log_test("Admin Get Activities", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Admin Get Activities", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Get Activities", False, "Request failed", str(e))
+            return False
+    
+    def test_admin_authentication_required(self):
+        """Test that admin endpoints require proper admin authentication"""
+        try:
+            # Test admin dashboard stats without authentication
+            response = requests.get(
+                f"{self.base_url}/api/admin/dashboard/stats",
+                timeout=10
+            )
+            
+            if response.status_code == 403:  # Should be forbidden without auth
+                # Test with regular user token (should also fail)
+                if hasattr(self, 'buyer_token') and self.buyer_token:
+                    headers = {"Authorization": f"Bearer {self.buyer_token}"}
+                    response = requests.get(
+                        f"{self.base_url}/api/admin/dashboard/stats",
+                        headers=headers,
+                        timeout=10
+                    )
+                    
+                    if response.status_code == 403:
+                        self.log_test("Admin Authentication Required", True, "Admin endpoints correctly require admin authentication")
+                        return True
+                    else:
+                        self.log_test("Admin Authentication Required", False, f"Regular user should be blocked, got HTTP {response.status_code}", response.text)
+                        return False
+                else:
+                    self.log_test("Admin Authentication Required", True, "Admin endpoints correctly require authentication")
+                    return True
+            else:
+                self.log_test("Admin Authentication Required", False, f"Expected 403 without auth, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Admin Authentication Required", False, "Request failed", str(e))
+            return False
+
     # ==================== PAYMENT API TESTS ====================
     
     def test_get_payment_packages(self):
