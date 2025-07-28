@@ -180,38 +180,6 @@ const DashboardPage = () => {
             </div>
           </div>
         );
-              </div>
-            </div>
-            
-            <div style={{
-              background: 'white',
-              padding: '2rem',
-              borderRadius: '10px',
-              boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
-            }}>
-              <h4 style={{ marginBottom: '1rem', color: '#1f2937' }}>Welcome to Your Seller Dashboard!</h4>
-              <p style={{ color: '#6b7280', lineHeight: '1.6' }}>
-                This is your central hub for managing your international shipping business from Liberia to the USA. 
-                Here you can manage your products, track orders, view analytics, and communicate with buyers.
-              </p>
-              <div style={{ marginTop: '1.5rem' }}>
-                <Link 
-                  to="/add-product"
-                  className="btn-primary"
-                  style={{ marginRight: '1rem', textDecoration: 'none' }}
-                >
-                  Add Your First Product
-                </Link>
-                <button 
-                  onClick={() => setActiveTab('shipping')} 
-                  className="btn-secondary"
-                >
-                  Setup Shipping
-                </button>
-              </div>
-            </div>
-          </div>
-        );
 
       case 'products':
         return (
