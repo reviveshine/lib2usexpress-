@@ -30,7 +30,18 @@ const LoginPage = () => {
       if (response.data.success) {
         localStorage.setItem('auth_token', response.data.token);
         localStorage.setItem('user_data', JSON.stringify(response.data.user));
-        navigate('/marketplace');
+        
+        // Role-based redirection
+        const userType = response.data.user.userType;
+        console.log('🔐 Login successful for userType:', userType);
+        
+        if (userType === 'seller') {
+          console.log('🏪 Redirecting seller to dashboard');
+          navigate('/dashboard');
+        } else {
+          console.log('🛍️ Redirecting buyer to marketplace');
+          navigate('/marketplace');
+        }
       } else {
         setError(response.data.message || 'Login failed');
       }
