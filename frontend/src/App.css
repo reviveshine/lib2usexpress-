@@ -237,6 +237,73 @@ body {
   }
 }
 
+/* Loading Spinner Animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Registration Form Enhancements */
+.registration-form-input:focus {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+}
+
+.registration-form-input:invalid {
+  border-color: #ef4444;
+}
+
+.registration-form-input:valid {
+  border-color: #10b981;
+}
+
+/* Enhanced Button Hover Effects */
+.registration-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+}
+
+.registration-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Password Strength Indicator */
+.password-strength-weak { border-color: #ef4444 !important; }
+.password-strength-medium { border-color: #f59e0b !important; }
+.password-strength-strong { border-color: #10b981 !important; }
+
+/* Form Field Focus Effects */
+.form-field-group {
+  position: relative;
+}
+
+.form-field-group input:focus + .field-icon,
+.form-field-group select:focus + .field-icon {
+  color: #dc2626;
+  transform: scale(1.1);
+}
+
+/* Error Message Animation */
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.error-message {
+  animation: errorShake 0.5s ease-in-out;
+}
+
+/* Success Message Animation */
+@keyframes successPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.success-message {
+  animation: successPulse 1s ease-in-out;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
