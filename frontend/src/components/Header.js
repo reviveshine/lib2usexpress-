@@ -27,7 +27,36 @@ const Header = () => {
   };
 
   return (
-    <header className="header">
+    <>
+      {/* Independence Day Banner */}
+      <div className="independence-banner">
+        <div className="independence-content">
+          <img 
+            src="https://images.pexels.com/photos/28209667/pexels-photo-28209667.jpeg?auto=compress&cs=tinysrgb&w=100&h=60&fit=crop" 
+            alt="Liberian Flag" 
+            className="liberian-flag"
+          />
+          <div className="independence-text">
+            <span className="happy-text">HAPPY INDEPENDENCE DAY</span>
+            <span className="liberia-text">🇱🇷 LIBERIA 🇱🇷</span>
+          </div>
+          <div className="sparkles">
+            <div className="sparkle sparkle-1">✨</div>
+            <div className="sparkle sparkle-2">⭐</div>
+            <div className="sparkle sparkle-3">💫</div>
+            <div className="sparkle sparkle-4">✨</div>
+            <div className="sparkle sparkle-5">⭐</div>
+            <div className="sparkle sparkle-6">💫</div>
+          </div>
+          <div className="smoke-effects">
+            <div className="smoke smoke-1"></div>
+            <div className="smoke smoke-2"></div>
+            <div className="smoke smoke-3"></div>
+          </div>
+        </div>
+      </div>
+      
+      <header className="header">
       <div className="container">
         <div className="logo">
           <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
