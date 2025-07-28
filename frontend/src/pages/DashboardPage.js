@@ -212,17 +212,26 @@ const DashboardPage = () => {
             </div>
           </div>
         );
-      
+
       case 'products':
         return (
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-              <h3 style={{ color: '#1f2937' }}>My Products</h3>
-              <Link to="/add-product" className="btn-primary" style={{ textDecoration: 'none' }}>
-                Add New Product
+              <h3 style={{ color: '#1f2937' }}>📦 My Products</h3>
+              <Link 
+                to="/add-product"
+                style={{
+                  backgroundColor: '#dc2626',
+                  color: 'white',
+                  padding: '10px 20px',
+                  borderRadius: '8px',
+                  textDecoration: 'none',
+                  fontWeight: 'bold'
+                }}
+              >
+                ➕ Add Product
               </Link>
             </div>
-            
             <div style={{
               background: 'white',
               padding: '2rem',
@@ -230,22 +239,32 @@ const DashboardPage = () => {
               boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
               textAlign: 'center'
             }}>
-              <h4 style={{ color: '#6b7280', marginBottom: '1rem' }}>No Products Yet</h4>
-              <p style={{ color: '#9ca3af', marginBottom: '2rem' }}>
-                Start by adding your first product to begin selling internationally.
+              <p style={{ fontSize: '1.1rem', color: '#6b7280' }}>
+                🏪 No products listed yet. Start by adding your first product!
               </p>
-              <Link to="/add-product" className="btn-primary" style={{ textDecoration: 'none' }}>
-                Create Your First Product
+              <Link 
+                to="/add-product"
+                style={{
+                  display: 'inline-block',
+                  marginTop: '1rem',
+                  backgroundColor: '#dc2626',
+                  color: 'white',
+                  padding: '12px 24px',
+                  borderRadius: '8px',
+                  textDecoration: 'none',
+                  fontWeight: 'bold'
+                }}
+              >
+                🚀 Add Your First Product
               </Link>
             </div>
           </div>
         );
-      
+
       case 'orders':
         return (
           <div>
-            <h3 style={{ marginBottom: '2rem', color: '#1f2937' }}>Order Management</h3>
-            
+            <h3 style={{ marginBottom: '2rem', color: '#1f2937' }}>📊 Recent Orders</h3>
             <div style={{
               background: 'white',
               padding: '2rem',
@@ -253,9 +272,8 @@ const DashboardPage = () => {
               boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
               textAlign: 'center'
             }}>
-              <h4 style={{ color: '#6b7280', marginBottom: '1rem' }}>No Orders Yet</h4>
-              <p style={{ color: '#9ca3af', marginBottom: '2rem' }}>
-                Orders from your customers will appear here once you start selling.
+              <p style={{ fontSize: '1.1rem', color: '#6b7280' }}>
+                📦 No orders yet. Once buyers purchase your products, they'll appear here.
               </p>
             </div>
           </div>
