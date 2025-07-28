@@ -114,6 +114,10 @@ class PaymentTester:
                 if data.get("success") and data.get("data") and len(data["data"]) > 0:
                     product = data["data"][0]
                     self.product_id = product["id"]
+                    self.product_name = product["name"]
+                    self.product_price = product["price"]
+                    self.seller_id = product["seller_id"]
+                    self.seller_name = product["seller_name"]
                     print(f"✅ Using existing product: {self.product_id}")
                     return True
                 else:
