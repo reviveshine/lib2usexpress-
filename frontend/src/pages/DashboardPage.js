@@ -289,7 +289,11 @@ const DashboardPage = () => {
         );
       
       default:
-        return null;
+        return (
+          <div>
+            <p>Select a tab to view content.</p>
+          </div>
+        );
     }
   };
 
