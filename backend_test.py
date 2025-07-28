@@ -13,7 +13,7 @@ import io
 from datetime import datetime
 
 # Get backend URL from frontend .env
-BACKEND_URL = "https://e6991e42-3bf6-4520-8a21-d5e1403c80dd.preview.emergentagent.com"
+BACKEND_URL = "https://79e557da-f3da-4f4e-8671-a735be62caea.preview.emergentagent.com"
 
 class BackendTester:
     def __init__(self):
