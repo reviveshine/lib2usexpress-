@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { AuthProvider } from './AuthContext';
+import { AdminAuthProvider } from './AdminAuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -15,31 +16,46 @@ import ChatPage from './pages/ChatPage';
 import CheckoutPage from './pages/CheckoutPage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import OrdersPage from './pages/OrdersPage';
+import AdminLoginPage from './pages/AdminLoginPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
 
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <div className="App">
-          <Header />
-          <main className="main-content">
+      <AdminAuthProvider>
+        <Router>
+          <div className="App">
             <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/marketplace" element={<MarketplacePage />} />
-              <Route path="/shipping" element={<ShippingPage />} />
-              <Route path="/chat" element={<ChatPage />} />
-              <Route path="/checkout" element={<CheckoutPage />} />
-              <Route path="/payment-success" element={<PaymentSuccessPage />} />
-              <Route path="/orders" element={<OrdersPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/add-product" element={<AddProductPage />} />
+              {/* Admin Routes - No Header/Footer */}
+              <Route path="/admin/login" element={<AdminLoginPage />} />
+              <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+              
+              {/* Regular Routes - With Header/Footer */}
+              <Route path="/*" element={
+                <>
+                  <Header />
+                  <main className="main-content">
+                    <Routes>
+                      <Route path="/" element={<HomePage />} />
+                      <Route path="/marketplace" element={<MarketplacePage />} />
+                      <Route path="/shipping" element={<ShippingPage />} />
+                      <Route path="/chat" element={<ChatPage />} />
+                      <Route path="/checkout" element={<CheckoutPage />} />
+                      <Route path="/payment-success" element={<PaymentSuccessPage />} />
+                      <Route path="/orders" element={<OrdersPage />} />
+                      <Route path="/login" element={<LoginPage />} />
+                      <Route path="/register" element={<RegisterPage />} />
+                      <Route path="/dashboard" element={<DashboardPage />} />
+                      <Route path="/add-product" element={<AddProductPage />} />
+                    </Routes>
+                  </main>
+                  <Footer />
+                </>
+              } />
             </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
+          </div>
+        </Router>
+      </AdminAuthProvider>
     </AuthProvider>
   );
 }
