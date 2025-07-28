@@ -54,6 +54,12 @@ const RegisterPage = () => {
     try {
       const API_BASE = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
       const { confirmPassword, ...registrationData } = formData;
+      
+      console.log('🔐 Attempting registration with data:', {
+        ...registrationData,
+        password: '[HIDDEN]'
+      });
+      
       const response = await axios.post(`${API_BASE}/api/auth/register`, registrationData);
       
       if (response.data.success) {
