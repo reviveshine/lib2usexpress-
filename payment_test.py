@@ -225,22 +225,27 @@ class PaymentTester:
                 "cart_items": [
                     {
                         "product_id": self.product_id,
+                        "product_name": self.product_name,
                         "quantity": 1,
-                        "price": 49.99
+                        "unit_price": self.product_price,
+                        "total_price": self.product_price,
+                        "seller_id": self.seller_id,
+                        "seller_name": self.seller_name
                     }
                 ],
                 "shipping_details": {
-                    "address": "123 Main St",
-                    "city": "New York",
-                    "state": "NY",
-                    "zip_code": "10001",
-                    "country": "USA"
+                    "carrier": "DHL",
+                    "service": "Express",
+                    "cost": 25.0,
+                    "estimated_days": 3
                 },
                 "buyer_info": {
                     "name": "John Smith",
                     "email": f"john.payment.test.{datetime.now().strftime('%Y%m%d%H%M%S')}@email.com",
                     "phone": "+1-555-0123"
-                }
+                },
+                "payment_method": "stripe",
+                "origin_url": "https://example.com/checkout"
             }
             
             response = requests.post(
