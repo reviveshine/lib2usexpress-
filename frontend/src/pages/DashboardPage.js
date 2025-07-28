@@ -1,43 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 
 const DashboardPage = () => {
-  const [user, setUser] = useState(null);
+  const { user, loading } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
   const navigate = useNavigate();
 
   useEffect(() => {
-    checkAuthStatus();
-  }, []);
-
-  const checkAuthStatus = () => {
-    const token = localStorage.getItem('auth_token');
-    const userData = localStorage.getItem('user_data');
-    
-    if (!token || !userData) {
-      navigate('/login');
-      return;
-    }
-
-    try {
-      const parsedUser = JSON.parse(userData);
-      setUser(parsedUser);
-      
-      // Only sellers can access dashboard
-      if (parsedUser.userType !== 'seller') {
-        navigate('/marketplace');
+    if (!loading) {
+      if (!user) {
+        console.log('🔐 No user found, redirecting to login');
+        navigate('/login');
+        return;
       }
-    } catch (error) {
-      console.error('Error parsing user data:', error);
-      navigate('/login');
-    }
-  };
 
-  if (!user) {
+      // Only sellers can access dashboard
+      if (user.userType !== 'seller') {
+        console.log('🚫 Non-seller trying to access dashboard, redirecting to marketplace');
+        navigate('/marketplace');
+        return;
+      }
+      
+      console.log('🏪 Seller dashboard access granted for:', user.firstName, user.lastName);
+    }
+  }, [user, loading, navigate]);
+
+  if (loading || !user) {
     return (
       <div className="page">
         <div className="container">
-          <p>Loading...</p>
+          <div style={{ textAlign: 'center', padding: '2rem' }}>
+            <div style={{ 
+              width: '50px', 
+              height: '50px', 
+              border: '4px solid #f3f3f3',
+              borderTop: '4px solid #dc2626',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite',
+              margin: '0 auto 1rem'
+            }}></div>
+            <p>Loading seller dashboard...</p>
+          </div>
         </div>
       </div>
     );
