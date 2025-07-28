@@ -386,7 +386,7 @@ class PaymentTester:
             return
         
         if not self.create_test_product():
-            print("❌ Failed to create test product. Some tests may fail.")
+            print("❌ Failed to get test product. Some tests may fail.")
         
         print("\n💳 Testing Payment API Endpoints...")
         print("-" * 40)
