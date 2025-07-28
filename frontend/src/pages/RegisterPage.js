@@ -72,11 +72,32 @@ const RegisterPage = () => {
           navigate('/marketplace');
         }
       } else {
-        setError(response.data.message || 'Registration failed');
+        // Handle validation errors
+        const errorMessage = response.data.message || 'Registration failed';
+        console.error('🔐 Registration error:', response.data);
+        setError(errorMessage);
       }
     } catch (error) {
-      console.error('Registration error:', error);
-      setError(error.response?.data?.message || 'Registration failed. Please try again.');
+      console.error('🔐 Registration request failed:', error);
+      
+      if (error.response) {
+        // Handle 422 validation errors specifically
+        if (error.response.status === 422) {
+          const validationErrors = error.response.data.detail;
+          if (Array.isArray(validationErrors) && validationErrors.length > 0) {
+            const firstError = validationErrors[0];
+            setError(`Validation error: ${firstError.msg} (${firstError.loc.join(' → ')})`);
+          } else {
+            setError('Please check your input fields and try again');
+          }
+        } else {
+          setError(error.response.data.message || error.response.data.detail || 'Registration failed');
+        }
+      } else if (error.request) {
+        setError('Network error: Please check your connection and try again');
+      } else {
+        setError('Registration failed. Please try again.');
+      }
     }
     
     setLoading(false);
