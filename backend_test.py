@@ -20,6 +20,7 @@ class BackendTester:
         self.base_url = BACKEND_URL
         self.buyer_token = None
         self.seller_token = None
+        self.admin_token = None
         self.buyer_id = None
         self.seller_id = None
         self.product_id = None
