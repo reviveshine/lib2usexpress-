@@ -22,27 +22,21 @@ const OrdersPage = () => {
 
   const fetchOrdersAndTransactions = async () => {
     try {
-      const [ordersResponse, transactionsResponse] = await Promise.all([
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/payments/orders`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        }),
-        fetch(`${process.env.REACT_APP_BACKEND_URL}/api/payments/transactions`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        })
-      ]);
+      // Note: Orders endpoint might not exist yet, so we'll primarily rely on transactions
+      const transactionsResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/payments/transactions`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        }
+      });
 
-      if (ordersResponse.ok && transactionsResponse.ok) {
-        const ordersData = await ordersResponse.json();
+      if (transactionsResponse.ok) {
         const transactionsData = await transactionsResponse.json();
         
-        setOrders(ordersData.orders || []);
+        // For now, we'll use transactions as orders since they contain similar information
+        setOrders([]); // Will implement later when orders endpoint is available
         setTransactions(transactionsData.transactions || []);
       } else {
-        setError('Failed to load orders and transactions');
+        setError('Failed to load transactions');
       }
     } catch (error) {
       setError('Error loading data');
