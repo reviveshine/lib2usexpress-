@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const RegisterPage = () => {
@@ -13,40 +13,78 @@ const RegisterPage = () => {
     location: '',
     phone: ''
   });
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    // Clear error when user starts typing
+    if (error) setError('');
+  };
+
+  const validateForm = () => {
+    // Enhanced client-side validation
+    const errors = [];
+    
+    // Name validation
+    if (formData.firstName.trim().length < 2) {
+      errors.push('First name must be at least 2 characters long');
+    }
+    if (formData.lastName.trim().length < 2) {
+      errors.push('Last name must be at least 2 characters long');
+    }
+    
+    // Email validation (basic pattern check)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      errors.push('Please enter a valid email address');
+    }
+    
+    // Password validation
+    if (formData.password.length < 6) {
+      errors.push('Password must be at least 6 characters long');
+    }
+    
+    if (formData.password !== formData.confirmPassword) {
+      errors.push('Passwords do not match');
+    }
+    
+    // Location validation based on user type
+    const location = formData.location.toLowerCase().trim();
+    
+    if (formData.userType === 'seller' && !location.includes('liberia')) {
+      errors.push('Sellers must be located in Liberia (e.g., "Monrovia, Liberia")');
+    }
+
+    if (formData.userType === 'buyer' && !(location.includes('usa') || location.includes('united states') || location.includes('america'))) {
+      errors.push('Buyers must be located in the USA (e.g., "New York, USA" or "California, United States")');
+    }
+    
+    // Phone validation (optional but if provided should be valid)
+    if (formData.phone && formData.phone.length < 10) {
+      errors.push('Please enter a valid phone number (at least 10 digits)');
+    }
+    
+    return errors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
+    setLoading(true);
 
-    // Validation
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      setLoading(false);
-      return;
-    }
-
-    // Location validation based on user type (matching backend validation)
-    const location = formData.location.toLowerCase();
-    
-    if (formData.userType === 'seller' && !location.includes('liberia')) {
-      setError('Sellers must be located in Liberia');
-      setLoading(false);
-      return;
-    }
-
-    if (formData.userType === 'buyer' && !(location.includes('usa') || location.includes('united states'))) {
-      setError('Buyers must be located in the USA or United States');
+    // Client-side validation
+    const validationErrors = validateForm();
+    if (validationErrors.length > 0) {
+      setError(validationErrors[0]); // Show first error
       setLoading(false);
       return;
     }
@@ -61,24 +99,36 @@ const RegisterPage = () => {
       });
       
       const response = await axios.post(`${API_BASE}/api/auth/register`, registrationData);
+
+      console.log('🔐 Registration response:', response.status);
       
       if (response.data.success) {
         localStorage.setItem('auth_token', response.data.token);
         localStorage.setItem('user_data', JSON.stringify(response.data.user));
         
-        // Role-based redirection
+        // Role-based redirection with success message
         const userType = response.data.user.userType;
         console.log('🔐 Registration successful for userType:', userType);
         
+        // Show success message briefly
+        setError('');
+        
         if (userType === 'seller') {
           console.log('🏪 Redirecting seller to dashboard');
-          navigate('/dashboard');
+          navigate('/dashboard', { 
+            state: { 
+              message: `🎉 Welcome to Liberia2USA Express, ${response.data.user.firstName}! Happy Independence Day! 🇱🇷` 
+            }
+          });
         } else {
           console.log('🛍️ Redirecting buyer to marketplace');
-          navigate('/marketplace');
+          navigate('/marketplace', { 
+            state: { 
+              message: `🎉 Welcome to Liberia2USA Express, ${response.data.user.firstName}! Start shopping! 🛍️` 
+            }
+          });
         }
       } else {
-        // Handle validation errors
         const errorMessage = response.data.message || 'Registration failed';
         console.error('🔐 Registration error:', response.data);
         setError(errorMessage);
@@ -87,20 +137,21 @@ const RegisterPage = () => {
       console.error('🔐 Registration request failed:', error);
       
       if (error.response) {
-        // Handle 422 validation errors specifically
         if (error.response.status === 422) {
           const validationErrors = error.response.data.detail;
           if (Array.isArray(validationErrors) && validationErrors.length > 0) {
             const firstError = validationErrors[0];
-            setError(`Validation error: ${firstError.msg} (${firstError.loc.join(' → ')})`);
+            setError(`${firstError.msg.replace('Value error, ', '')}`);
           } else {
             setError('Please check your input fields and try again');
           }
+        } else if (error.response.status === 409) {
+          setError('An account with this email already exists. Please try logging in instead.');
         } else {
           setError(error.response.data.message || error.response.data.detail || 'Registration failed');
         }
       } else if (error.request) {
-        setError('Network error: Please check your connection and try again');
+        setError('Network error: Please check your internet connection and try again');
       } else {
         setError('Registration failed. Please try again.');
       }
