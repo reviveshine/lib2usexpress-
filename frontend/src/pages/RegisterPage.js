@@ -162,9 +162,9 @@ const RegisterPage = () => {
 
   return (
     <div className="page">
-      <div className="container" style={{ maxWidth: '600px', margin: '2rem auto' }}>
+      <div className="registration-form-container container" style={{ maxWidth: '600px', margin: '2rem auto' }}>
         {/* Independence Day Header */}
-        <div style={{
+        <div className="registration-header" style={{
           background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
           color: 'white',
           padding: '2rem',
@@ -212,7 +212,7 @@ const RegisterPage = () => {
           border: '3px solid #ffd700'
         }}>
           {error && (
-            <div style={{
+            <div className="error-message" style={{
               background: 'linear-gradient(135deg, #fef2f2 0%, #fed7d7 100%)',
               color: '#dc2626',
               padding: '1rem',
@@ -230,9 +230,9 @@ const RegisterPage = () => {
           
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             {/* Name Fields */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
               <div>
-                <label style={{ 
+                <label className="form-label" style={{ 
                   display: 'block', 
                   marginBottom: '0.5rem', 
                   color: '#374151',
@@ -248,21 +248,20 @@ const RegisterPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="Enter your first name"
+                  className="registration-form-input"
                   style={{
                     width: '100%',
                     padding: '0.875rem',
                     border: '2px solid #d1d5db',
                     borderRadius: '8px',
                     fontSize: '1rem',
-                    transition: 'border-color 0.3s, box-shadow 0.3s',
+                    transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                     outline: 'none'
                   }}
-                  onFocus={(e) => e.target.style.borderColor = '#dc2626'}
-                  onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
                 />
               </div>
               <div>
-                <label style={{ 
+                <label className="form-label" style={{ 
                   display: 'block', 
                   marginBottom: '0.5rem', 
                   color: '#374151',
@@ -278,24 +277,23 @@ const RegisterPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="Enter your last name"
+                  className="registration-form-input"
                   style={{
                     width: '100%',
                     padding: '0.875rem',
                     border: '2px solid #d1d5db',
                     borderRadius: '8px',
                     fontSize: '1rem',
-                    transition: 'border-color 0.3s, box-shadow 0.3s',
+                    transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                     outline: 'none'
                   }}
-                  onFocus={(e) => e.target.style.borderColor = '#dc2626'}
-                  onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
                 />
               </div>
             </div>
 
             {/* Account Type */}
-            <div>
-              <label style={{ 
+            <div className="form-group">
+              <label className="form-label" style={{ 
                 display: 'block', 
                 marginBottom: '0.5rem', 
                 color: '#374151',
@@ -308,6 +306,7 @@ const RegisterPage = () => {
                 name="userType"
                 value={formData.userType}
                 onChange={handleChange}
+                className="registration-form-input"
                 style={{
                   width: '100%',
                   padding: '0.875rem',
@@ -316,10 +315,9 @@ const RegisterPage = () => {
                   fontSize: '1rem',
                   backgroundColor: 'white',
                   cursor: 'pointer',
-                  outline: 'none'
+                  outline: 'none',
+                  transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#dc2626'}
-                onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
               >
                 <option value="buyer">🛍️ Buyer (USA) - Shop Liberian Products</option>
                 <option value="seller">🏪 Seller (Liberia) - Sell to USA Market</option>
@@ -327,8 +325,8 @@ const RegisterPage = () => {
             </div>
             
             {/* Email */}
-            <div>
-              <label style={{ 
+            <div className="form-group">
+              <label className="form-label" style={{ 
                 display: 'block', 
                 marginBottom: '0.5rem', 
                 color: '#374151',
@@ -344,23 +342,22 @@ const RegisterPage = () => {
                 onChange={handleChange}
                 required
                 placeholder="your.email@example.com"
+                className="registration-form-input"
                 style={{
                   width: '100%',
                   padding: '0.875rem',
                   border: '2px solid #d1d5db',
                   borderRadius: '8px',
                   fontSize: '1rem',
-                  transition: 'border-color 0.3s',
+                  transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                   outline: 'none'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#dc2626'}
-                onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
               />
             </div>
 
             {/* Phone */}
-            <div>
-              <label style={{ 
+            <div className="form-group">
+              <label className="form-label" style={{ 
                 display: 'block', 
                 marginBottom: '0.5rem', 
                 color: '#374151',
@@ -375,23 +372,22 @@ const RegisterPage = () => {
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder={formData.userType === 'seller' ? '+231 XXX XXXX' : '+1 XXX XXX XXXX'}
+                className="registration-form-input"
                 style={{
                   width: '100%',
                   padding: '0.875rem',
                   border: '2px solid #d1d5db',
                   borderRadius: '8px',
                   fontSize: '1rem',
-                  transition: 'border-color 0.3s',
+                  transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                   outline: 'none'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#dc2626'}
-                onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
               />
             </div>
 
             {/* Location */}
-            <div>
-              <label style={{ 
+            <div className="form-group">
+              <label className="form-label" style={{ 
                 display: 'block', 
                 marginBottom: '0.5rem', 
                 color: '#374151',
@@ -414,24 +410,23 @@ const RegisterPage = () => {
                 onChange={handleChange}
                 placeholder={formData.userType === 'seller' ? 'e.g., Monrovia, Liberia' : 'e.g., New York, USA'}
                 required
+                className="registration-form-input"
                 style={{
                   width: '100%',
                   padding: '0.875rem',
                   border: '2px solid #d1d5db',
                   borderRadius: '8px',
                   fontSize: '1rem',
-                  transition: 'border-color 0.3s',
+                  transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                   outline: 'none'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#dc2626'}
-                onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
               />
             </div>
             
             {/* Password Fields */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="form-group" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
               <div>
-                <label style={{ 
+                <label className="form-label" style={{ 
                   display: 'block', 
                   marginBottom: '0.5rem', 
                   color: '#374151',
@@ -448,6 +443,11 @@ const RegisterPage = () => {
                     onChange={handleChange}
                     required
                     placeholder="Min. 6 characters"
+                    className={`registration-form-input ${
+                      formData.password.length === 0 ? '' :
+                      formData.password.length < 6 ? 'password-strength-weak' :
+                      formData.password.length < 10 ? 'password-strength-medium' : 'password-strength-strong'
+                    }`}
                     style={{
                       width: '100%',
                       padding: '0.875rem',
@@ -455,15 +455,14 @@ const RegisterPage = () => {
                       border: '2px solid #d1d5db',
                       borderRadius: '8px',
                       fontSize: '1rem',
-                      transition: 'border-color 0.3s',
+                      transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                       outline: 'none'
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#dc2626'}
-                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
+                    className="password-toggle"
                     style={{
                       position: 'absolute',
                       right: '0.75rem',
@@ -480,7 +479,7 @@ const RegisterPage = () => {
                 </div>
               </div>
               <div>
-                <label style={{ 
+                <label className="form-label" style={{ 
                   display: 'block', 
                   marginBottom: '0.5rem', 
                   color: '#374151',
@@ -497,6 +496,10 @@ const RegisterPage = () => {
                     onChange={handleChange}
                     required
                     placeholder="Repeat password"
+                    className={`registration-form-input ${
+                      formData.confirmPassword.length === 0 ? '' :
+                      formData.password !== formData.confirmPassword ? 'password-strength-weak' : 'password-strength-strong'
+                    }`}
                     style={{
                       width: '100%',
                       padding: '0.875rem',
@@ -504,15 +507,14 @@ const RegisterPage = () => {
                       border: '2px solid #d1d5db',
                       borderRadius: '8px',
                       fontSize: '1rem',
-                      transition: 'border-color 0.3s',
+                      transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                       outline: 'none'
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#dc2626'}
-                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="password-toggle"
                     style={{
                       position: 'absolute',
                       right: '0.75rem',
@@ -534,6 +536,7 @@ const RegisterPage = () => {
             <button
               type="submit"
               disabled={loading}
+              className="registration-submit-btn"
               style={{
                 width: '100%',
                 padding: '1rem',
@@ -544,21 +547,9 @@ const RegisterPage = () => {
                 fontSize: '1.1rem',
                 fontWeight: 'bold',
                 cursor: loading ? 'not-allowed' : 'pointer',
-                transition: 'all 0.3s',
+                transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                 boxShadow: loading ? 'none' : '0 4px 15px rgba(220, 38, 38, 0.3)',
                 textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
-              }}
-              onMouseEnter={(e) => {
-                if (!loading) {
-                  e.target.style.transform = 'translateY(-2px)';
-                  e.target.style.boxShadow = '0 6px 20px rgba(220, 38, 38, 0.4)';
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (!loading) {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = '0 4px 15px rgba(220, 38, 38, 0.3)';
-                }
               }}
             >
               {loading ? (
