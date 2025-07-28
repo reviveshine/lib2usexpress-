@@ -656,7 +656,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Shipping API functionality tested successfully"
+    - "Admin API endpoints tested successfully"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
