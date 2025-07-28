@@ -36,15 +36,17 @@ const RegisterPage = () => {
       return;
     }
 
-    // Location validation based on user type
-    if (formData.userType === 'seller' && !formData.location.toLowerCase().includes('liberia')) {
+    // Location validation based on user type (matching backend validation)
+    const location = formData.location.toLowerCase();
+    
+    if (formData.userType === 'seller' && !location.includes('liberia')) {
       setError('Sellers must be located in Liberia');
       setLoading(false);
       return;
     }
 
-    if (formData.userType === 'buyer' && !formData.location.toLowerCase().includes('usa')) {
-      setError('Buyers must be located in the USA');
+    if (formData.userType === 'buyer' && !(location.includes('usa') || location.includes('united states'))) {
+      setError('Buyers must be located in the USA or United States');
       setLoading(false);
       return;
     }
