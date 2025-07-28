@@ -76,7 +76,7 @@ class PaymentTester:
         seller_data = {
             "firstName": "Mary",
             "lastName": "Johnson",
-            "email": "mary.payment.test@email.com",
+            "email": f"mary.payment.test.{datetime.now().strftime('%Y%m%d%H%M%S')}@email.com",
             "password": "SecurePass456!",
             "userType": "seller",
             "location": "Monrovia, Liberia",
