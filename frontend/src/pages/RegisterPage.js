@@ -162,35 +162,84 @@ const RegisterPage = () => {
 
   return (
     <div className="page">
-      <div className="container" style={{ maxWidth: '500px', margin: '2rem auto' }}>
+      <div className="container" style={{ maxWidth: '600px', margin: '2rem auto' }}>
+        {/* Independence Day Header */}
+        <div style={{
+          background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+          color: 'white',
+          padding: '2rem',
+          borderRadius: '15px 15px 0 0',
+          textAlign: 'center',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          <div style={{
+            position: 'absolute',
+            top: '10px',
+            left: '20px',
+            fontSize: '2rem',
+            animation: 'sparkleMove 3s linear infinite'
+          }}>✨</div>
+          <div style={{
+            position: 'absolute',
+            top: '15px',
+            right: '30px',
+            fontSize: '1.5rem',
+            animation: 'sparkleMove 3s linear infinite 1s'
+          }}>⭐</div>
+          
+          <h2 style={{ 
+            fontSize: '2rem', 
+            marginBottom: '0.5rem',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+          }}>
+            🇱🇷 Join Liberia2USA Express 🇱🇷
+          </h2>
+          <p style={{ 
+            fontSize: '1.1rem', 
+            opacity: '0.9',
+            marginBottom: '0'
+          }}>
+            🎉 Celebrating Independence Day - Connect Liberian Heritage to American Markets! 🎉
+          </p>
+        </div>
+        
         <div style={{
           background: 'white',
-          padding: '2rem',
-          borderRadius: '10px',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+          padding: '2.5rem',
+          borderRadius: '0 0 15px 15px',
+          boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
+          border: '3px solid #ffd700'
         }}>
-          <h2 style={{ textAlign: 'center', marginBottom: '2rem', color: '#1f2937' }}>
-            Create Your Account
-          </h2>
-          
           {error && (
             <div style={{
-              background: '#fef2f2',
+              background: 'linear-gradient(135deg, #fef2f2 0%, #fed7d7 100%)',
               color: '#dc2626',
-              padding: '0.75rem',
-              borderRadius: '5px',
-              marginBottom: '1rem',
-              border: '1px solid #fecaca'
+              padding: '1rem',
+              borderRadius: '10px',
+              marginBottom: '1.5rem',
+              border: '2px solid #fecaca',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
             }}>
-              {error}
+              <span style={{ fontSize: '1.2rem' }}>⚠️</span>
+              <span style={{ fontWeight: '500' }}>{error}</span>
             </div>
           )}
           
-          <form onSubmit={handleSubmit}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            {/* Name Fields */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151' }}>
-                  First Name
+                <label style={{ 
+                  display: 'block', 
+                  marginBottom: '0.5rem', 
+                  color: '#374151',
+                  fontWeight: '600',
+                  fontSize: '0.95rem'
+                }}>
+                  👤 First Name *
                 </label>
                 <input
                   type="text"
@@ -198,18 +247,29 @@ const RegisterPage = () => {
                   value={formData.firstName}
                   onChange={handleChange}
                   required
+                  placeholder="Enter your first name"
                   style={{
                     width: '100%',
-                    padding: '0.75rem',
-                    border: '1px solid #d1d5db',
-                    borderRadius: '5px',
-                    fontSize: '1rem'
+                    padding: '0.875rem',
+                    border: '2px solid #d1d5db',
+                    borderRadius: '8px',
+                    fontSize: '1rem',
+                    transition: 'border-color 0.3s, box-shadow 0.3s',
+                    outline: 'none'
                   }}
+                  onFocus={(e) => e.target.style.borderColor = '#dc2626'}
+                  onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
                 />
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151' }}>
-                  Last Name
+                <label style={{ 
+                  display: 'block', 
+                  marginBottom: '0.5rem', 
+                  color: '#374151',
+                  fontWeight: '600',
+                  fontSize: '0.95rem'
+                }}>
+                  👤 Last Name *
                 </label>
                 <input
                   type="text"
@@ -217,20 +277,32 @@ const RegisterPage = () => {
                   value={formData.lastName}
                   onChange={handleChange}
                   required
+                  placeholder="Enter your last name"
                   style={{
                     width: '100%',
-                    padding: '0.75rem',
-                    border: '1px solid #d1d5db',
-                    borderRadius: '5px',
-                    fontSize: '1rem'
+                    padding: '0.875rem',
+                    border: '2px solid #d1d5db',
+                    borderRadius: '8px',
+                    fontSize: '1rem',
+                    transition: 'border-color 0.3s, box-shadow 0.3s',
+                    outline: 'none'
                   }}
+                  onFocus={(e) => e.target.style.borderColor = '#dc2626'}
+                  onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
                 />
               </div>
             </div>
 
-            <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151' }}>
-                Account Type
+            {/* Account Type */}
+            <div>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '0.5rem', 
+                color: '#374151',
+                fontWeight: '600',
+                fontSize: '0.95rem'
+              }}>
+                🏷️ Account Type *
               </label>
               <select
                 name="userType"
@@ -238,20 +310,32 @@ const RegisterPage = () => {
                 onChange={handleChange}
                 style={{
                   width: '100%',
-                  padding: '0.75rem',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '5px',
-                  fontSize: '1rem'
+                  padding: '0.875rem',
+                  border: '2px solid #d1d5db',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  backgroundColor: 'white',
+                  cursor: 'pointer',
+                  outline: 'none'
                 }}
+                onFocus={(e) => e.target.style.borderColor = '#dc2626'}
+                onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
               >
-                <option value="buyer">Buyer (USA)</option>
-                <option value="seller">Seller (Liberia)</option>
+                <option value="buyer">🛍️ Buyer (USA) - Shop Liberian Products</option>
+                <option value="seller">🏪 Seller (Liberia) - Sell to USA Market</option>
               </select>
             </div>
             
-            <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151' }}>
-                Email Address
+            {/* Email */}
+            <div>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '0.5rem', 
+                color: '#374151',
+                fontWeight: '600',
+                fontSize: '0.95rem'
+              }}>
+                📧 Email Address *
               </label>
               <input
                 type="email"
@@ -259,38 +343,69 @@ const RegisterPage = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
+                placeholder="your.email@example.com"
                 style={{
                   width: '100%',
-                  padding: '0.75rem',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '5px',
-                  fontSize: '1rem'
+                  padding: '0.875rem',
+                  border: '2px solid #d1d5db',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  transition: 'border-color 0.3s',
+                  outline: 'none'
                 }}
+                onFocus={(e) => e.target.style.borderColor = '#dc2626'}
+                onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
               />
             </div>
 
-            <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151' }}>
-                Phone Number
+            {/* Phone */}
+            <div>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '0.5rem', 
+                color: '#374151',
+                fontWeight: '600',
+                fontSize: '0.95rem'
+              }}>
+                📱 Phone Number <span style={{ color: '#6b7280', fontWeight: '400' }}>(Optional)</span>
               </label>
               <input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
+                placeholder={formData.userType === 'seller' ? '+231 XXX XXXX' : '+1 XXX XXX XXXX'}
                 style={{
                   width: '100%',
-                  padding: '0.75rem',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '5px',
-                  fontSize: '1rem'
+                  padding: '0.875rem',
+                  border: '2px solid #d1d5db',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  transition: 'border-color 0.3s',
+                  outline: 'none'
                 }}
+                onFocus={(e) => e.target.style.borderColor = '#dc2626'}
+                onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
               />
             </div>
 
-            <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151' }}>
-                Location {formData.userType === 'seller' ? '(Must be in Liberia)' : '(Must be in USA)'}
+            {/* Location */}
+            <div>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '0.5rem', 
+                color: '#374151',
+                fontWeight: '600',
+                fontSize: '0.95rem'
+              }}>
+                📍 Location * 
+                <span style={{ 
+                  color: formData.userType === 'seller' ? '#dc2626' : '#2563eb',
+                  fontWeight: '500',
+                  fontSize: '0.85rem'
+                }}>
+                  {formData.userType === 'seller' ? '(Must be in Liberia 🇱🇷)' : '(Must be in USA 🇺🇸)'}
+                </span>
               </label>
               <input
                 type="text"
@@ -301,78 +416,185 @@ const RegisterPage = () => {
                 required
                 style={{
                   width: '100%',
-                  padding: '0.75rem',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '5px',
-                  fontSize: '1rem'
+                  padding: '0.875rem',
+                  border: '2px solid #d1d5db',
+                  borderRadius: '8px',
+                  fontSize: '1rem',
+                  transition: 'border-color 0.3s',
+                  outline: 'none'
                 }}
+                onFocus={(e) => e.target.style.borderColor = '#dc2626'}
+                onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
               />
             </div>
             
-            <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151' }}>
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                style={{
-                  width: '100%',
-                  padding: '0.75rem',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '5px',
-                  fontSize: '1rem'
-                }}
-              />
-            </div>
-
-            <div style={{ marginBottom: '1.5rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151' }}>
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-                style={{
-                  width: '100%',
-                  padding: '0.75rem',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '5px',
-                  fontSize: '1rem'
-                }}
-              />
+            {/* Password Fields */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div>
+                <label style={{ 
+                  display: 'block', 
+                  marginBottom: '0.5rem', 
+                  color: '#374151',
+                  fontWeight: '600',
+                  fontSize: '0.95rem'
+                }}>
+                  🔒 Password *
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                    placeholder="Min. 6 characters"
+                    style={{
+                      width: '100%',
+                      padding: '0.875rem',
+                      paddingRight: '3rem',
+                      border: '2px solid #d1d5db',
+                      borderRadius: '8px',
+                      fontSize: '1rem',
+                      transition: 'border-color 0.3s',
+                      outline: 'none'
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = '#dc2626'}
+                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{
+                      position: 'absolute',
+                      right: '0.75rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: '1.2rem'
+                    }}
+                  >
+                    {showPassword ? '🙈' : '👁️'}
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label style={{ 
+                  display: 'block', 
+                  marginBottom: '0.5rem', 
+                  color: '#374151',
+                  fontWeight: '600',
+                  fontSize: '0.95rem'
+                }}>
+                  🔒 Confirm Password *
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                    placeholder="Repeat password"
+                    style={{
+                      width: '100%',
+                      padding: '0.875rem',
+                      paddingRight: '3rem',
+                      border: '2px solid #d1d5db',
+                      borderRadius: '8px',
+                      fontSize: '1rem',
+                      transition: 'border-color 0.3s',
+                      outline: 'none'
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = '#dc2626'}
+                    onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    style={{
+                      position: 'absolute',
+                      right: '0.75rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: '1.2rem'
+                    }}
+                  >
+                    {showConfirmPassword ? '🙈' : '👁️'}
+                  </button>
+                </div>
+              </div>
             </div>
             
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
               style={{
                 width: '100%',
-                padding: '0.75rem',
-                backgroundColor: loading ? '#9ca3af' : '#dc2626',
+                padding: '1rem',
+                background: loading ? 'linear-gradient(135deg, #9ca3af 0%, #6b7280 100%)' : 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
                 color: 'white',
                 border: 'none',
-                borderRadius: '5px',
-                fontSize: '1rem',
+                borderRadius: '10px',
+                fontSize: '1.1rem',
+                fontWeight: 'bold',
                 cursor: loading ? 'not-allowed' : 'pointer',
-                transition: 'background-color 0.3s'
+                transition: 'all 0.3s',
+                boxShadow: loading ? 'none' : '0 4px 15px rgba(220, 38, 38, 0.3)',
+                textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
+              }}
+              onMouseEnter={(e) => {
+                if (!loading) {
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 6px 20px rgba(220, 38, 38, 0.4)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!loading) {
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = '0 4px 15px rgba(220, 38, 38, 0.3)';
+                }
               }}
             >
-              {loading ? 'Creating Account...' : 'Create Account'}
+              {loading ? (
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                  <span style={{
+                    width: '20px',
+                    height: '20px',
+                    border: '2px solid #ffffff',
+                    borderTop: '2px solid transparent',
+                    borderRadius: '50%',
+                    animation: 'spin 1s linear infinite'
+                  }}></span>
+                  Creating Your Account...
+                </span>
+              ) : (
+                '🚀 Create Account & Join the Celebration!'
+              )}
             </button>
           </form>
           
-          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <p style={{ color: '#6b7280' }}>
+          {/* Login Link */}
+          <div style={{ textAlign: 'center', marginTop: '2rem', padding: '1rem', backgroundColor: '#f9fafb', borderRadius: '10px' }}>
+            <p style={{ color: '#6b7280', margin: '0', fontSize: '1rem' }}>
               Already have an account?{' '}
-              <Link to="/login" style={{ color: '#dc2626', textDecoration: 'none' }}>
-                Login here
+              <Link 
+                to="/login" 
+                style={{ 
+                  color: '#dc2626', 
+                  textDecoration: 'none',
+                  fontWeight: 'bold',
+                  transition: 'color 0.3s'
+                }}
+                onMouseEnter={(e) => e.target.style.color = '#b91c1c'}
+                onMouseLeave={(e) => e.target.style.color = '#dc2626'}
+              >
+                🔑 Login here
               </Link>
             </p>
           </div>
