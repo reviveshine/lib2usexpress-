@@ -2718,6 +2718,14 @@ class BackendTester:
             self.test_chat_access_control,
             self.test_message_encryption_in_database,
             self.test_chat_authentication_required,
+            # New admin API tests
+            self.test_admin_login,
+            self.test_admin_me_endpoint,
+            self.test_admin_dashboard_stats,
+            self.test_admin_get_users,
+            self.test_admin_get_products,
+            self.test_admin_get_activities,
+            self.test_admin_authentication_required,
             # New payment API tests
             self.test_get_payment_packages,
             self.test_calculate_order_total,
