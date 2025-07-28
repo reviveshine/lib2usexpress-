@@ -4,70 +4,70 @@
     "success": true,
     "message": "API is running and database connected",
     "details": null,
-    "timestamp": "2025-07-28T22:38:07.156546"
+    "timestamp": "2025-07-28T22:38:22.333599"
   },
   {
     "test": "Buyer Registration",
     "success": false,
     "message": "HTTP 400",
     "details": "{\"detail\":\"Email already registered\"}",
-    "timestamp": "2025-07-28T22:38:07.739157"
+    "timestamp": "2025-07-28T22:38:22.381785"
   },
   {
     "test": "Seller Registration",
     "success": false,
     "message": "HTTP 400",
     "details": "{\"detail\":\"Email already registered\"}",
-    "timestamp": "2025-07-28T22:38:07.790311"
+    "timestamp": "2025-07-28T22:38:22.435635"
   },
   {
     "test": "Location Validation",
     "success": true,
     "message": "Location validation working - buyer with Liberia location rejected",
     "details": null,
-    "timestamp": "2025-07-28T22:38:07.808134"
+    "timestamp": "2025-07-28T22:38:22.470671"
   },
   {
     "test": "Buyer Login",
     "success": true,
     "message": "Buyer login successful",
     "details": null,
-    "timestamp": "2025-07-28T22:38:08.170097"
+    "timestamp": "2025-07-28T22:38:22.806656"
   },
   {
     "test": "Seller Login",
     "success": true,
     "message": "Seller login successful",
     "details": null,
-    "timestamp": "2025-07-28T22:38:08.502177"
+    "timestamp": "2025-07-28T22:38:23.141726"
   },
   {
     "test": "Auth Me Endpoint",
     "success": true,
     "message": "User info retrieved successfully",
     "details": null,
-    "timestamp": "2025-07-28T22:38:08.551424"
+    "timestamp": "2025-07-28T22:38:23.191491"
   },
   {
     "test": "Get User Profile",
     "success": true,
     "message": "User profile retrieved successfully",
     "details": null,
-    "timestamp": "2025-07-28T22:38:08.599506"
+    "timestamp": "2025-07-28T22:38:23.260445"
   },
   {
     "test": "Update User Profile",
     "success": true,
     "message": "User profile updated successfully",
     "details": null,
-    "timestamp": "2025-07-28T22:38:08.730045"
+    "timestamp": "2025-07-28T22:38:23.375272"
   },
   {
     "test": "Get Sellers",
     "success": true,
     "message": "Retrieved 3 sellers",
     "details": null,
-    "timestamp": "2025-07-28T22:38:08.781665"
+    "timestamp": "2025-07-28T22:38:23.427316"
   },
   {
     "test": "Create Product",
@@ -235,84 +235,84 @@
         "hasPrevPage": false
       }
     },
-    "timestamp": "2025-07-28T22:38:08.882191"
+    "timestamp": "2025-07-28T22:38:23.521809"
   },
   {
     "test": "Get Products",
     "success": true,
     "message": "Retrieved 5 products with pagination",
     "details": null,
-    "timestamp": "2025-07-28T22:38:08.991405"
+    "timestamp": "2025-07-28T22:38:23.618658"
   },
   {
     "test": "Get Products with Filters",
     "success": true,
     "message": "Products filtered successfully",
     "details": null,
-    "timestamp": "2025-07-28T22:38:09.088149"
+    "timestamp": "2025-07-28T22:38:23.712021"
   },
   {
     "test": "Get Single Product",
     "success": false,
     "message": "No product ID available",
     "details": "Product creation may have failed",
-    "timestamp": "2025-07-28T22:38:09.088505"
+    "timestamp": "2025-07-28T22:38:23.712358"
   },
   {
     "test": "Get Seller Products",
     "success": true,
     "message": "Retrieved 0 seller products",
     "details": null,
-    "timestamp": "2025-07-28T22:38:09.199008"
+    "timestamp": "2025-07-28T22:38:23.824118"
   },
   {
     "test": "Buyer Product Creation Block",
     "success": false,
     "message": "Expected 403, got HTTP 200",
     "details": "{\"success\":true,\"data\":[{\"id\":\"98758bbe-ab32-408e-8c64-b364f86c66a0\",\"name\":\"Traditional Liberian Kente Cloth\",\"description\":\"Authentic handwoven Kente cloth from Liberia, perfect for special occasions and cultural events.\",\"price\":45.99,\"category\":\"fashion\",\"images\":[\"https://via.placeholder.com/400x400?text=Kente+Cloth\"],\"video\":null,\"stock\":15,\"tags\":[\"traditional\",\"kente\",\"fashion\",\"handwoven\"],\"weight\":0.5,\"dimensions\":{\"length\":200,\"width\":150,\"height\":1},\"seller_id\":\"seller123\",\"seller_name\":\"Mary Johnson\",\"views\":125,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"29c9eb92-3d56-420d-9fa7-83b44709c15d\",\"name\":\"Liberian Coffee Beans - Premium Grade\",\"description\":\"Premium coffee beans from the mountains of Liberia, known for their rich flavor and aroma.\",\"price\":28.5,\"category\":\"food\",\"images\":[\"https://via.placeholder.com/400x400?text=Coffee+Beans\"],\"video\":null,\"stock\":50,\"tags\":[\"coffee\",\"beans\",\"premium\",\"liberian\"],\"weight\":1.0,\"dimensions\":{\"length\":20,\"width\":15,\"height\":8},\"seller_id\":\"seller456\",\"seller_name\":\"John Smith\",\"views\":89,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"bbde824e-e442-4437-8287-d7e63998e3c6\",\"name\":\"Handcrafted Wooden Sculpture\",\"description\":\"Beautiful wooden sculpture carved by skilled artisans, representing traditional Liberian art.\",\"price\":75.0,\"category\":\"art\",\"images\":[\"https://via.placeholder.com/400x400?text=Wooden+Sculpture\"],\"video\":null,\"stock\":8,\"tags\":[\"sculpture\",\"handcrafted\",\"wood\",\"art\"],\"weight\":2.5,\"dimensions\":{\"length\":30,\"width\":15,\"height\":25},\"seller_id\":\"seller789\",\"seller_name\":\"Grace Williams\",\"views\":67,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"b966ba55-e534-4ec8-a797-bdec65862516\",\"name\":\"Liberian Pepper Sauce - Hot\",\"description\":\"Authentic Liberian pepper sauce made from locally grown peppers. Perfect for adding heat to any dish.\",\"price\":12.99,\"category\":\"food\",\"images\":[\"https://via.placeholder.com/400x400?text=Pepper+Sauce\"],\"video\":null,\"stock\":100,\"tags\":[\"sauce\",\"spicy\",\"condiment\",\"liberian\"],\"weight\":0.3,\"dimensions\":{\"length\":12,\"width\":6,\"height\":15},\"seller_id\":\"seller456\",\"seller_name\":\"John Smith\",\"views\":203,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"f6fe49f3-b00c-4cad-a478-627d5a66ab51\",\"name\":\"Traditional Liberian Jewelry Set\",\"description\":\"Beautiful jewelry set featuring traditional Liberian designs, made with gold-plated materials.\",\"price\":89.99,\"category\":\"jewelry\",\"images\":[\"https://via.placeholder.com/400x400?text=Jewelry+Set\"],\"video\":null,\"stock\":12,\"tags\":[\"jewelry\",\"traditional\",\"gold\",\"set\"],\"weight\":0.2,\"dimensions\":{\"length\":15,\"width\":10,\"height\":3},\"seller_id\":\"seller789\",\"seller_name\":\"Grace Williams\",\"views\":156,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"}],\"pagination\":{\"currentPage\":1,\"totalPages\":1,\"totalCount\":5,\"hasNextPage\":false,\"hasPrevPage\":false}}",
-    "timestamp": "2025-07-28T22:38:09.292392"
+    "timestamp": "2025-07-28T22:38:23.920823"
   },
   {
     "test": "Unauthorized Access Block",
     "success": true,
     "message": "Protected endpoints correctly require authentication",
     "details": null,
-    "timestamp": "2025-07-28T22:38:09.313406"
+    "timestamp": "2025-07-28T22:38:23.940958"
   },
   {
     "test": "Media Upload - Images",
     "success": true,
     "message": "Images uploaded and base64 encoded successfully",
     "details": null,
-    "timestamp": "2025-07-28T22:38:09.454901"
+    "timestamp": "2025-07-28T22:38:24.094553"
   },
   {
     "test": "Media Upload - Video",
     "success": true,
     "message": "Video uploaded and base64 encoded successfully",
     "details": null,
-    "timestamp": "2025-07-28T22:38:09.717154"
+    "timestamp": "2025-07-28T22:38:24.353976"
   },
   {
     "test": "Media Upload Authentication",
     "success": true,
     "message": "Media upload correctly requires seller authentication",
     "details": null,
-    "timestamp": "2025-07-28T22:38:09.935741"
+    "timestamp": "2025-07-28T22:38:24.419010"
   },
   {
     "test": "Media Upload Size Limits",
     "success": true,
     "message": "File size limits correctly enforced",
     "details": null,
-    "timestamp": "2025-07-28T22:38:12.339035"
+    "timestamp": "2025-07-28T22:38:26.607831"
   },
   {
     "test": "Media Upload Count Limits",
     "success": true,
     "message": "File count limits correctly enforced",
     "details": null,
-    "timestamp": "2025-07-28T22:38:12.512766"
+    "timestamp": "2025-07-28T22:38:26.724807"
   },
   {
     "test": "Create Product with Multimedia",
@@ -480,321 +480,321 @@
         "hasPrevPage": false
       }
     },
-    "timestamp": "2025-07-28T22:38:12.785960"
+    "timestamp": "2025-07-28T22:38:27.010520"
   },
   {
     "test": "Get Product with Multimedia",
     "success": false,
     "message": "No product ID available",
     "details": "Product creation may have failed",
-    "timestamp": "2025-07-28T22:38:12.786518"
+    "timestamp": "2025-07-28T22:38:27.011067"
   },
   {
     "test": "Media Upload Invalid Files",
     "success": true,
     "message": "Invalid file types correctly ignored",
     "details": null,
-    "timestamp": "2025-07-28T22:38:12.835075"
+    "timestamp": "2025-07-28T22:38:27.058303"
   },
   {
     "test": "Get Shipping Carriers",
     "success": true,
     "message": "All 4 carriers (DHL, FedEx, UPS, Aramex) returned with service details",
     "details": null,
-    "timestamp": "2025-07-28T22:38:12.853396"
+    "timestamp": "2025-07-28T22:38:27.076546"
   },
   {
     "test": "Get Shipping Zones",
     "success": true,
     "message": "Shipping zones returned with Liberia origins and all US states",
     "details": null,
-    "timestamp": "2025-07-28T22:38:12.872824"
+    "timestamp": "2025-07-28T22:38:27.094965"
   },
   {
     "test": "Shipping Estimate (No Auth)",
     "success": true,
     "message": "Got 11 shipping estimates with customs duties included",
     "details": null,
-    "timestamp": "2025-07-28T22:38:12.895540"
+    "timestamp": "2025-07-28T22:38:27.114518"
   },
   {
     "test": "Shipping Estimate Different States",
     "success": true,
     "message": "Successfully got estimates for 4 different US states",
     "details": null,
-    "timestamp": "2025-07-28T22:38:12.977235"
+    "timestamp": "2025-07-28T22:38:27.190037"
   },
   {
     "test": "Calculate Customs Duties",
     "success": true,
     "message": "Customs duties calculated: $45.5 total charges",
     "details": null,
-    "timestamp": "2025-07-28T22:38:12.996854"
+    "timestamp": "2025-07-28T22:38:27.210610"
   },
   {
     "test": "Customs Calculation Auth Required",
     "success": true,
     "message": "Customs calculation correctly requires authentication",
     "details": null,
-    "timestamp": "2025-07-28T22:38:13.022978"
+    "timestamp": "2025-07-28T22:38:27.227890"
   },
   {
     "test": "Shipping Rates Full Request",
     "success": true,
     "message": "Got 11 rates from all 4 carriers (DHL, FedEx, UPS, Aramex)",
     "details": null,
-    "timestamp": "2025-07-28T22:38:13.088908"
+    "timestamp": "2025-07-28T22:38:27.294145"
   },
   {
     "test": "Shipping Rates Multiple Packages",
     "success": true,
     "message": "Rates calculated correctly for 3 packages (total weight: 4.5kg)",
     "details": null,
-    "timestamp": "2025-07-28T22:38:13.147244"
+    "timestamp": "2025-07-28T22:38:27.345571"
   },
   {
     "test": "Shipping Rates Origin Validation",
     "success": true,
     "message": "Non-Liberia origins correctly rejected",
     "details": null,
-    "timestamp": "2025-07-28T22:38:13.165937"
+    "timestamp": "2025-07-28T22:38:27.362997"
   },
   {
     "test": "Shipping Rates Destination Validation",
     "success": true,
     "message": "Non-USA destinations correctly rejected",
     "details": null,
-    "timestamp": "2025-07-28T22:38:13.187142"
+    "timestamp": "2025-07-28T22:38:27.380639"
   },
   {
     "test": "Shipping Rates Auth Required",
     "success": true,
     "message": "Shipping rates correctly require authentication",
     "details": null,
-    "timestamp": "2025-07-28T22:38:13.203839"
+    "timestamp": "2025-07-28T22:38:27.404622"
   },
   {
     "test": "Create Chat Between Users",
     "success": true,
     "message": "Chat created successfully with ID: 250b430d-bea0-4e0c-8253-0d09d01988cf",
     "details": null,
-    "timestamp": "2025-07-28T22:38:13.397546"
+    "timestamp": "2025-07-28T22:38:27.581404"
   },
   {
     "test": "Create Chat Without Product",
     "success": true,
     "message": "Chat created successfully without product context",
     "details": null,
-    "timestamp": "2025-07-28T22:38:13.576424"
+    "timestamp": "2025-07-28T22:38:27.796861"
   },
   {
     "test": "Create Duplicate Chat",
     "success": true,
     "message": "Existing chat returned instead of creating duplicate",
     "details": null,
-    "timestamp": "2025-07-28T22:38:13.754943"
+    "timestamp": "2025-07-28T22:38:27.987576"
   },
   {
     "test": "Get User Chat List",
     "success": true,
     "message": "Retrieved 1 chats with unread count: 1",
     "details": null,
-    "timestamp": "2025-07-28T22:38:13.838992"
+    "timestamp": "2025-07-28T22:38:28.072953"
   },
   {
     "test": "Send Text Message",
     "success": true,
     "message": "Text message sent successfully",
     "details": null,
-    "timestamp": "2025-07-28T22:38:13.988541"
+    "timestamp": "2025-07-28T22:38:28.228904"
   },
   {
     "test": "Send Reply Message",
     "success": true,
     "message": "Reply message sent successfully",
     "details": null,
-    "timestamp": "2025-07-28T22:38:14.141027"
+    "timestamp": "2025-07-28T22:38:28.377528"
   },
   {
     "test": "Get Chat Messages",
     "success": true,
-    "message": "Retrieved 30 messages, messages properly decrypted",
+    "message": "Retrieved 36 messages, messages properly decrypted",
     "details": null,
-    "timestamp": "2025-07-28T22:38:14.356617"
+    "timestamp": "2025-07-28T22:38:28.600238"
   },
   {
     "test": "Mark Messages Read",
     "success": true,
     "message": "Messages marked as read successfully",
     "details": null,
-    "timestamp": "2025-07-28T22:38:14.471515"
+    "timestamp": "2025-07-28T22:38:28.712950"
   },
   {
     "test": "Verify Unread Count Update",
     "success": true,
     "message": "Unread count correctly updated to 0 after marking as read",
     "details": null,
-    "timestamp": "2025-07-28T22:38:14.552405"
+    "timestamp": "2025-07-28T22:38:28.796009"
   },
   {
     "test": "Chat Report Functionality",
     "success": true,
-    "message": "Chat reported successfully with report ID: 7e749850-8316-42bf-a6b0-3b1fd018c38f",
+    "message": "Chat reported successfully with report ID: 68f234dd-c210-42c4-8cc3-b2f3dbe77793",
     "details": null,
-    "timestamp": "2025-07-28T22:38:14.665396"
+    "timestamp": "2025-07-28T22:38:28.909656"
   },
   {
     "test": "Get Online Users",
     "success": true,
     "message": "Retrieved 0 online users",
     "details": null,
-    "timestamp": "2025-07-28T22:38:14.684221"
+    "timestamp": "2025-07-28T22:38:28.931573"
   },
   {
     "test": "Chat Access Control",
     "success": false,
     "message": "Failed to create third user for testing",
     "details": "{\"detail\":\"Email already registered\"}",
-    "timestamp": "2025-07-28T22:38:14.733528"
+    "timestamp": "2025-07-28T22:38:28.979406"
   },
   {
     "test": "Message Encryption in Database",
     "success": true,
     "message": "Messages are encrypted in storage (verified by is_encrypted flag)",
     "details": null,
-    "timestamp": "2025-07-28T22:38:14.879284"
+    "timestamp": "2025-07-28T22:38:29.131445"
   },
   {
     "test": "Chat Authentication Required",
     "success": true,
     "message": "All chat endpoints correctly require authentication",
     "details": null,
-    "timestamp": "2025-07-28T22:38:14.913042"
+    "timestamp": "2025-07-28T22:38:29.165936"
   },
   {
     "test": "Admin Login",
     "success": true,
     "message": "Admin login successful - Role: super_admin",
     "details": null,
-    "timestamp": "2025-07-28T22:38:15.228093"
+    "timestamp": "2025-07-28T22:38:29.480127"
   },
   {
     "test": "Admin Me Endpoint",
     "success": true,
     "message": "Admin info retrieved - System Administrator",
     "details": null,
-    "timestamp": "2025-07-28T22:38:15.279666"
+    "timestamp": "2025-07-28T22:38:29.531449"
   },
   {
     "test": "Admin Dashboard Stats",
     "success": true,
-    "message": "Stats retrieved - Users: 20, Products: 5, Transactions: 16",
+    "message": "Stats retrieved - Users: 20, Products: 5, Transactions: 18",
     "details": null,
-    "timestamp": "2025-07-28T22:38:15.768490"
+    "timestamp": "2025-07-28T22:38:30.031157"
   },
   {
     "test": "Admin Get Users",
     "success": true,
     "message": "Retrieved 20 users (Total: 20) with pagination",
     "details": null,
-    "timestamp": "2025-07-28T22:38:15.881410"
+    "timestamp": "2025-07-28T22:38:30.146096"
   },
   {
     "test": "Admin Get Products",
     "success": true,
     "message": "Retrieved 5 products (Total: 5) for admin review",
     "details": null,
-    "timestamp": "2025-07-28T22:38:15.994780"
+    "timestamp": "2025-07-28T22:38:30.259154"
   },
   {
     "test": "Admin Get Activities",
     "success": true,
-    "message": "Retrieved 2 activities (Total: 2) from admin logs",
+    "message": "Retrieved 3 activities (Total: 3) from admin logs",
     "details": null,
-    "timestamp": "2025-07-28T22:38:16.109597"
+    "timestamp": "2025-07-28T22:38:30.368951"
   },
   {
     "test": "Admin Authentication Required",
     "success": true,
     "message": "Admin endpoints correctly require admin authentication",
     "details": null,
-    "timestamp": "2025-07-28T22:38:16.182401"
+    "timestamp": "2025-07-28T22:38:30.432255"
   },
   {
     "test": "Get Payment Packages",
     "success": true,
     "message": "Retrieved 3 payment packages",
     "details": null,
-    "timestamp": "2025-07-28T22:38:16.199925"
+    "timestamp": "2025-07-28T22:38:30.449667"
   },
   {
     "test": "Calculate Order Total",
     "success": true,
     "message": "Order total calculated: $141.88",
     "details": null,
-    "timestamp": "2025-07-28T22:38:16.219349"
+    "timestamp": "2025-07-28T22:38:30.468874"
   },
   {
     "test": "Calculate Total Auth Required",
     "success": true,
     "message": "Calculate total correctly requires authentication",
     "details": null,
-    "timestamp": "2025-07-28T22:38:16.237599"
+    "timestamp": "2025-07-28T22:38:30.486541"
   },
   {
     "test": "Create Checkout Session",
     "success": true,
-    "message": "Checkout session created with ID: cs_test_a1FGsFH6YQQxDSypJkeqkBUU65g06xDeXqQE0C3bTVUSekUUsgyuLBwCv1",
+    "message": "Checkout session created with ID: cs_test_a1Qhp409tv36OOJkXfxQE9952AQpYi9TwzJgfHRuFEbYJV7GykVZ9coHdR",
     "details": null,
-    "timestamp": "2025-07-28T22:38:16.910139"
+    "timestamp": "2025-07-28T22:38:30.981261"
   },
   {
     "test": "Create Package Checkout",
     "success": true,
-    "message": "Package checkout session created with ID: cs_test_a1Es5ZJyPlc2nokiYgJz45hI1oy2OHsngGGGWsd1LwiGkSEVgsuQtdKYr3",
+    "message": "Package checkout session created with ID: cs_test_a1NEtsyB2Jdd5yhE2c5pQbjnNet7C5AgETKVwREMPJyZW4xw83kyfMSj9i",
     "details": null,
-    "timestamp": "2025-07-28T22:38:17.369919"
+    "timestamp": "2025-07-28T22:38:31.459016"
   },
   {
     "test": "Package Checkout Invalid Package",
     "success": true,
     "message": "Invalid package ID correctly rejected",
     "details": null,
-    "timestamp": "2025-07-28T22:38:17.389824"
+    "timestamp": "2025-07-28T22:38:31.475450"
   },
   {
     "test": "Check Payment Status",
     "success": true,
     "message": "Payment status retrieved: unpaid",
     "details": null,
-    "timestamp": "2025-07-28T22:38:17.782819"
+    "timestamp": "2025-07-28T22:38:31.759202"
   },
   {
     "test": "Get User Transactions",
     "success": true,
     "message": "Retrieved 10 transactions",
     "details": null,
-    "timestamp": "2025-07-28T22:38:17.864436"
+    "timestamp": "2025-07-28T22:38:31.838264"
   },
   {
     "test": "Transactions Auth Required",
     "success": true,
     "message": "Transactions endpoint correctly requires authentication",
     "details": null,
-    "timestamp": "2025-07-28T22:38:17.879798"
+    "timestamp": "2025-07-28T22:38:31.857934"
   },
   {
     "test": "Payment Status Access Control",
     "success": true,
     "message": "Users correctly blocked from accessing other users' payment status",
     "details": null,
-    "timestamp": "2025-07-28T22:38:18.261112"
+    "timestamp": "2025-07-28T22:38:32.236823"
   },
   {
     "test": "Checkout Auth Required",
     "success": true,
     "message": "Checkout endpoints correctly require authentication",
     "details": null,
-    "timestamp": "2025-07-28T22:38:18.280852"
+    "timestamp": "2025-07-28T22:38:32.253117"
   }
 ]
