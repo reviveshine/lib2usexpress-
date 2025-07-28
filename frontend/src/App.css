@@ -13,6 +13,230 @@ body {
   background-color: #f8f9fa;
 }
 
+/* Independence Day Banner Styles */
+.independence-banner {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #dc2626 100%);
+  color: white;
+  padding: 15px 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  border-bottom: 3px solid #ffd700;
+}
+
+.independence-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+}
+
+.liberian-flag {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border: 2px solid #ffd700;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  animation: flagWave 2s ease-in-out infinite;
+}
+
+.independence-text {
+  text-align: center;
+  position: relative;
+}
+
+.happy-text {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  animation: textGlow 2s ease-in-out infinite alternate;
+  letter-spacing: 3px;
+}
+
+.liberia-text {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 5px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  animation: textPulse 1.5s ease-in-out infinite;
+}
+
+/* Sparkle Animations */
+.sparkles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.sparkle {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: sparkleMove 3s linear infinite;
+  opacity: 0.8;
+}
+
+.sparkle-1 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.sparkle-2 {
+  top: 60%;
+  left: 80%;
+  animation-delay: 0.5s;
+}
+
+.sparkle-3 {
+  top: 10%;
+  left: 70%;
+  animation-delay: 1s;
+}
+
+.sparkle-4 {
+  top: 80%;
+  left: 20%;
+  animation-delay: 1.5s;
+}
+
+.sparkle-5 {
+  top: 40%;
+  left: 90%;
+  animation-delay: 2s;
+}
+
+.sparkle-6 {
+  top: 70%;
+  left: 5%;
+  animation-delay: 2.5s;
+}
+
+/* Smoke Effects */
+.smoke-effects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.smoke {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+  border-radius: 50%;
+  animation: smokeRise 4s linear infinite;
+}
+
+.smoke-1 {
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.smoke-2 {
+  left: 50%;
+  animation-delay: 1.5s;
+}
+
+.smoke-3 {
+  left: 75%;
+  animation-delay: 3s;
+}
+
+/* Keyframe Animations */
+@keyframes flagWave {
+  0%, 100% { transform: rotate(-2deg) scale(1); }
+  50% { transform: rotate(2deg) scale(1.05); }
+}
+
+@keyframes textGlow {
+  0% { 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 10px rgba(255,215,0,0.3);
+  }
+  100% { 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 20px rgba(255,215,0,0.8), 0 0 30px rgba(255,215,0,0.6);
+  }
+}
+
+@keyframes textPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes sparkleMove {
+  0% { 
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 0;
+  }
+  10% { 
+    opacity: 1;
+  }
+  90% { 
+    opacity: 1;
+  }
+  100% { 
+    transform: translateY(-100px) rotate(360deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes smokeRise {
+  0% { 
+    bottom: -60px;
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  20% { 
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  80% { 
+    opacity: 0.3;
+    transform: scale(1.5);
+  }
+  100% { 
+    bottom: 120px;
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .independence-content {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .happy-text {
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+  }
+  
+  .liberia-text {
+    font-size: 1rem;
+  }
+  
+  .liberian-flag {
+    width: 50px;
+    height: 35px;
+  }
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
