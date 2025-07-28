@@ -313,6 +313,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "Payment backend integration working perfectly - GET /api/payments/packages returns 3 payment packages, POST /api/payments/calculate-total calculates order totals with taxes and shipping, POST /api/payments/checkout/session creates Stripe checkout sessions, GET /api/payments/transactions returns user payment history with pagination, POST /api/payments/package/checkout creates package checkout sessions, GET /api/payments/status/{session_id} retrieves payment status with proper access control. All endpoints require proper authentication, error handling working correctly, Stripe integration operational."
+      - working: true
+        agent: "testing"
+        comment: "COMPREHENSIVE PAYMENT API RE-TESTING COMPLETED (2025-01-28): All 6 requested payment endpoints verified and working correctly after frontend integration work. ✅ GET /api/payments/packages - Returns 3 payment packages (express_shipping, standard_shipping, economy_shipping) with proper structure ✅ POST /api/payments/calculate-total - Calculates order totals including subtotal, shipping, tax, and total amount with proper authentication ✅ POST /api/payments/checkout/session - Creates Stripe checkout sessions with payment_id, checkout_url, and session_id ✅ GET /api/payments/transactions - Returns user payment history with pagination and proper access control ✅ POST /api/payments/package/checkout - Creates package checkout sessions for predefined packages ✅ GET /api/payments/status/{session_id} - Retrieves payment status with proper authentication and access control. SUCCESS RATE: 100% (8/8 tests passed). Authentication and authorization properly enforced across all endpoints. API responses match expected format for frontend consumption. Payment backend integration is production-ready and fully operational."
 
   - task: "Payment Service Integration" 
     implemented: true
