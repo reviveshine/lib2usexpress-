@@ -197,11 +197,12 @@ class PaymentTester:
             if response.status_code == 200:
                 data = response.json()
                 if (data.get("success") and 
-                    "subtotal" in data and
-                    "shipping_cost" in data and
-                    "tax_amount" in data and
-                    "total_amount" in data):
-                    self.log_test("POST /api/payments/calculate-total", True, f"Order total calculated: ${data['total_amount']}")
+                    "breakdown" in data and
+                    "subtotal" in data["breakdown"] and
+                    "shipping_cost" in data["breakdown"] and
+                    "tax_amount" in data["breakdown"] and
+                    "total_amount" in data["breakdown"]):
+                    self.log_test("POST /api/payments/calculate-total", True, f"Order total calculated: ${data['breakdown']['total_amount']}")
                     return True
                 else:
                     self.log_test("POST /api/payments/calculate-total", False, "Invalid response format", data)
