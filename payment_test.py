@@ -226,7 +226,7 @@ class PaymentTester:
                 },
                 "buyer_info": {
                     "name": "John Smith",
-                    "email": "john.payment.test@email.com",
+                    "email": f"john.payment.test.{datetime.now().strftime('%Y%m%d%H%M%S')}@email.com",
                     "phone": "+1-555-0123"
                 }
             }
