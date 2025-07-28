@@ -103,36 +103,27 @@ class PaymentTester:
             return False
     
     def create_test_product(self):
-        """Create a test product for payment testing"""
-        print("🛍️ Creating test product...")
+        """Get an existing product for payment testing"""
+        print("🛍️ Getting existing product for testing...")
         
         try:
-            headers = {"Authorization": f"Bearer {self.seller_token}"}
-            product_data = {
-                "name": "Payment Test Product",
-                "description": "Test product for payment API testing",
-                "price": 49.99,
-                "category": "Test",
-                "stock": 10,
-                "weight": 1.0,
-                "dimensions": {"length": 20, "width": 15, "height": 10}
-            }
-            
-            response = requests.post(f"{self.base_url}/api/products", json=product_data, headers=headers, timeout=10)
+            # Get existing products
+            response = requests.get(f"{self.base_url}/api/products?limit=1", timeout=10)
             if response.status_code == 200:
                 data = response.json()
-                if data.get("success") and data.get("product"):
-                    self.product_id = data["product"]["id"]
-                    print(f"✅ Product created: {self.product_id}")
+                if data.get("success") and data.get("data") and len(data["data"]) > 0:
+                    product = data["data"][0]
+                    self.product_id = product["id"]
+                    print(f"✅ Using existing product: {self.product_id}")
                     return True
                 else:
-                    print(f"❌ Product creation failed: {data}")
+                    print(f"❌ No products available: {data}")
                     return False
             else:
-                print(f"❌ Product creation HTTP {response.status_code}: {response.text}")
+                print(f"❌ Product fetch HTTP {response.status_code}: {response.text}")
                 return False
         except Exception as e:
-            print(f"❌ Product creation error: {e}")
+            print(f"❌ Product fetch error: {e}")
             return False
     
     def test_get_payment_packages(self):
