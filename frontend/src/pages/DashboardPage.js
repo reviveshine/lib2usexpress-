@@ -52,7 +52,22 @@ const DashboardPage = () => {
       case 'overview':
         return (
           <div>
-            <h3 style={{ marginBottom: '2rem', color: '#1f2937' }}>Dashboard Overview</h3>
+            <div style={{ 
+              background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+              color: 'white',
+              padding: '2rem',
+              borderRadius: '15px',
+              marginBottom: '2rem',
+              textAlign: 'center'
+            }}>
+              <h3 style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>
+                🏪 Welcome to Your Seller Dashboard, {user.firstName}!
+              </h3>
+              <p style={{ fontSize: '1.1rem', opacity: '0.9' }}>
+                🇱🇷 Happy Independence Day! Manage your Liberian products and reach customers in the USA
+              </p>
+            </div>
+            
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
@@ -64,30 +79,107 @@ const DashboardPage = () => {
                 padding: '1.5rem',
                 borderRadius: '10px',
                 boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                textAlign: 'center'
+                textAlign: 'center',
+                border: '2px solid #ffd700'
               }}>
-                <h4 style={{ color: '#dc2626', marginBottom: '0.5rem' }}>Total Products</h4>
+                <h4 style={{ color: '#dc2626', marginBottom: '0.5rem' }}>📦 Total Products</h4>
                 <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1f2937' }}>0</p>
+                <p style={{ fontSize: '0.9rem', color: '#6b7280' }}>Products listed</p>
               </div>
               <div style={{
                 background: 'white',
                 padding: '1.5rem',
                 borderRadius: '10px',
                 boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                textAlign: 'center'
+                textAlign: 'center',
+                border: '2px solid #ffd700'
               }}>
-                <h4 style={{ color: '#dc2626', marginBottom: '0.5rem' }}>Total Orders</h4>
+                <h4 style={{ color: '#dc2626', marginBottom: '0.5rem' }}>📊 Total Orders</h4>
                 <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1f2937' }}>0</p>
+                <p style={{ fontSize: '0.9rem', color: '#6b7280' }}>Orders received</p>
               </div>
               <div style={{
                 background: 'white',
                 padding: '1.5rem',
                 borderRadius: '10px',
                 boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                textAlign: 'center'
+                textAlign: 'center',
+                border: '2px solid #ffd700'
               }}>
-                <h4 style={{ color: '#dc2626', marginBottom: '0.5rem' }}>Total Revenue</h4>
+                <h4 style={{ color: '#dc2626', marginBottom: '0.5rem' }}>💰 Total Revenue</h4>
                 <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1f2937' }}>$0</p>
+                <p style={{ fontSize: '0.9rem', color: '#6b7280' }}>Total earnings</p>
+              </div>
+            </div>
+            
+            <div style={{
+              background: 'white',
+              padding: '2rem',
+              borderRadius: '15px',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+              textAlign: 'center'
+            }}>
+              <h4 style={{ color: '#dc2626', marginBottom: '1rem', fontSize: '1.4rem' }}>
+                🚀 Quick Actions
+              </h4>
+              <div style={{ 
+                display: 'flex', 
+                gap: '1rem', 
+                justifyContent: 'center',
+                flexWrap: 'wrap'
+              }}>
+                <Link 
+                  to="/add-product" 
+                  style={{
+                    backgroundColor: '#dc2626',
+                    color: 'white',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    fontWeight: 'bold',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}
+                >
+                  ➕ Add New Product
+                </Link>
+                <Link 
+                  to="/marketplace" 
+                  style={{
+                    backgroundColor: '#ffd700',
+                    color: '#dc2626',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    fontWeight: 'bold',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}
+                >
+                  🛍️ View Marketplace
+                </Link>
+                <Link 
+                  to="/chat" 
+                  style={{
+                    backgroundColor: '#16a34a',
+                    color: 'white',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    fontWeight: 'bold',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}
+                >
+                  💬 Messages
+                </Link>
+              </div>
+            </div>
+          </div>
+        );
               </div>
             </div>
             
