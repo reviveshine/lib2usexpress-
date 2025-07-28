@@ -20,6 +20,10 @@ class PaymentTester:
         self.buyer_id = None
         self.seller_id = None
         self.product_id = None
+        self.product_name = None
+        self.product_price = None
+        self.seller_id = None
+        self.seller_name = None
         self.checkout_session_id = None
         self.package_session_id = None
         self.test_results = []
