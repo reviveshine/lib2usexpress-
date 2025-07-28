@@ -808,17 +808,41 @@ test_plan:
         agent: "main"
         comment: "Seller dashboard completely enhanced with Independence Day theme - IMPROVEMENTS: Added AuthContext integration for consistent authentication. Created beautiful welcome banner with personalized greeting for sellers. Added Independence Day celebration messaging. Enhanced overview cards with golden borders and better styling. Created Quick Actions section with prominent buttons for Add Product, View Marketplace, and Messages. Enhanced Products tab with better empty state and call-to-action buttons. Enhanced Orders tab with emoji icons and better messaging. Added loading spinner and proper error handling."
 
-  - task: "Authentication Flow - Role-Based Redirection"
+  - task: "Registration Failure Bug Fix"
     implemented: true
     working: true
-    file: "frontend/src/pages/LoginPage.js"
+    file: "frontend/src/pages/RegisterPage.js"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Registration failure completely fixed - CRITICAL BUG RESOLVED: Fixed validation mismatch between frontend and backend location validation. Frontend now accepts both 'usa' and 'united states' for buyers (matching backend Pydantic validation). Enhanced error handling to display specific 422 validation errors with field locations and detailed messages. Added comprehensive debugging with console logging for registration attempts. Fixed network error handling and request error categorization. Backend API tested and confirmed working correctly (returns proper success/error responses). Users now get specific error messages instead of generic 'Registration failed' message."
+
+  - task: "Enhanced Registration Error Handling"
+    implemented: true
+    working: true
+    file: "frontend/src/pages/RegisterPage.js"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Role-based authentication flow implemented successfully - FIXES: Updated LoginPage.js to redirect sellers to /dashboard and buyers to /marketplace based on userType. Added comprehensive console logging for debugging authentication flow. Updated RegisterPage.js with same role-based redirection logic. Users now get proper role-specific navigation after login/registration. Backend API returns correct userType in authentication responses."
+        comment: "Registration error handling completely enhanced - IMPROVEMENTS: Added specific handling for 422 validation errors from FastAPI backend. Extracts detailed validation error messages with field locations (e.g., 'Validation error: Invalid email (body → email)'). Added network error detection and user-friendly messages. Added comprehensive console logging with 🔐 emoji for debugging registration flow. Categorized errors into response errors, network errors, and request errors. Users now receive specific, actionable error messages for all validation failures."
+
+  - task: "Location Validation Consistency Fix"
+    implemented: true
+    working: true
+    file: "frontend/src/pages/RegisterPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Location validation consistency achieved between frontend and backend - FIX: Updated frontend validation to accept both 'usa' and 'united states' for buyers (matching backend Pydantic UserCreate validator). Sellers still require 'liberia' in location. Fixed case-insensitive validation logic. Added clear error messages for location requirements. Backend validation confirmed working correctly via direct API testing. Registration now works for users entering 'United States' or 'USA' in their location."
 
 agent_communication:
   - agent: "testing"
