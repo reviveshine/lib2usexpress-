@@ -317,15 +317,99 @@ const ProfileTab = () => {
         marginBottom: '2rem',
         textAlign: 'center'
       }}>
-        <h3 style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>
-          👤 {user.firstName} {user.lastName}
-        </h3>
-        <p style={{ fontSize: '1.2rem', opacity: '0.9' }}>
-          🆔 System ID: {profile?.system_user_id}
-        </p>
-        <p style={{ fontSize: '1rem', opacity: '0.8' }}>
-          {user.userType === 'seller' ? '🏪 Seller Account' : '🛍️ Buyer Account'} • {user.location}
-        </p>
+        {/* Profile Picture Section */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: '1.5rem'
+        }}>
+          <div style={{
+            width: '120px',
+            height: '120px',
+            borderRadius: '50%',
+            border: '4px solid white',
+            overflow: 'hidden',
+            backgroundColor: '#f3f4f6',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginRight: '1rem',
+            position: 'relative'
+          }}>
+            {profile?.profile_picture ? (
+              <img 
+                src={profile.profile_picture}
+                alt="Profile"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover'
+                }}
+              />
+            ) : (
+              <span style={{
+                fontSize: '3rem',
+                color: '#6b7280'
+              }}>
+                👤
+              </span>
+            )}
+            
+            {/* Upload/Edit Button */}
+            <label style={{
+              position: 'absolute',
+              bottom: '0',
+              right: '0',
+              backgroundColor: '#dc2626',
+              width: '36px',
+              height: '36px',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              border: '2px solid white'
+            }}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleProfilePictureUpload}
+                style={{ display: 'none' }}
+              />
+              <span style={{ color: 'white', fontSize: '0.8rem' }}>📷</span>
+            </label>
+          </div>
+
+          <div style={{ textAlign: 'left' }}>
+            <h3 style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>
+              {user.firstName} {user.lastName}
+            </h3>
+            <p style={{ fontSize: '1.2rem', opacity: '0.9' }}>
+              🆔 System ID: {profile?.system_user_id}
+            </p>
+            <p style={{ fontSize: '1rem', opacity: '0.8' }}>
+              {user.userType === 'seller' ? '🏪 Seller Account' : '🛍️ Buyer Account'} • {user.location}
+            </p>
+            {profile?.profile_picture && (
+              <button
+                onClick={handleRemoveProfilePicture}
+                style={{
+                  backgroundColor: 'rgba(255,255,255,0.2)',
+                  color: 'white',
+                  border: '1px solid rgba(255,255,255,0.3)',
+                  borderRadius: '4px',
+                  padding: '0.25rem 0.5rem',
+                  fontSize: '0.8rem',
+                  cursor: 'pointer',
+                  marginTop: '0.5rem'
+                }}
+              >
+                Remove Picture
+              </button>
+            )}
+          </div>
+        </div>
       </div>
 
       <div style={{
