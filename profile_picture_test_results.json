@@ -4,48 +4,48 @@
     "success": true,
     "message": "PNG profile picture uploaded successfully",
     "details": null,
-    "timestamp": "2025-07-29T15:16:10.516765"
+    "timestamp": "2025-07-29T15:18:18.385252"
   },
   {
     "test": "Profile Picture Retrieval After Upload",
-    "success": false,
-    "message": "HTTP 500",
-    "details": "Internal Server Error",
-    "timestamp": "2025-07-29T15:16:10.593842"
+    "success": true,
+    "message": "Profile picture retrieved successfully after upload",
+    "details": null,
+    "timestamp": "2025-07-29T15:18:18.467698"
   },
   {
     "test": "Profile Picture Upload - JPEG",
     "success": false,
-    "message": "HTTP 404",
-    "details": "{\"detail\":\"Profile not found\"}",
-    "timestamp": "2025-07-29T15:16:10.650198"
+    "message": "No seller token available",
+    "details": "Seller authentication failed",
+    "timestamp": "2025-07-29T15:18:18.468030"
   },
   {
     "test": "Profile Picture Delete",
     "success": true,
     "message": "Profile picture deleted successfully",
     "details": null,
-    "timestamp": "2025-07-29T15:16:10.733890"
+    "timestamp": "2025-07-29T15:18:18.557211"
   },
   {
     "test": "Profile Picture Retrieval After Delete",
-    "success": false,
-    "message": "HTTP 500",
-    "details": "Internal Server Error",
-    "timestamp": "2025-07-29T15:16:10.816703"
+    "success": true,
+    "message": "Profile picture correctly set to null after deletion",
+    "details": null,
+    "timestamp": "2025-07-29T15:18:18.636712"
   },
   {
     "test": "Profile Picture Authentication Required",
     "success": true,
     "message": "Profile picture endpoints correctly require authentication",
     "details": null,
-    "timestamp": "2025-07-29T15:16:10.860316"
+    "timestamp": "2025-07-29T15:18:18.670299"
   },
   {
     "test": "Complete Workflow",
-    "success": false,
-    "message": "Profile retrieval failed",
-    "details": "Internal Server Error",
-    "timestamp": "2025-07-29T15:16:11.024983"
+    "success": true,
+    "message": "Complete workflow successful: upload \u2192 retrieve \u2192 delete \u2192 verify removal",
+    "details": null,
+    "timestamp": "2025-07-29T15:18:19.006122"
   }
 ]
