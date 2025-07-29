@@ -289,6 +289,9 @@ const DashboardPage = () => {
           </div>
         );
       
+      case 'profile':
+        return <ProfileTab />;
+      
       default:
         return (
           <div>
