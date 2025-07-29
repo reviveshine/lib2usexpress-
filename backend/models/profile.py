@@ -64,10 +64,14 @@ class UserProfile(BaseModel):
     updated_at: datetime
 
 class UpdateProfileRequest(BaseModel):
+    profile_picture: Optional[str] = None
     addresses: Optional[List[AddressModel]] = None
     shipping_addresses: Optional[List[ShippingAddressModel]] = None
     mobile_money_wallets: Optional[List[MobileMoneyWallet]] = None
     bank_accounts: Optional[List[BankAccount]] = None
+
+class UpdateProfilePictureRequest(BaseModel):
+    profile_picture: str  # base64 encoded image
 
 class AddIdentityDocumentRequest(BaseModel):
     document_type: str
