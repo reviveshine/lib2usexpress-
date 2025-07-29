@@ -16,6 +16,7 @@ import ChatPage from './pages/ChatPage';
 import CheckoutPage from './pages/CheckoutPage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import OrdersPage from './pages/OrdersPage';
+import SellerVerificationPage from './pages/SellerVerificationPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 
@@ -47,6 +48,7 @@ function App() {
                       <Route path="/register" element={<RegisterPage />} />
                       <Route path="/dashboard" element={<DashboardPage />} />
                       <Route path="/add-product" element={<AddProductPage />} />
+                      <Route path="/seller-verification" element={<SellerVerificationPage />} />
                     </Routes>
                   </main>
                   <Footer />
