@@ -413,11 +413,10 @@ class VerificationTester:
                 data = response.json()
                 if (data.get("success") and 
                     "verifications" in data and
-                    "total_count" in data and
                     "pagination" in data):
                     
                     verification_count = len(data["verifications"])
-                    total_count = data["total_count"]
+                    total_count = data["pagination"]["totalCount"]
                     
                     # Verify verification structure if any exist
                     if verification_count > 0:
