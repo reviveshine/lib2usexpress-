@@ -7,9 +7,13 @@ Validates required environment variables and dependencies for deployment
 import os
 import sys
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Add the backend directory to Python path
 sys.path.append('/app/backend')
+
+# Load environment variables
+load_dotenv('/app/backend/.env')
 
 def validate_environment():
     """Validate environment variables and configuration"""
