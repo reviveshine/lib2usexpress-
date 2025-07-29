@@ -3,6 +3,7 @@ from passlib.hash import bcrypt
 from datetime import datetime, timedelta
 import uuid
 import secrets
+import os
 from models.user import UserCreate, UserLogin, UserResponse
 from models.password_reset import ForgotPasswordRequest, ResetPasswordRequest, PasswordResetToken, PasswordResetResponse
 from database import get_database
