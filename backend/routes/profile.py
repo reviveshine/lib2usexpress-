@@ -390,13 +390,21 @@ async def update_profile_picture(
     
     database = get_database()
     
-    # Get profile
+    # Get or create profile
     profile = await database.user_profiles.find_one({"user_id": current_user_id})
     if not profile:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Profile not found"
+        # Generate system user ID
+        system_user_id = f"LIB2USA-{str(uuid.uuid4())[:8].upper()}"
+        
+        # Create default profile
+        new_profile = UserProfile(
+            user_id=current_user_id,
+            system_user_id=system_user_id,
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow()
         )
+        
+        await database.user_profiles.insert_one(new_profile.dict())
     
     # Update profile picture
     await database.user_profiles.update_one(
