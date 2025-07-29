@@ -39,15 +39,17 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS middleware - include production URLs
+# CORS middleware - include production and preview URLs
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000", 
         "http://localhost:8001",
         "https://express-shipping-2.emergent.host",
+        "https://lib2usa-market.preview.emergentagent.com",
         "https://*.emergent.host",
-        "https://*.emergentagent.com"
+        "https://*.emergentagent.com",
+        "https://*.preview.emergentagent.com"
     ],
     allow_credentials=True,
     allow_methods=["*"],
