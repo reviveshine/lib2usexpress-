@@ -13,7 +13,7 @@ import io
 from datetime import datetime
 
 # Get backend URL from frontend .env
-BACKEND_URL = "https://express-shipping-2.emergent.host"
+BACKEND_URL = "http://localhost:8001"
 
 class BackendTester:
     def __init__(self):
