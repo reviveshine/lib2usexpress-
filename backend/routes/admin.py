@@ -687,6 +687,44 @@ async def get_all_verifications(
         }
     }
 
+@router.get("/verifications/stats", response_model=dict)
+async def get_verification_stats(admin = Depends(get_current_admin)):
+    """Get verification statistics"""
+    await check_admin_permission("view_analytics", admin)
+    
+    database = get_database()
+    
+    # Get verification counts by status
+    pipeline = [
+        {"$group": {
+            "_id": "$verification_status",
+            "count": {"$sum": 1}
+        }}
+    ]
+    
+    status_counts = {"pending": 0, "documents_required": 0, "under_review": 0, "approved": 0, "rejected": 0}
+    
+    async for result in database.seller_verifications.aggregate(pipeline):
+        status_counts[result["_id"]] = result["count"]
+    
+    total_applications = sum(status_counts.values())
+    approval_rate = (status_counts["approved"] / total_applications * 100) if total_applications > 0 else 0
+    
+    stats = {
+        "total_applications": total_applications,
+        "pending_review": status_counts["pending"],
+        "documents_required": status_counts["documents_required"],
+        "under_review": status_counts["under_review"],
+        "approved": status_counts["approved"],
+        "rejected": status_counts["rejected"],
+        "approval_rate": round(approval_rate, 1)
+    }
+    
+    return {
+        "success": True,
+        "stats": stats
+    }
+
 @router.get("/verifications/{verification_id}", response_model=dict)
 async def get_verification_details(
     verification_id: str,
