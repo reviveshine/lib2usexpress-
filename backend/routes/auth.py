@@ -182,7 +182,8 @@ async def forgot_password(request: ForgotPasswordRequest):
     
     # In a real application, you would send an email here
     # For now, we'll log the reset link for development/testing
-    reset_link = f"https://3744ae8f-4a39-4611-b6ff-c79e842af2fc.preview.emergentagent.com/reset-password?token={reset_token}"
+    frontend_url = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
+    reset_link = f"{frontend_url}/reset-password?token={reset_token}"
     print(f"🔐 Password Reset Link for {request.email}: {reset_link}")
     print(f"🔐 Reset Token: {reset_token}")
     
