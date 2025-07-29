@@ -81,15 +81,45 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-# Health check endpoint
+# Health check endpoint - must not depend on database for Kubernetes health checks
 @app.get("/api/health")
 async def health_check():
-    database = get_database()
-    return {
+    """Health check endpoint for Kubernetes deployment"""
+    db_connected = is_database_connected()
+    
+    # Always return 200 OK for Kubernetes health checks
+    # Database connection is optional for health check success
+    response = {
         "status": "OK",
         "message": "Liberia2USA Express API is running",
         "timestamp": datetime.utcnow().isoformat(),
-        "database_connected": database is not None
+        "version": "1.0.0",
+        "database_connected": db_connected
+    }
+    
+    if db_connected:
+        database = get_database()
+        response["database_name"] = database.name if database else "unknown"
+    
+    return response
+
+# Kubernetes readiness probe endpoint
+@app.get("/api/ready")
+async def readiness_check():
+    """Readiness check for Kubernetes - requires database connection"""
+    db_connected = is_database_connected()
+    
+    if not db_connected:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Database not connected"
+        )
+    
+    return {
+        "status": "READY",
+        "message": "Application is ready to serve requests",
+        "timestamp": datetime.utcnow().isoformat(),
+        "database_connected": True
     }
 
 # Root endpoint
