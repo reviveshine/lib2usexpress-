@@ -656,9 +656,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Password Reset - Forgot Password Page"
-    - "Password Reset - Reset Password Page"
-    - "Password Reset - Login Page Integration"
+    - "Password reset functionality testing completed successfully"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
