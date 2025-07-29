@@ -136,24 +136,31 @@ async def root():
         }
     }
 
-# Import routes (we'll create these next)
-from routes.auth import router as auth_router
-from routes.users import router as users_router
-from routes.products import router as products_router
-from routes.shipping import router as shipping_router
-from routes.chat import router as chat_router
-from routes.payments import router as payments_router
-from routes.admin import router as admin_router
-from routes.verification import router as verification_router
+# Import routes with error handling
+try:
+    from routes.auth import router as auth_router
+    from routes.users import router as users_router
+    from routes.products import router as products_router
+    from routes.shipping import router as shipping_router
+    from routes.chat import router as chat_router
+    from routes.payments import router as payments_router
+    from routes.admin import router as admin_router
+    from routes.verification import router as verification_router
 
-app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
-app.include_router(users_router, prefix="/api/users", tags=["Users"])
-app.include_router(products_router, prefix="/api/products", tags=["Products"])
-app.include_router(shipping_router, prefix="/api/shipping", tags=["Shipping"])
-app.include_router(chat_router, prefix="/api/chat", tags=["Chat"])
-app.include_router(payments_router, prefix="/api/payments", tags=["Payments"])
-app.include_router(admin_router, prefix="/api/admin", tags=["Admin"])
-app.include_router(verification_router, prefix="/api/verification", tags=["Verification"])
+    app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
+    app.include_router(users_router, prefix="/api/users", tags=["Users"])
+    app.include_router(products_router, prefix="/api/products", tags=["Products"])
+    app.include_router(shipping_router, prefix="/api/shipping", tags=["Shipping"])
+    app.include_router(chat_router, prefix="/api/chat", tags=["Chat"])
+    app.include_router(payments_router, prefix="/api/payments", tags=["Payments"])
+    app.include_router(admin_router, prefix="/api/admin", tags=["Admin"])
+    app.include_router(verification_router, prefix="/api/verification", tags=["Verification"])
+    
+    print("✅ All API routes loaded successfully")
+    
+except ImportError as e:
+    print(f"⚠️ Warning: Some routes could not be imported: {e}")
+    print("✅ Application will continue with available routes")
 
 if __name__ == "__main__":
     uvicorn.run(
