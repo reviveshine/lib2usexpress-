@@ -4,69 +4,69 @@
     "success": true,
     "message": "Requirements loaded - Basic: 2, Enhanced: 3, Business: 4 docs, 15 counties",
     "details": null,
-    "timestamp": "2025-07-29T00:22:34.988050"
+    "timestamp": "2025-07-29T00:27:15.145390"
   },
   {
     "test": "Create Verification Profile",
     "success": true,
     "message": "Seller verification profile created successfully",
     "details": null,
-    "timestamp": "2025-07-29T00:22:35.083449"
+    "timestamp": "2025-07-29T00:27:15.244849"
   },
   {
     "test": "Get Verification Profile",
     "success": true,
-    "message": "Profile retrieved - Status: pending",
+    "message": "Profile retrieved - Status: under_review",
     "details": null,
-    "timestamp": "2025-07-29T00:22:35.176232"
+    "timestamp": "2025-07-29T00:27:15.342746"
   },
   {
     "test": "Upload Verification Document",
     "success": true,
     "message": "National ID uploaded successfully - ID: 997427de-a10c-4ae6-953b-e8baeda6ca5f",
     "details": null,
-    "timestamp": "2025-07-29T00:22:35.391633"
+    "timestamp": "2025-07-29T00:27:15.571631"
   },
   {
     "test": "Upload Utility Bill Document",
     "success": true,
     "message": "Utility bill uploaded successfully - ID: 33f72d9c-7f17-4d80-894b-1cfea5c6835b",
     "details": null,
-    "timestamp": "2025-07-29T00:22:35.609417"
+    "timestamp": "2025-07-29T00:27:15.799855"
   },
   {
     "test": "Get Verification Documents",
     "success": true,
     "message": "Retrieved 2 documents",
     "details": null,
-    "timestamp": "2025-07-29T00:22:35.672328"
+    "timestamp": "2025-07-29T00:27:15.865767"
   },
   {
     "test": "Get Verification Status",
     "success": true,
     "message": "Status: under_review, Progress: 0.0%, Documents: 2/2",
     "details": null,
-    "timestamp": "2025-07-29T00:22:35.764733"
+    "timestamp": "2025-07-29T00:27:15.966734"
   },
   {
     "test": "Verification Buyer Access Denied",
     "success": true,
     "message": "Buyers correctly blocked from verification endpoints",
     "details": null,
-    "timestamp": "2025-07-29T00:22:35.797481"
+    "timestamp": "2025-07-29T00:27:16.000974"
   },
   {
     "test": "Admin Get All Verifications",
     "success": true,
     "message": "Retrieved 1/1 verifications",
     "details": null,
-    "timestamp": "2025-07-29T00:22:35.981478"
+    "timestamp": "2025-07-29T00:27:16.195287"
   },
   {
     "test": "Admin Verification Stats",
-    "success": false,
-    "message": "HTTP 404",
-    "details": "{\"detail\":\"Verification not found\"}",
-    "timestamp": "2025-07-29T00:22:36.052069"
+    "success": true,
+    "message": "Stats: 1 total, 0 pending, 0 approved, 0 rejected, 0.0% approval rate",
+    "details": null,
+    "timestamp": "2025-07-29T00:27:16.261545"
   }
 ]
