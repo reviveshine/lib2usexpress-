@@ -43,6 +43,10 @@ async def get_user_profile(current_user_id: str = Depends(get_current_user)):
         
         await database.user_profiles.insert_one(new_profile.dict())
         profile = new_profile.dict()
+    else:
+        # Remove MongoDB ObjectId to avoid serialization issues
+        if "_id" in profile:
+            del profile["_id"]
     
     return {
         "success": True,
