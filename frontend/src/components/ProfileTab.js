@@ -71,6 +71,69 @@ const ProfileTab = () => {
     }
   };
 
+  const handleProfilePictureUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Check file size (limit to 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File size must be less than 5MB');
+        return;
+      }
+      
+      // Check file type
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file');
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNewProfilePicture(reader.result);
+        setShowProfilePictureModal(true);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleUpdateProfilePicture = async () => {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const response = await axios.put(
+        `${process.env.REACT_APP_BACKEND_URL}/api/profile/profile/picture`,
+        { profile_picture: newProfilePicture },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      if (response.data.success) {
+        setShowProfilePictureModal(false);
+        setNewProfilePicture('');
+        fetchProfile();
+      }
+    } catch (error) {
+      console.error('Error updating profile picture:', error);
+    }
+  };
+
+  const handleRemoveProfilePicture = async () => {
+    try {
+      const token = localStorage.getItem('auth_token');
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BACKEND_URL}/api/profile/profile/picture`,
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      if (response.data.success) {
+        fetchProfile();
+      }
+    } catch (error) {
+      console.error('Error removing profile picture:', error);
+    }
+  };
+
   const handleAddAddress = async (e) => {
     e.preventDefault();
     try {
