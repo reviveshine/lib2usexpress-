@@ -153,6 +153,7 @@ try:
     from routes.payments import router as payments_router
     from routes.admin import router as admin_router
     from routes.verification import router as verification_router
+    from routes.profile import router as profile_router
 
     app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
     app.include_router(users_router, prefix="/api/users", tags=["Users"])
@@ -162,6 +163,7 @@ try:
     app.include_router(payments_router, prefix="/api/payments", tags=["Payments"])
     app.include_router(admin_router, prefix="/api/admin", tags=["Admin"])
     app.include_router(verification_router, prefix="/api/verification", tags=["Verification"])
+    app.include_router(profile_router, prefix="/api/profile", tags=["Profile"])
     
     print("✅ All API routes loaded successfully")
     
