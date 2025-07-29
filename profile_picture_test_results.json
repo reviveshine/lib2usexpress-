@@ -4,48 +4,48 @@
     "success": true,
     "message": "PNG profile picture uploaded successfully",
     "details": null,
-    "timestamp": "2025-07-29T15:18:18.385252"
+    "timestamp": "2025-07-29T15:19:32.672003"
   },
   {
     "test": "Profile Picture Retrieval After Upload",
     "success": true,
     "message": "Profile picture retrieved successfully after upload",
     "details": null,
-    "timestamp": "2025-07-29T15:18:18.467698"
+    "timestamp": "2025-07-29T15:19:32.759429"
   },
   {
     "test": "Profile Picture Upload - JPEG",
     "success": false,
-    "message": "No seller token available",
-    "details": "Seller authentication failed",
-    "timestamp": "2025-07-29T15:18:18.468030"
+    "message": "HTTP 404",
+    "details": "{\"detail\":\"Profile not found\"}",
+    "timestamp": "2025-07-29T15:19:32.813845"
   },
   {
     "test": "Profile Picture Delete",
     "success": true,
     "message": "Profile picture deleted successfully",
     "details": null,
-    "timestamp": "2025-07-29T15:18:18.557211"
+    "timestamp": "2025-07-29T15:19:32.895716"
   },
   {
     "test": "Profile Picture Retrieval After Delete",
     "success": true,
     "message": "Profile picture correctly set to null after deletion",
     "details": null,
-    "timestamp": "2025-07-29T15:18:18.636712"
+    "timestamp": "2025-07-29T15:19:32.979349"
   },
   {
     "test": "Profile Picture Authentication Required",
     "success": true,
     "message": "Profile picture endpoints correctly require authentication",
     "details": null,
-    "timestamp": "2025-07-29T15:18:18.670299"
+    "timestamp": "2025-07-29T15:19:33.017517"
   },
   {
     "test": "Complete Workflow",
     "success": true,
     "message": "Complete workflow successful: upload \u2192 retrieve \u2192 delete \u2192 verify removal",
     "details": null,
-    "timestamp": "2025-07-29T15:18:19.006122"
+    "timestamp": "2025-07-29T15:19:33.337308"
   }
 ]
