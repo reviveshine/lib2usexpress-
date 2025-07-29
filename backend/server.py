@@ -39,18 +39,10 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS middleware - include production and preview URLs
+# CORS middleware - very permissive for debugging
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000", 
-        "http://localhost:8001",
-        "https://express-shipping-2.emergent.host",
-        "https://lib2usa-market.preview.emergentagent.com",
-        "https://*.emergent.host",
-        "https://*.emergentagent.com",
-        "https://*.preview.emergentagent.com"
-    ],
+    allow_origins=["*"],  # Allow all origins for debugging
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
