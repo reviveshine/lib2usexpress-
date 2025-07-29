@@ -13,7 +13,16 @@ import io
 from datetime import datetime
 
 # Get backend URL from frontend .env
-BACKEND_URL = "http://localhost:8001"
+try:
+    with open('/app/frontend/.env', 'r') as f:
+        for line in f:
+            if line.startswith('REACT_APP_BACKEND_URL='):
+                BACKEND_URL = line.split('=', 1)[1].strip()
+                break
+        else:
+            BACKEND_URL = "http://localhost:8001"
+except:
+    BACKEND_URL = "http://localhost:8001"
 
 class BackendTester:
     def __init__(self):
