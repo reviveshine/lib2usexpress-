@@ -1032,6 +1032,9 @@ test_plan:
       - working: true
         agent: "main"
         comment: "NETWORK CONNECTIVITY ISSUE RESOLVED: User reported 'Network error: Unable to connect to server at https://lib2usa-market.emergent.host' - ISSUE DIAGNOSED: The https://lib2usa-market.emergent.host domain is not a properly configured production URL through Emergent's deployment system. SOLUTION APPLIED: Reverted to working preview URL (https://3744ae8f-4a39-4611-b6ff-c79e842af2fc.preview.emergentagent.com) with proper environment configuration. VERIFICATION COMPLETED: ✅ Frontend loads correctly ✅ Password reset system fully functional ✅ API connectivity working ✅ Mock email system generating reset tokens with 🔐 emoji ✅ Complete frontend-backend communication established. EXPLANATION PROVIDED: User needs to use Emergent's Deploy button to get actual production URL, or configure custom domain through proper Emergent deployment process. Password reset system is fully operational on correct URL."
+      - working: true
+        agent: "main"
+        comment: "REGISTRATION FLOW BUG FIXED: User reported that after account creation, users see 'Login to Your Account' with no reaction and don't move to the right dashboard. ROOT CAUSE IDENTIFIED: RegisterPage and LoginPage were manually setting localStorage but not using AuthContext.login() method, causing authentication state mismatch. SOLUTION APPLIED: ✅ Updated RegisterPage.js to import and use AuthContext.login() method instead of manual localStorage ✅ Updated LoginPage.js to use AuthContext.login() method consistently ✅ Restarted frontend service to apply changes. VERIFICATION COMPLETED: Frontend testing agent confirmed registration flow working perfectly - buyers redirect to /marketplace, sellers to /dashboard, header shows logged-in state, AuthContext properly updated. Registration bug completely resolved."
 
 agent_communication:
   - agent: "testing"
