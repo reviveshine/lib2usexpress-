@@ -3925,6 +3925,357 @@ class BackendTester:
             self.log_test("Shipping Rates Auth Required", False, "Request failed", str(e))
             return False
     
+    # ==================== PROFILE PICTURE TESTS ====================
+    
+    def test_profile_picture_upload_png(self):
+        """Test PUT /api/profile/profile/picture with PNG image"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            
+            # Use the provided test image (1x1 pixel PNG)
+            test_image_base64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+            
+            picture_data = {
+                "profile_picture": test_image_base64
+            }
+            
+            response = requests.put(
+                f"{self.base_url}/api/profile/profile/picture",
+                json=picture_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and data.get("message") == "Profile picture updated successfully":
+                    self.log_test("Profile Picture Upload - PNG", True, "PNG profile picture uploaded successfully")
+                    return True
+                else:
+                    self.log_test("Profile Picture Upload - PNG", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Profile Picture Upload - PNG", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Profile Picture Upload - PNG", False, "Request failed", str(e))
+            return False
+    
+    def test_profile_picture_upload_jpeg(self):
+        """Test PUT /api/profile/profile/picture with JPEG image"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # Create a simple JPEG base64 test image
+            test_image_base64 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwA/wA=="
+            
+            picture_data = {
+                "profile_picture": test_image_base64
+            }
+            
+            response = requests.put(
+                f"{self.base_url}/api/profile/profile/picture",
+                json=picture_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and data.get("message") == "Profile picture updated successfully":
+                    self.log_test("Profile Picture Upload - JPEG", True, "JPEG profile picture uploaded successfully")
+                    return True
+                else:
+                    self.log_test("Profile Picture Upload - JPEG", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Profile Picture Upload - JPEG", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Profile Picture Upload - JPEG", False, "Request failed", str(e))
+            return False
+    
+    def test_profile_picture_retrieval_after_upload(self):
+        """Test GET /api/profile/profile includes profile_picture after upload"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            
+            response = requests.get(
+                f"{self.base_url}/api/profile/profile",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("profile") and
+                    "profile_picture" in data["profile"] and
+                    data["profile"]["profile_picture"] is not None and
+                    data["profile"]["profile_picture"].startswith("data:image/")):
+                    self.log_test("Profile Picture Retrieval After Upload", True, "Profile picture retrieved successfully after upload")
+                    return True
+                else:
+                    self.log_test("Profile Picture Retrieval After Upload", False, "Profile picture not found or invalid format", data.get("profile", {}))
+                    return False
+            else:
+                self.log_test("Profile Picture Retrieval After Upload", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Profile Picture Retrieval After Upload", False, "Request failed", str(e))
+            return False
+    
+    def test_profile_picture_updated_at_timestamp(self):
+        """Test that profile picture upload updates the updated_at timestamp"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            
+            # Get current profile to check timestamp
+            response1 = requests.get(
+                f"{self.base_url}/api/profile/profile",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response1.status_code != 200:
+                self.log_test("Profile Picture Updated At Timestamp", False, "Failed to get initial profile", response1.text)
+                return False
+            
+            initial_data = response1.json()
+            initial_updated_at = initial_data["profile"]["updated_at"]
+            
+            # Wait a moment to ensure timestamp difference
+            import time
+            time.sleep(1)
+            
+            # Upload new profile picture
+            test_image_base64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+            picture_data = {"profile_picture": test_image_base64}
+            
+            response2 = requests.put(
+                f"{self.base_url}/api/profile/profile/picture",
+                json=picture_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response2.status_code != 200:
+                self.log_test("Profile Picture Updated At Timestamp", False, "Failed to upload profile picture", response2.text)
+                return False
+            
+            # Get updated profile
+            response3 = requests.get(
+                f"{self.base_url}/api/profile/profile",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response3.status_code == 200:
+                updated_data = response3.json()
+                updated_updated_at = updated_data["profile"]["updated_at"]
+                
+                if updated_updated_at > initial_updated_at:
+                    self.log_test("Profile Picture Updated At Timestamp", True, "Profile updated_at timestamp correctly updated after picture upload")
+                    return True
+                else:
+                    self.log_test("Profile Picture Updated At Timestamp", False, f"Timestamp not updated: {initial_updated_at} -> {updated_updated_at}")
+                    return False
+            else:
+                self.log_test("Profile Picture Updated At Timestamp", False, f"HTTP {response3.status_code}", response3.text)
+                return False
+        except Exception as e:
+            self.log_test("Profile Picture Updated At Timestamp", False, "Request failed", str(e))
+            return False
+    
+    def test_profile_picture_delete(self):
+        """Test DELETE /api/profile/profile/picture removes profile picture"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            response = requests.delete(
+                f"{self.base_url}/api/profile/profile/picture",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and data.get("message") == "Profile picture removed successfully":
+                    self.log_test("Profile Picture Delete", True, "Profile picture deleted successfully")
+                    return True
+                else:
+                    self.log_test("Profile Picture Delete", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Profile Picture Delete", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Profile Picture Delete", False, "Request failed", str(e))
+            return False
+    
+    def test_profile_picture_retrieval_after_delete(self):
+        """Test GET /api/profile/profile shows null profile_picture after deletion"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            response = requests.get(
+                f"{self.base_url}/api/profile/profile",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("profile") and
+                    "profile_picture" in data["profile"] and
+                    data["profile"]["profile_picture"] is None):
+                    self.log_test("Profile Picture Retrieval After Delete", True, "Profile picture correctly set to null after deletion")
+                    return True
+                else:
+                    self.log_test("Profile Picture Retrieval After Delete", False, "Profile picture not null after deletion", data.get("profile", {}))
+                    return False
+            else:
+                self.log_test("Profile Picture Retrieval After Delete", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Profile Picture Retrieval After Delete", False, "Request failed", str(e))
+            return False
+    
+    def test_profile_picture_delete_when_none_exists(self):
+        """Test DELETE /api/profile/profile/picture when no picture exists"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            
+            # First ensure no profile picture exists by deleting it
+            requests.delete(
+                f"{self.base_url}/api/profile/profile/picture",
+                headers=headers,
+                timeout=10
+            )
+            
+            # Now try to delete again
+            response = requests.delete(
+                f"{self.base_url}/api/profile/profile/picture",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and data.get("message") == "Profile picture removed successfully":
+                    self.log_test("Profile Picture Delete When None Exists", True, "Delete operation successful even when no picture exists")
+                    return True
+                else:
+                    self.log_test("Profile Picture Delete When None Exists", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Profile Picture Delete When None Exists", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Profile Picture Delete When None Exists", False, "Request failed", str(e))
+            return False
+    
+    def test_profile_picture_authentication_required(self):
+        """Test that profile picture endpoints require authentication"""
+        try:
+            # Test upload without authentication
+            test_image_base64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+            picture_data = {"profile_picture": test_image_base64}
+            
+            response1 = requests.put(
+                f"{self.base_url}/api/profile/profile/picture",
+                json=picture_data,
+                timeout=10
+            )
+            
+            # Test delete without authentication
+            response2 = requests.delete(
+                f"{self.base_url}/api/profile/profile/picture",
+                timeout=10
+            )
+            
+            if response1.status_code == 403 and response2.status_code == 403:
+                self.log_test("Profile Picture Authentication Required", True, "Profile picture endpoints correctly require authentication")
+                return True
+            else:
+                self.log_test("Profile Picture Authentication Required", False, f"Expected 403 for both endpoints, got {response1.status_code} and {response2.status_code}")
+                return False
+        except Exception as e:
+            self.log_test("Profile Picture Authentication Required", False, "Request failed", str(e))
+            return False
+    
+    def test_profile_picture_complete_workflow(self):
+        """Test complete profile picture workflow: upload → retrieve → delete → verify removal"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            
+            # Step 1: Upload profile picture
+            test_image_base64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+            picture_data = {"profile_picture": test_image_base64}
+            
+            upload_response = requests.put(
+                f"{self.base_url}/api/profile/profile/picture",
+                json=picture_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if upload_response.status_code != 200:
+                self.log_test("Profile Picture Complete Workflow", False, "Upload failed", upload_response.text)
+                return False
+            
+            # Step 2: Retrieve and verify picture exists
+            get_response = requests.get(
+                f"{self.base_url}/api/profile/profile",
+                headers=headers,
+                timeout=10
+            )
+            
+            if get_response.status_code != 200:
+                self.log_test("Profile Picture Complete Workflow", False, "Profile retrieval failed", get_response.text)
+                return False
+            
+            get_data = get_response.json()
+            if not (get_data.get("profile", {}).get("profile_picture") and 
+                   get_data["profile"]["profile_picture"].startswith("data:image/")):
+                self.log_test("Profile Picture Complete Workflow", False, "Profile picture not found after upload")
+                return False
+            
+            # Step 3: Delete profile picture
+            delete_response = requests.delete(
+                f"{self.base_url}/api/profile/profile/picture",
+                headers=headers,
+                timeout=10
+            )
+            
+            if delete_response.status_code != 200:
+                self.log_test("Profile Picture Complete Workflow", False, "Delete failed", delete_response.text)
+                return False
+            
+            # Step 4: Verify picture is removed
+            verify_response = requests.get(
+                f"{self.base_url}/api/profile/profile",
+                headers=headers,
+                timeout=10
+            )
+            
+            if verify_response.status_code != 200:
+                self.log_test("Profile Picture Complete Workflow", False, "Verification retrieval failed", verify_response.text)
+                return False
+            
+            verify_data = verify_response.json()
+            if verify_data.get("profile", {}).get("profile_picture") is not None:
+                self.log_test("Profile Picture Complete Workflow", False, "Profile picture not removed after deletion")
+                return False
+            
+            self.log_test("Profile Picture Complete Workflow", True, "Complete workflow successful: upload → retrieve → delete → verify removal")
+            return True
+            
+        except Exception as e:
+            self.log_test("Profile Picture Complete Workflow", False, "Request failed", str(e))
+            return False
+
     def run_all_tests(self):
         """Run all backend tests in sequence"""
         print(f"\n🚀 Starting Backend API Tests for Liberia2USA Express")
