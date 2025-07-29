@@ -3102,6 +3102,17 @@ class BackendTester:
             self.test_admin_get_products,
             self.test_admin_get_activities,
             self.test_admin_authentication_required,
+            # New seller verification API tests
+            self.test_create_verification_profile,
+            self.test_get_verification_profile,
+            self.test_upload_verification_document,
+            self.test_upload_utility_bill_document,
+            self.test_get_verification_documents,
+            self.test_get_verification_status,
+            self.test_get_verification_requirements,
+            self.test_verification_buyer_access_denied,
+            self.test_admin_get_all_verifications,
+            self.test_admin_verification_stats,
             # New payment API tests
             self.test_get_payment_packages,
             self.test_calculate_order_total,
