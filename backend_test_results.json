@@ -2,547 +2,985 @@
   {
     "test": "Health Check",
     "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:43.743264"
+    "message": "Connection failed",
+    "details": "'NoneType' object has no attribute 'get'",
+    "timestamp": "2025-07-29T01:27:07.461839"
   },
   {
     "test": "Buyer Registration",
     "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:43.763405"
+    "message": "HTTP 400",
+    "details": "{\"detail\":\"Email already registered\"}",
+    "timestamp": "2025-07-29T01:27:07.525393"
   },
   {
     "test": "Seller Registration",
     "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:43.782583"
+    "message": "HTTP 400",
+    "details": "{\"detail\":\"Email already registered\"}",
+    "timestamp": "2025-07-29T01:27:07.577463"
   },
   {
     "test": "Location Validation",
-    "success": false,
-    "message": "Expected validation error, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:43.806694"
+    "success": true,
+    "message": "Location validation working - buyer with Liberia location rejected",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:07.605703"
   },
   {
     "test": "Buyer Login",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:43.829188"
+    "success": true,
+    "message": "Buyer login successful",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:07.982688"
   },
   {
     "test": "Seller Login",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:43.854362"
+    "success": true,
+    "message": "Seller login successful",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:08.314283"
   },
   {
     "test": "Auth Me Endpoint",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:43.875424"
+    "success": true,
+    "message": "User info retrieved successfully",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:08.369043"
+  },
+  {
+    "test": "Forgot Password - Valid Email",
+    "success": true,
+    "message": "Password reset request successful",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:08.503514"
+  },
+  {
+    "test": "Forgot Password - Invalid Email",
+    "success": true,
+    "message": "Non-existent email handled securely (no information disclosure)",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:08.558114"
+  },
+  {
+    "test": "Get Reset Token",
+    "success": true,
+    "message": "Reset token extraction simulated (would be from email in production)",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:08.670850"
+  },
+  {
+    "test": "Verify Reset Token - Invalid",
+    "success": true,
+    "message": "Invalid token correctly rejected",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:08.730781"
+  },
+  {
+    "test": "Reset Password - Invalid Token",
+    "success": true,
+    "message": "Invalid token correctly rejected",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:08.778599"
+  },
+  {
+    "test": "Reset Password - Mismatched Passwords",
+    "success": true,
+    "message": "Password validation working (or token validation first)",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:08.808705"
+  },
+  {
+    "test": "Reset Password - Weak Password",
+    "success": true,
+    "message": "Password strength validation working (or token validation first)",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:08.827718"
+  },
+  {
+    "test": "Password Reset Integration Flow",
+    "success": true,
+    "message": "Complete password reset flow validated - forgot password request successful, token would be sent via email in production, reset endpoints validated separately",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:09.252167"
   },
   {
     "test": "Get User Profile",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:43.897772"
+    "success": true,
+    "message": "User profile retrieved successfully",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:09.302554"
   },
   {
     "test": "Update User Profile",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:43.919353"
+    "success": true,
+    "message": "User profile updated successfully",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:09.416569"
   },
   {
     "test": "Get Sellers",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:43.942296"
+    "success": true,
+    "message": "Retrieved 3 sellers",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:09.464803"
   },
   {
     "test": "Create Product",
     "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:43.962762"
+    "message": "Invalid response format",
+    "details": {
+      "success": true,
+      "data": [
+        {
+          "id": "98758bbe-ab32-408e-8c64-b364f86c66a0",
+          "name": "Traditional Liberian Kente Cloth",
+          "description": "Authentic handwoven Kente cloth from Liberia, perfect for special occasions and cultural events.",
+          "price": 45.99,
+          "category": "fashion",
+          "images": [
+            "https://via.placeholder.com/400x400?text=Kente+Cloth"
+          ],
+          "video": null,
+          "stock": 15,
+          "tags": [
+            "traditional",
+            "kente",
+            "fashion",
+            "handwoven"
+          ],
+          "weight": 0.5,
+          "dimensions": {
+            "length": 200,
+            "width": 150,
+            "height": 1
+          },
+          "seller_id": "seller123",
+          "seller_name": "Mary Johnson",
+          "views": 125,
+          "is_active": true,
+          "created_at": "2025-07-26T01:49:36.707000",
+          "updated_at": "2025-07-26T01:49:36.707000"
+        },
+        {
+          "id": "29c9eb92-3d56-420d-9fa7-83b44709c15d",
+          "name": "Liberian Coffee Beans - Premium Grade",
+          "description": "Premium coffee beans from the mountains of Liberia, known for their rich flavor and aroma.",
+          "price": 28.5,
+          "category": "food",
+          "images": [
+            "https://via.placeholder.com/400x400?text=Coffee+Beans"
+          ],
+          "video": null,
+          "stock": 50,
+          "tags": [
+            "coffee",
+            "beans",
+            "premium",
+            "liberian"
+          ],
+          "weight": 1.0,
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 8
+          },
+          "seller_id": "seller456",
+          "seller_name": "John Smith",
+          "views": 89,
+          "is_active": true,
+          "created_at": "2025-07-26T01:49:36.707000",
+          "updated_at": "2025-07-26T01:49:36.707000"
+        },
+        {
+          "id": "bbde824e-e442-4437-8287-d7e63998e3c6",
+          "name": "Handcrafted Wooden Sculpture",
+          "description": "Beautiful wooden sculpture carved by skilled artisans, representing traditional Liberian art.",
+          "price": 75.0,
+          "category": "art",
+          "images": [
+            "https://via.placeholder.com/400x400?text=Wooden+Sculpture"
+          ],
+          "video": null,
+          "stock": 8,
+          "tags": [
+            "sculpture",
+            "handcrafted",
+            "wood",
+            "art"
+          ],
+          "weight": 2.5,
+          "dimensions": {
+            "length": 30,
+            "width": 15,
+            "height": 25
+          },
+          "seller_id": "seller789",
+          "seller_name": "Grace Williams",
+          "views": 67,
+          "is_active": true,
+          "created_at": "2025-07-26T01:49:36.707000",
+          "updated_at": "2025-07-26T01:49:36.707000"
+        },
+        {
+          "id": "b966ba55-e534-4ec8-a797-bdec65862516",
+          "name": "Liberian Pepper Sauce - Hot",
+          "description": "Authentic Liberian pepper sauce made from locally grown peppers. Perfect for adding heat to any dish.",
+          "price": 12.99,
+          "category": "food",
+          "images": [
+            "https://via.placeholder.com/400x400?text=Pepper+Sauce"
+          ],
+          "video": null,
+          "stock": 100,
+          "tags": [
+            "sauce",
+            "spicy",
+            "condiment",
+            "liberian"
+          ],
+          "weight": 0.3,
+          "dimensions": {
+            "length": 12,
+            "width": 6,
+            "height": 15
+          },
+          "seller_id": "seller456",
+          "seller_name": "John Smith",
+          "views": 203,
+          "is_active": true,
+          "created_at": "2025-07-26T01:49:36.707000",
+          "updated_at": "2025-07-26T01:49:36.707000"
+        },
+        {
+          "id": "f6fe49f3-b00c-4cad-a478-627d5a66ab51",
+          "name": "Traditional Liberian Jewelry Set",
+          "description": "Beautiful jewelry set featuring traditional Liberian designs, made with gold-plated materials.",
+          "price": 89.99,
+          "category": "jewelry",
+          "images": [
+            "https://via.placeholder.com/400x400?text=Jewelry+Set"
+          ],
+          "video": null,
+          "stock": 12,
+          "tags": [
+            "jewelry",
+            "traditional",
+            "gold",
+            "set"
+          ],
+          "weight": 0.2,
+          "dimensions": {
+            "length": 15,
+            "width": 10,
+            "height": 3
+          },
+          "seller_id": "seller789",
+          "seller_name": "Grace Williams",
+          "views": 156,
+          "is_active": true,
+          "created_at": "2025-07-26T01:49:36.707000",
+          "updated_at": "2025-07-26T01:49:36.707000"
+        }
+      ],
+      "pagination": {
+        "currentPage": 1,
+        "totalPages": 1,
+        "totalCount": 5,
+        "hasNextPage": false,
+        "hasPrevPage": false
+      }
+    },
+    "timestamp": "2025-07-29T01:27:09.558997"
   },
   {
     "test": "Get Products",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:43.982371"
+    "success": true,
+    "message": "Retrieved 5 products with pagination",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:09.654075"
   },
   {
     "test": "Get Products with Filters",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.005766"
+    "success": true,
+    "message": "Products filtered successfully",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:09.751689"
   },
   {
     "test": "Get Single Product",
     "success": false,
     "message": "No product ID available",
     "details": "Product creation may have failed",
-    "timestamp": "2025-07-29T00:17:44.006061"
+    "timestamp": "2025-07-29T01:27:09.751998"
   },
   {
     "test": "Get Seller Products",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.027494"
+    "success": true,
+    "message": "Retrieved 0 seller products",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:09.874859"
   },
   {
     "test": "Buyer Product Creation Block",
     "success": false,
-    "message": "Expected 403, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.049922"
+    "message": "Expected 403, got HTTP 200",
+    "details": "{\"success\":true,\"data\":[{\"id\":\"98758bbe-ab32-408e-8c64-b364f86c66a0\",\"name\":\"Traditional Liberian Kente Cloth\",\"description\":\"Authentic handwoven Kente cloth from Liberia, perfect for special occasions and cultural events.\",\"price\":45.99,\"category\":\"fashion\",\"images\":[\"https://via.placeholder.com/400x400?text=Kente+Cloth\"],\"video\":null,\"stock\":15,\"tags\":[\"traditional\",\"kente\",\"fashion\",\"handwoven\"],\"weight\":0.5,\"dimensions\":{\"length\":200,\"width\":150,\"height\":1},\"seller_id\":\"seller123\",\"seller_name\":\"Mary Johnson\",\"views\":125,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"29c9eb92-3d56-420d-9fa7-83b44709c15d\",\"name\":\"Liberian Coffee Beans - Premium Grade\",\"description\":\"Premium coffee beans from the mountains of Liberia, known for their rich flavor and aroma.\",\"price\":28.5,\"category\":\"food\",\"images\":[\"https://via.placeholder.com/400x400?text=Coffee+Beans\"],\"video\":null,\"stock\":50,\"tags\":[\"coffee\",\"beans\",\"premium\",\"liberian\"],\"weight\":1.0,\"dimensions\":{\"length\":20,\"width\":15,\"height\":8},\"seller_id\":\"seller456\",\"seller_name\":\"John Smith\",\"views\":89,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"bbde824e-e442-4437-8287-d7e63998e3c6\",\"name\":\"Handcrafted Wooden Sculpture\",\"description\":\"Beautiful wooden sculpture carved by skilled artisans, representing traditional Liberian art.\",\"price\":75.0,\"category\":\"art\",\"images\":[\"https://via.placeholder.com/400x400?text=Wooden+Sculpture\"],\"video\":null,\"stock\":8,\"tags\":[\"sculpture\",\"handcrafted\",\"wood\",\"art\"],\"weight\":2.5,\"dimensions\":{\"length\":30,\"width\":15,\"height\":25},\"seller_id\":\"seller789\",\"seller_name\":\"Grace Williams\",\"views\":67,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"b966ba55-e534-4ec8-a797-bdec65862516\",\"name\":\"Liberian Pepper Sauce - Hot\",\"description\":\"Authentic Liberian pepper sauce made from locally grown peppers. Perfect for adding heat to any dish.\",\"price\":12.99,\"category\":\"food\",\"images\":[\"https://via.placeholder.com/400x400?text=Pepper+Sauce\"],\"video\":null,\"stock\":100,\"tags\":[\"sauce\",\"spicy\",\"condiment\",\"liberian\"],\"weight\":0.3,\"dimensions\":{\"length\":12,\"width\":6,\"height\":15},\"seller_id\":\"seller456\",\"seller_name\":\"John Smith\",\"views\":203,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"f6fe49f3-b00c-4cad-a478-627d5a66ab51\",\"name\":\"Traditional Liberian Jewelry Set\",\"description\":\"Beautiful jewelry set featuring traditional Liberian designs, made with gold-plated materials.\",\"price\":89.99,\"category\":\"jewelry\",\"images\":[\"https://via.placeholder.com/400x400?text=Jewelry+Set\"],\"video\":null,\"stock\":12,\"tags\":[\"jewelry\",\"traditional\",\"gold\",\"set\"],\"weight\":0.2,\"dimensions\":{\"length\":15,\"width\":10,\"height\":3},\"seller_id\":\"seller789\",\"seller_name\":\"Grace Williams\",\"views\":156,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"}],\"pagination\":{\"currentPage\":1,\"totalPages\":1,\"totalCount\":5,\"hasNextPage\":false,\"hasPrevPage\":false}}",
+    "timestamp": "2025-07-29T01:27:09.968096"
   },
   {
     "test": "Unauthorized Access Block",
-    "success": false,
-    "message": "Expected 403, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.070399"
+    "success": true,
+    "message": "Protected endpoints correctly require authentication",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:09.985821"
   },
   {
     "test": "Media Upload - Images",
-    "success": false,
-    "message": "Request failed",
-    "details": "HTTPSConnectionPool(host='express-shipping-2.emergent.host', port=443): Max retries exceeded with url: /api/products/upload-media (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:2437)')))",
-    "timestamp": "2025-07-29T00:17:44.101583"
+    "success": true,
+    "message": "Images uploaded and base64 encoded successfully",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:10.144129"
   },
   {
     "test": "Media Upload - Video",
-    "success": false,
-    "message": "Request failed",
-    "details": "HTTPSConnectionPool(host='express-shipping-2.emergent.host', port=443): Max retries exceeded with url: /api/products/upload-media (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:2437)')))",
-    "timestamp": "2025-07-29T00:17:44.128180"
+    "success": true,
+    "message": "Video uploaded and base64 encoded successfully",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:10.395412"
   },
   {
     "test": "Media Upload Authentication",
-    "success": false,
-    "message": "Expected 403 without auth, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.151686"
+    "success": true,
+    "message": "Media upload correctly requires seller authentication",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:10.462152"
   },
   {
     "test": "Media Upload Size Limits",
-    "success": false,
-    "message": "Request failed",
-    "details": "HTTPSConnectionPool(host='express-shipping-2.emergent.host', port=443): Max retries exceeded with url: /api/products/upload-media (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:2437)')))",
-    "timestamp": "2025-07-29T00:17:44.189463"
+    "success": true,
+    "message": "File size limits correctly enforced",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:12.312749"
   },
   {
     "test": "Media Upload Count Limits",
-    "success": false,
-    "message": "Expected 400 for >10 images, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.224310"
+    "success": true,
+    "message": "File count limits correctly enforced",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:12.421675"
   },
   {
     "test": "Create Product with Multimedia",
     "success": false,
-    "message": "Request failed",
-    "details": "HTTPSConnectionPool(host='express-shipping-2.emergent.host', port=443): Max retries exceeded with url: /api/products/upload-media (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:2437)')))",
-    "timestamp": "2025-07-29T00:17:44.248767"
+    "message": "Invalid response format",
+    "details": {
+      "success": true,
+      "data": [
+        {
+          "id": "98758bbe-ab32-408e-8c64-b364f86c66a0",
+          "name": "Traditional Liberian Kente Cloth",
+          "description": "Authentic handwoven Kente cloth from Liberia, perfect for special occasions and cultural events.",
+          "price": 45.99,
+          "category": "fashion",
+          "images": [
+            "https://via.placeholder.com/400x400?text=Kente+Cloth"
+          ],
+          "video": null,
+          "stock": 15,
+          "tags": [
+            "traditional",
+            "kente",
+            "fashion",
+            "handwoven"
+          ],
+          "weight": 0.5,
+          "dimensions": {
+            "length": 200,
+            "width": 150,
+            "height": 1
+          },
+          "seller_id": "seller123",
+          "seller_name": "Mary Johnson",
+          "views": 125,
+          "is_active": true,
+          "created_at": "2025-07-26T01:49:36.707000",
+          "updated_at": "2025-07-26T01:49:36.707000"
+        },
+        {
+          "id": "29c9eb92-3d56-420d-9fa7-83b44709c15d",
+          "name": "Liberian Coffee Beans - Premium Grade",
+          "description": "Premium coffee beans from the mountains of Liberia, known for their rich flavor and aroma.",
+          "price": 28.5,
+          "category": "food",
+          "images": [
+            "https://via.placeholder.com/400x400?text=Coffee+Beans"
+          ],
+          "video": null,
+          "stock": 50,
+          "tags": [
+            "coffee",
+            "beans",
+            "premium",
+            "liberian"
+          ],
+          "weight": 1.0,
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 8
+          },
+          "seller_id": "seller456",
+          "seller_name": "John Smith",
+          "views": 89,
+          "is_active": true,
+          "created_at": "2025-07-26T01:49:36.707000",
+          "updated_at": "2025-07-26T01:49:36.707000"
+        },
+        {
+          "id": "bbde824e-e442-4437-8287-d7e63998e3c6",
+          "name": "Handcrafted Wooden Sculpture",
+          "description": "Beautiful wooden sculpture carved by skilled artisans, representing traditional Liberian art.",
+          "price": 75.0,
+          "category": "art",
+          "images": [
+            "https://via.placeholder.com/400x400?text=Wooden+Sculpture"
+          ],
+          "video": null,
+          "stock": 8,
+          "tags": [
+            "sculpture",
+            "handcrafted",
+            "wood",
+            "art"
+          ],
+          "weight": 2.5,
+          "dimensions": {
+            "length": 30,
+            "width": 15,
+            "height": 25
+          },
+          "seller_id": "seller789",
+          "seller_name": "Grace Williams",
+          "views": 67,
+          "is_active": true,
+          "created_at": "2025-07-26T01:49:36.707000",
+          "updated_at": "2025-07-26T01:49:36.707000"
+        },
+        {
+          "id": "b966ba55-e534-4ec8-a797-bdec65862516",
+          "name": "Liberian Pepper Sauce - Hot",
+          "description": "Authentic Liberian pepper sauce made from locally grown peppers. Perfect for adding heat to any dish.",
+          "price": 12.99,
+          "category": "food",
+          "images": [
+            "https://via.placeholder.com/400x400?text=Pepper+Sauce"
+          ],
+          "video": null,
+          "stock": 100,
+          "tags": [
+            "sauce",
+            "spicy",
+            "condiment",
+            "liberian"
+          ],
+          "weight": 0.3,
+          "dimensions": {
+            "length": 12,
+            "width": 6,
+            "height": 15
+          },
+          "seller_id": "seller456",
+          "seller_name": "John Smith",
+          "views": 203,
+          "is_active": true,
+          "created_at": "2025-07-26T01:49:36.707000",
+          "updated_at": "2025-07-26T01:49:36.707000"
+        },
+        {
+          "id": "f6fe49f3-b00c-4cad-a478-627d5a66ab51",
+          "name": "Traditional Liberian Jewelry Set",
+          "description": "Beautiful jewelry set featuring traditional Liberian designs, made with gold-plated materials.",
+          "price": 89.99,
+          "category": "jewelry",
+          "images": [
+            "https://via.placeholder.com/400x400?text=Jewelry+Set"
+          ],
+          "video": null,
+          "stock": 12,
+          "tags": [
+            "jewelry",
+            "traditional",
+            "gold",
+            "set"
+          ],
+          "weight": 0.2,
+          "dimensions": {
+            "length": 15,
+            "width": 10,
+            "height": 3
+          },
+          "seller_id": "seller789",
+          "seller_name": "Grace Williams",
+          "views": 156,
+          "is_active": true,
+          "created_at": "2025-07-26T01:49:36.707000",
+          "updated_at": "2025-07-26T01:49:36.707000"
+        }
+      ],
+      "pagination": {
+        "currentPage": 1,
+        "totalPages": 1,
+        "totalCount": 5,
+        "hasNextPage": false,
+        "hasPrevPage": false
+      }
+    },
+    "timestamp": "2025-07-29T01:27:12.714132"
   },
   {
     "test": "Get Product with Multimedia",
     "success": false,
     "message": "No product ID available",
     "details": "Product creation may have failed",
-    "timestamp": "2025-07-29T00:17:44.248806"
+    "timestamp": "2025-07-29T01:27:12.714675"
   },
   {
     "test": "Media Upload Invalid Files",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.281841"
+    "success": true,
+    "message": "Invalid file types correctly ignored",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:12.778345"
   },
   {
     "test": "Get Shipping Carriers",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.304722"
+    "success": true,
+    "message": "All 4 carriers (DHL, FedEx, UPS, Aramex) returned with service details",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:12.795749"
   },
   {
     "test": "Get Shipping Zones",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.328531"
+    "success": true,
+    "message": "Shipping zones returned with Liberia origins and all US states",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:12.813472"
   },
   {
     "test": "Shipping Estimate (No Auth)",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.351188"
+    "success": true,
+    "message": "Got 11 shipping estimates with customs duties included",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:12.831551"
   },
   {
     "test": "Shipping Estimate Different States",
-    "success": false,
-    "message": "Failed to get estimates for all states",
+    "success": true,
+    "message": "Successfully got estimates for 4 different US states",
     "details": null,
-    "timestamp": "2025-07-29T00:17:44.371244"
+    "timestamp": "2025-07-29T01:27:12.902947"
   },
   {
     "test": "Calculate Customs Duties",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.391694"
+    "success": true,
+    "message": "Customs duties calculated: $45.5 total charges",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:12.921209"
   },
   {
     "test": "Customs Calculation Auth Required",
-    "success": false,
-    "message": "Expected 403, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.413062"
+    "success": true,
+    "message": "Customs calculation correctly requires authentication",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:12.939085"
   },
   {
     "test": "Shipping Rates Full Request",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.434441"
+    "success": true,
+    "message": "Got 11 rates from all 4 carriers (DHL, FedEx, UPS, Aramex)",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:12.993717"
   },
   {
     "test": "Shipping Rates Multiple Packages",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.454920"
+    "success": true,
+    "message": "Rates calculated correctly for 3 packages (total weight: 4.5kg)",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:13.048583"
   },
   {
     "test": "Shipping Rates Origin Validation",
-    "success": false,
-    "message": "Expected 400 for non-Liberia origin, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.478835"
+    "success": true,
+    "message": "Non-Liberia origins correctly rejected",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:13.067946"
   },
   {
     "test": "Shipping Rates Destination Validation",
-    "success": false,
-    "message": "Expected 400 for non-USA destination, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.500606"
+    "success": true,
+    "message": "Non-USA destinations correctly rejected",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:13.086611"
   },
   {
     "test": "Shipping Rates Auth Required",
-    "success": false,
-    "message": "Expected 403, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.521991"
+    "success": true,
+    "message": "Shipping rates correctly require authentication",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:14.151646"
   },
   {
     "test": "Create Chat Between Users",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.543943"
+    "success": true,
+    "message": "Chat created successfully with ID: 250b430d-bea0-4e0c-8253-0d09d01988cf",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:14.333803"
   },
   {
     "test": "Create Chat Without Product",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.565457"
+    "success": true,
+    "message": "Chat created successfully without product context",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:14.509286"
   },
   {
     "test": "Create Duplicate Chat",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.587475"
+    "success": true,
+    "message": "Existing chat returned instead of creating duplicate",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:14.683840"
   },
   {
     "test": "Get User Chat List",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.609850"
+    "success": true,
+    "message": "Retrieved 1 chats with unread count: 1",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:14.758890"
   },
   {
     "test": "Send Text Message",
-    "success": false,
-    "message": "No chat ID available",
-    "details": "Chat creation may have failed",
-    "timestamp": "2025-07-29T00:17:44.610136"
+    "success": true,
+    "message": "Text message sent successfully",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:14.902441"
   },
   {
     "test": "Send Reply Message",
-    "success": false,
-    "message": "No chat ID or message ID available",
-    "details": "Previous tests may have failed",
-    "timestamp": "2025-07-29T00:17:44.610167"
+    "success": true,
+    "message": "Reply message sent successfully",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:15.059478"
   },
   {
     "test": "Get Chat Messages",
-    "success": false,
-    "message": "No chat ID available",
-    "details": "Chat creation may have failed",
-    "timestamp": "2025-07-29T00:17:44.610179"
+    "success": true,
+    "message": "Retrieved 48 messages, messages properly decrypted",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:15.268264"
   },
   {
     "test": "Mark Messages Read",
-    "success": false,
-    "message": "No chat ID available",
-    "details": "Chat creation may have failed",
-    "timestamp": "2025-07-29T00:17:44.610202"
+    "success": true,
+    "message": "Messages marked as read successfully",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:15.377984"
   },
   {
     "test": "Verify Unread Count Update",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.628842"
+    "success": true,
+    "message": "Unread count correctly updated to 0 after marking as read",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:15.458419"
   },
   {
     "test": "Chat Report Functionality",
-    "success": false,
-    "message": "No chat ID available",
-    "details": "Chat creation may have failed",
-    "timestamp": "2025-07-29T00:17:44.629101"
+    "success": true,
+    "message": "Chat reported successfully with report ID: bff20cae-3fa9-442e-b068-25fd9a7046df",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:15.570375"
   },
   {
     "test": "Get Online Users",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.649375"
+    "success": true,
+    "message": "Retrieved 0 online users",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:15.589162"
   },
   {
     "test": "Chat Access Control",
     "success": false,
-    "message": "No chat ID available",
-    "details": "Chat creation may have failed",
-    "timestamp": "2025-07-29T00:17:44.649616"
+    "message": "Failed to create third user for testing",
+    "details": "{\"detail\":\"Email already registered\"}",
+    "timestamp": "2025-07-29T01:27:15.634045"
   },
   {
     "test": "Message Encryption in Database",
-    "success": false,
-    "message": "No chat ID available",
-    "details": "Chat creation may have failed",
-    "timestamp": "2025-07-29T00:17:44.649630"
+    "success": true,
+    "message": "Messages are encrypted in storage (verified by is_encrypted flag)",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:15.779108"
   },
   {
     "test": "Chat Authentication Required",
-    "success": false,
-    "message": "Chat creation should require auth, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.667699"
+    "success": true,
+    "message": "All chat endpoints correctly require authentication",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:15.813751"
   },
   {
     "test": "Admin Login",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.691574"
+    "success": true,
+    "message": "Admin login successful - Role: super_admin",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:16.131169"
   },
   {
     "test": "Admin Me Endpoint",
-    "success": false,
-    "message": "No admin token available",
-    "details": "Admin login may have failed",
-    "timestamp": "2025-07-29T00:17:44.691842"
+    "success": true,
+    "message": "Admin info retrieved - System Administrator",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:16.182881"
   },
   {
     "test": "Admin Dashboard Stats",
-    "success": false,
-    "message": "No admin token available",
-    "details": "Admin login may have failed",
-    "timestamp": "2025-07-29T00:17:44.691856"
+    "success": true,
+    "message": "Stats retrieved - Users: 30, Products: 5, Transactions: 22",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:16.666622"
   },
   {
     "test": "Admin Get Users",
-    "success": false,
-    "message": "No admin token available",
-    "details": "Admin login may have failed",
-    "timestamp": "2025-07-29T00:17:44.691865"
+    "success": true,
+    "message": "Retrieved 20 users (Total: 30) with pagination",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:16.775697"
   },
   {
     "test": "Admin Get Products",
-    "success": false,
-    "message": "No admin token available",
-    "details": "Admin login may have failed",
-    "timestamp": "2025-07-29T00:17:44.691873"
+    "success": true,
+    "message": "Retrieved 5 products (Total: 5) for admin review",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:16.886468"
   },
   {
     "test": "Admin Get Activities",
-    "success": false,
-    "message": "No admin token available",
-    "details": "Admin login may have failed",
-    "timestamp": "2025-07-29T00:17:44.691881"
+    "success": true,
+    "message": "Retrieved 11 activities (Total: 11) from admin logs",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:16.994643"
   },
   {
     "test": "Admin Authentication Required",
-    "success": false,
-    "message": "Expected 403 without auth, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.717277"
+    "success": true,
+    "message": "Admin endpoints correctly require admin authentication",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:17.058047"
   },
   {
     "test": "Create Verification Profile",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.739030"
+    "success": true,
+    "message": "Seller verification profile created successfully",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:17.172768"
   },
   {
     "test": "Get Verification Profile",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.760907"
+    "success": true,
+    "message": "Profile retrieved - Status: pending",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:17.290811"
   },
   {
     "test": "Upload Verification Document",
     "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.780614"
+    "message": "HTTP 400",
+    "details": "{\"detail\":\"Invalid file content\"}",
+    "timestamp": "2025-07-29T01:27:17.339632"
   },
   {
     "test": "Upload Utility Bill Document",
     "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.801661"
+    "message": "HTTP 400",
+    "details": "{\"detail\":\"Invalid file content\"}",
+    "timestamp": "2025-07-29T01:27:17.388306"
   },
   {
     "test": "Get Verification Documents",
     "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.825471"
+    "message": "Invalid response format or insufficient documents",
+    "details": {
+      "success": true,
+      "documents": []
+    },
+    "timestamp": "2025-07-29T01:27:17.466731"
   },
   {
     "test": "Get Verification Status",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.848386"
+    "success": true,
+    "message": "Status: pending, Progress: 0.0%, Documents: 0/2",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:17.603247"
   },
   {
     "test": "Get Verification Requirements",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.871683"
+    "success": true,
+    "message": "Requirements loaded - Basic: 2, Enhanced: 3, Business: 4 docs, 15 counties",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:17.623137"
   },
   {
     "test": "Verification Buyer Access Denied",
-    "success": false,
-    "message": "Expected 403, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.890645"
+    "success": true,
+    "message": "Buyers correctly blocked from verification endpoints",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:17.671811"
   },
   {
     "test": "Admin Get All Verifications",
     "success": false,
-    "message": "No admin token available",
-    "details": "Admin login may have failed",
-    "timestamp": "2025-07-29T00:17:44.890905"
+    "message": "Invalid response format",
+    "details": {
+      "success": true,
+      "verifications": [
+        {
+          "id": "f9807d96-b235-4f8b-86e2-28cc68d6524f",
+          "seller": {
+            "id": "e7ec1a0c-623b-45b0-9100-686774e76ab2",
+            "name": "Mary Johnson",
+            "email": "mary.johnson@email.com",
+            "location": "Monrovia, Liberia",
+            "phone": "+231-555-0456"
+          },
+          "full_name": "Mary Johnson",
+          "business_name": "Johnson's Crafts & Textiles",
+          "business_type": "sole_proprietorship",
+          "county": "Montserrado",
+          "city": "Monrovia",
+          "verification_status": "pending",
+          "verification_level": "basic",
+          "documents_uploaded": 0,
+          "documents_approved": 0,
+          "required_documents": 2,
+          "created_at": "2025-07-29T01:27:17.136000",
+          "updated_at": "2025-07-29T01:27:17.136000",
+          "verified_at": null
+        },
+        {
+          "id": "1c06ed9a-4eb5-4116-8f52-9f6b8befc2da",
+          "seller": {
+            "id": "83a1a7b6-afe4-4087-929c-98b6325207e3",
+            "name": "Mary Johnson",
+            "email": "mary.johnson.verification@email.com",
+            "location": "Monrovia, Liberia",
+            "phone": "+231-555-0456"
+          },
+          "full_name": "Mary Johnson",
+          "business_name": "Johnson's Crafts & Textiles",
+          "business_type": "sole_proprietorship",
+          "county": "Montserrado",
+          "city": "Monrovia",
+          "verification_status": "under_review",
+          "verification_level": "basic",
+          "documents_uploaded": 2,
+          "documents_approved": 0,
+          "required_documents": 2,
+          "created_at": "2025-07-29T00:20:26.431000",
+          "updated_at": "2025-07-29T00:27:15.765000",
+          "verified_at": null
+        }
+      ],
+      "pagination": {
+        "currentPage": 1,
+        "totalPages": 1,
+        "totalCount": 2,
+        "hasNextPage": false,
+        "hasPrevPage": false
+      }
+    },
+    "timestamp": "2025-07-29T01:27:17.962024"
   },
   {
     "test": "Admin Verification Stats",
-    "success": false,
-    "message": "No admin token available",
-    "details": "Admin login may have failed",
-    "timestamp": "2025-07-29T00:17:44.890919"
+    "success": true,
+    "message": "Stats: 2 total, 1 pending, 0 approved, 0 rejected, 0.0% approval rate",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:18.040787"
   },
   {
     "test": "Get Payment Packages",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.914583"
+    "success": true,
+    "message": "Retrieved 3 payment packages",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:18.057542"
   },
   {
     "test": "Calculate Order Total",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.936300"
+    "success": true,
+    "message": "Order total calculated: $141.88",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:18.077026"
   },
   {
     "test": "Calculate Total Auth Required",
-    "success": false,
-    "message": "Expected 403, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.961255"
+    "success": true,
+    "message": "Calculate total correctly requires authentication",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:18.094286"
   },
   {
     "test": "Create Checkout Session",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:44.984300"
+    "success": true,
+    "message": "Checkout session created with ID: cs_test_a17XiRFcE5NXJd8J1DA3m6L2ciZlPWzyu1Zlgm3M0qWdmCpDl65aKvsNzY",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:18.770881"
   },
   {
     "test": "Create Package Checkout",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:45.007656"
+    "success": true,
+    "message": "Package checkout session created with ID: cs_test_a1vc9712dRepCiC8xpXqhTSZ1fcRwnnnC3LGRZA6HUF387HR0ZVzzVJzzh",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:19.330735"
   },
   {
     "test": "Package Checkout Invalid Package",
-    "success": false,
-    "message": "Expected 400, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:45.036702"
+    "success": true,
+    "message": "Invalid package ID correctly rejected",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:19.345890"
   },
   {
     "test": "Check Payment Status",
-    "success": false,
-    "message": "No checkout session ID available",
-    "details": "Checkout session creation may have failed",
-    "timestamp": "2025-07-29T00:17:45.036997"
+    "success": true,
+    "message": "Payment status retrieved: unpaid",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:19.626437"
   },
   {
     "test": "Get User Transactions",
-    "success": false,
-    "message": "HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:45.055551"
+    "success": true,
+    "message": "Retrieved 10 transactions",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:19.706882"
   },
   {
     "test": "Transactions Auth Required",
-    "success": false,
-    "message": "Expected 403, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:45.080134"
+    "success": true,
+    "message": "Transactions endpoint correctly requires authentication",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:19.726191"
   },
   {
     "test": "Payment Status Access Control",
-    "success": false,
-    "message": "No checkout session ID available",
-    "details": "Checkout session creation may have failed",
-    "timestamp": "2025-07-29T00:17:45.080460"
+    "success": true,
+    "message": "Users correctly blocked from accessing other users' payment status",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:20.102584"
   },
   {
     "test": "Checkout Auth Required",
-    "success": false,
-    "message": "Expected 403, got HTTP 503",
-    "details": "Service temporarily unavailable\n",
-    "timestamp": "2025-07-29T00:17:45.103296"
+    "success": true,
+    "message": "Checkout endpoints correctly require authentication",
+    "details": null,
+    "timestamp": "2025-07-29T01:27:20.118543"
   }
 ]
