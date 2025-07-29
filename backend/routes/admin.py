@@ -609,3 +609,304 @@ async def get_admin_activities(
             "hasPrevPage": page > 1
         }
     }
+
+# Verification Management for Admins
+@router.get("/verifications", response_model=dict)
+async def get_all_verifications(
+    admin = Depends(get_current_admin),
+    page: int = Query(1, ge=1),
+    limit: int = Query(20, ge=1, le=100),
+    status: Optional[str] = Query(None),
+    level: Optional[str] = Query(None)
+):
+    """Get all seller verification applications"""
+    await check_admin_permission("manage_users", admin)
+    
+    database = get_database()
+    
+    # Build query
+    query = {}
+    if status:
+        query["verification_status"] = status
+    if level:
+        query["verification_level"] = level
+    
+    # Calculate skip
+    skip = (page - 1) * limit
+    
+    # Get verifications with seller details
+    verifications = []
+    verifications_cursor = database.seller_verifications.find(query).sort([("created_at", -1)]).skip(skip).limit(limit)
+    
+    async for verification in verifications_cursor:
+        # Get seller details
+        seller = await database.users.find_one({"id": verification["user_id"]}, {"password_hash": 0})
+        
+        # Get document count
+        doc_count = await database.verification_documents.count_documents({"user_id": verification["user_id"]})
+        approved_docs = await database.verification_documents.count_documents({"user_id": verification["user_id"], "status": "approved"})
+        
+        verification_data = {
+            "id": verification["id"],
+            "seller": {
+                "id": seller["id"],
+                "name": f"{seller['firstName']} {seller['lastName']}",
+                "email": seller["email"],
+                "location": seller["location"],
+                "phone": seller.get("phone")
+            } if seller else None,
+            "full_name": verification["full_name"],
+            "business_name": verification.get("business_name"),
+            "business_type": verification.get("business_type"),
+            "county": verification["county"],
+            "city": verification["city"],
+            "verification_status": verification["verification_status"],
+            "verification_level": verification["verification_level"],
+            "documents_uploaded": doc_count,
+            "documents_approved": approved_docs,
+            "required_documents": len(verification["required_documents"]),
+            "created_at": verification["created_at"],
+            "updated_at": verification["updated_at"],
+            "verified_at": verification.get("verified_at")
+        }
+        verifications.append(verification_data)
+    
+    # Get total count
+    total_count = await database.seller_verifications.count_documents(query)
+    total_pages = (total_count + limit - 1) // limit
+    
+    return {
+        "success": True,
+        "verifications": verifications,
+        "pagination": {
+            "currentPage": page,
+            "totalPages": total_pages,
+            "totalCount": total_count,
+            "hasNextPage": page < total_pages,
+            "hasPrevPage": page > 1
+        }
+    }
+
+@router.get("/verifications/{verification_id}", response_model=dict)
+async def get_verification_details(
+    verification_id: str,
+    admin = Depends(get_current_admin)
+):
+    """Get detailed verification information"""
+    await check_admin_permission("manage_users", admin)
+    
+    database = get_database()
+    
+    # Get verification profile
+    verification = await database.seller_verifications.find_one({"id": verification_id})
+    if not verification:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Verification not found"
+        )
+    
+    # Get seller details
+    seller = await database.users.find_one({"id": verification["user_id"]}, {"password_hash": 0})
+    
+    # Get all documents
+    documents = []
+    documents_cursor = database.verification_documents.find({"user_id": verification["user_id"]})
+    
+    async for doc in documents_cursor:
+        document_data = {
+            "id": doc["id"],
+            "document_type": doc["document_type"],
+            "document_name": doc["document_name"],
+            "file_type": doc["file_type"],
+            "file_size": doc["file_size"],
+            "status": doc["status"],
+            "uploaded_at": doc["uploaded_at"],
+            "rejection_reason": doc.get("rejection_reason"),
+            "reviewed_by": doc.get("reviewed_by"),
+            "reviewed_at": doc.get("reviewed_at"),
+            # Include file content for admin review
+            "file_content": doc["file_content"]
+        }
+        documents.append(document_data)
+    
+    return {
+        "success": True,
+        "verification": verification,
+        "seller": seller,
+        "documents": documents
+    }
+
+@router.post("/verifications/{verification_id}/review", response_model=dict)
+async def review_verification(
+    verification_id: str,
+    review_data: dict,
+    admin = Depends(get_current_admin)
+):
+    """Review and approve/reject seller verification"""
+    await check_admin_permission("manage_users", admin)
+    
+    database = get_database()
+    
+    # Get verification
+    verification = await database.seller_verifications.find_one({"id": verification_id})
+    if not verification:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Verification not found"
+        )
+    
+    action = review_data.get("action")  # "approve", "reject", "request_documents"
+    notes = review_data.get("notes", "")
+    verification_level = review_data.get("verification_level", verification["verification_level"])
+    
+    update_data = {
+        "updated_at": datetime.utcnow(),
+        "verification_notes": notes
+    }
+    
+    if action == "approve":
+        update_data.update({
+            "verification_status": "approved",
+            "verification_level": verification_level,
+            "verified_at": datetime.utcnow(),
+            "verified_by": admin["id"]
+        })
+        
+        # Update user's verification status
+        await database.users.update_one(
+            {"id": verification["user_id"]},
+            {"$set": {"isVerified": True, "updatedAt": datetime.utcnow()}}
+        )
+        
+        message = f"Seller verification approved at {verification_level} level"
+        
+    elif action == "reject":
+        update_data.update({
+            "verification_status": "rejected",
+            "verified_at": datetime.utcnow(),
+            "verified_by": admin["id"]
+        })
+        
+        message = "Seller verification rejected"
+        
+    elif action == "request_documents":
+        required_docs = review_data.get("required_documents", verification["required_documents"])
+        update_data.update({
+            "verification_status": "documents_required",
+            "required_documents": required_docs
+        })
+        
+        message = "Additional documents requested from seller"
+        
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid action"
+        )
+    
+    # Update verification
+    await database.seller_verifications.update_one(
+        {"id": verification_id},
+        {"$set": update_data}
+    )
+    
+    # Log admin activity
+    await log_admin_activity(
+        database, admin["id"], 
+        f"{admin['firstName']} {admin['lastName']}", 
+        f"verification_{action}", "verification", verification_id,
+        f"Seller verification {action}: {notes}"
+    )
+    
+    return {
+        "success": True,
+        "message": message
+    }
+
+@router.post("/verifications/documents/{document_id}/review", response_model=dict)
+async def review_document(
+    document_id: str,
+    review_data: dict,
+    admin = Depends(get_current_admin)
+):
+    """Review individual document"""
+    await check_admin_permission("manage_users", admin)
+    
+    database = get_database()
+    
+    # Get document
+    document = await database.verification_documents.find_one({"id": document_id})
+    if not document:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Document not found"
+        )
+    
+    action = review_data.get("action")  # "approve", "reject"
+    rejection_reason = review_data.get("rejection_reason", "")
+    
+    update_data = {
+        "status": action + "d",  # "approved" or "rejected"
+        "reviewed_by": admin["id"],
+        "reviewed_at": datetime.utcnow()
+    }
+    
+    if action == "reject":
+        update_data["rejection_reason"] = rejection_reason
+    
+    # Update document
+    await database.verification_documents.update_one(
+        {"id": document_id},
+        {"$set": update_data}
+    )
+    
+    # Log admin activity
+    await log_admin_activity(
+        database, admin["id"], 
+        f"{admin['firstName']} {admin['lastName']}", 
+        f"document_{action}", "document", document_id,
+        f"Document {action}: {document['document_type']} - {rejection_reason}"
+    )
+    
+    return {
+        "success": True,
+        "message": f"Document {action}d successfully"
+    }
+
+@router.get("/verifications/stats", response_model=dict)
+async def get_verification_stats(admin = Depends(get_current_admin)):
+    """Get verification statistics"""
+    await check_admin_permission("view_analytics", admin)
+    
+    database = get_database()
+    
+    # Get verification counts by status
+    pipeline = [
+        {"$group": {
+            "_id": "$verification_status",
+            "count": {"$sum": 1}
+        }}
+    ]
+    
+    status_counts = {"pending": 0, "documents_required": 0, "under_review": 0, "approved": 0, "rejected": 0}
+    
+    async for result in database.seller_verifications.aggregate(pipeline):
+        status_counts[result["_id"]] = result["count"]
+    
+    total_applications = sum(status_counts.values())
+    approval_rate = (status_counts["approved"] / total_applications * 100) if total_applications > 0 else 0
+    
+    stats = {
+        "total_applications": total_applications,
+        "pending_review": status_counts["pending"],
+        "documents_required": status_counts["documents_required"],
+        "under_review": status_counts["under_review"],
+        "approved": status_counts["approved"],
+        "rejected": status_counts["rejected"],
+        "approval_rate": round(approval_rate, 1)
+    }
+    
+    return {
+        "success": True,
+        "stats": stats
+    }
