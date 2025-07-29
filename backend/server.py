@@ -106,7 +106,17 @@ async def health_check():
         else:
             response["database_name"] = "unknown"
     
-    return response
+# Debug endpoint for troubleshooting network issues
+@app.get("/api/debug/network")
+async def debug_network():
+    """Debug endpoint to test network connectivity"""
+    return {
+        "status": "OK",
+        "message": "Network connectivity test successful",
+        "timestamp": datetime.utcnow().isoformat(),
+        "headers_received": "Check browser network tab for full headers",
+        "cors_configured": True
+    }
 
 # Kubernetes readiness probe endpoint
 @app.get("/api/ready")
