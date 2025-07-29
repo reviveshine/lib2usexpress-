@@ -118,6 +118,19 @@ const LoginPage = () => {
                   fontSize: '1rem'
                 }}
               />
+              <div style={{ textAlign: 'right', marginTop: '0.5rem' }}>
+                <Link 
+                  to="/forgot-password" 
+                  style={{ 
+                    color: '#dc2626', 
+                    textDecoration: 'none',
+                    fontSize: '0.9rem',
+                    fontWeight: '500'
+                  }}
+                >
+                  Forgot Password?
+                </Link>
+              </div>
             </div>
             
             <button
