@@ -163,9 +163,16 @@ except ImportError as e:
     print("✅ Application will continue with available routes")
 
 if __name__ == "__main__":
+    # Get port from environment for Kubernetes deployment
+    port = int(os.getenv("PORT", 8001))
+    host = os.getenv("HOST", "0.0.0.0")
+    
+    print(f"🚀 Starting server on {host}:{port}")
+    
     uvicorn.run(
         "server:app",
-        host="0.0.0.0",
-        port=int(os.getenv("PORT", 8001)),
-        reload=True
+        host=host,
+        port=port,
+        reload=False,  # Disable reload in production
+        log_level="info"
     )
