@@ -161,7 +161,7 @@ async def forgot_password(request: ForgotPasswordRequest):
     
     # Generate secure reset token
     reset_token = secrets.token_urlsafe(32)
-    expires_at = datetime.utcnow() + timedelta(minutes=30)  # Token expires in 30 minutes
+    expires_at = datetime.utcnow() + timedelta(minutes=15)  # Token expires in 15 minutes
     
     # Invalidate any existing reset tokens for this user
     await database.password_reset_tokens.delete_many({"user_id": user["id"]})
