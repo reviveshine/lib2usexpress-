@@ -76,8 +76,8 @@ class ProfilePictureTester:
             response = requests.post(f"{self.base_url}/api/auth/login", json=login_data, timeout=10)
             if response.status_code == 200:
                 data = response.json()
-                if data.get("success") and data.get("access_token"):
-                    self.buyer_token = data["access_token"]
+                if data.get("success") and data.get("token"):
+                    self.buyer_token = data["token"]
                     print("✅ Buyer login successful")
                 else:
                     print("❌ Buyer login failed - invalid response")
