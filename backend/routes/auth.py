@@ -181,7 +181,7 @@ async def forgot_password(request: ForgotPasswordRequest):
     
     # In a real application, you would send an email here
     # For now, we'll log the reset link for development/testing
-    reset_link = f"https://lib2usa-market.preview.emergentagent.com/reset-password?token={reset_token}"
+    reset_link = f"https://42f929ff-98cd-4d7a-9640-3a6396ca9e77.preview.emergentagent.com/reset-password?token={reset_token}"
     print(f"🔐 Password Reset Link for {request.email}: {reset_link}")
     print(f"🔐 Reset Token: {reset_token}")
     

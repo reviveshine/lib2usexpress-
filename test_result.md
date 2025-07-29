@@ -1013,7 +1013,7 @@ test_plan:
     status_history:
       - working: true
         agent: "main"
-        comment: "Registration 'Not Found' error successfully resolved - ISSUE IDENTIFIED: Double /api path construction causing malformed URLs (https://lib2usa-market.preview.emergentagent.com/api/api/auth/register → 404 Not Found). ROOT CAUSE: REACT_APP_BACKEND_URL included /api suffix, but RegisterPage.js added /api prefix, creating double path. SOLUTION IMPLEMENTED: Corrected frontend .env to use base URL without /api suffix (REACT_APP_BACKEND_URL=https://lib2usa-market.preview.emergentagent.com), maintaining proper URL construction pattern ${API_BASE}/api/endpoint. VERIFICATION COMPLETED: Single /api path now working correctly (User ID: 88099ddb-a95d-4295-8b06-a58af390a659), double /api path confirmed returning 404. Registration form 'Create Account & Join the Celebration!' button now functional."
+        comment: "Registration 'Not Found' error successfully resolved - ISSUE IDENTIFIED: Double /api path construction causing malformed URLs (https://42f929ff-98cd-4d7a-9640-3a6396ca9e77.preview.emergentagent.com), maintaining proper URL construction pattern ${API_BASE}/api/endpoint. VERIFICATION COMPLETED: Single /api path now working correctly (User ID: 88099ddb-a95d-4295-8b06-a58af390a659), double /api path confirmed returning 404. Registration form 'Create Account & Join the Celebration!' button now functional."
 
 agent_communication:
   - agent: "testing"
