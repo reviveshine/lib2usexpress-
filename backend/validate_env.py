@@ -116,7 +116,7 @@ def test_imports():
     
     try:
         import motor
-        print(f"✅ Motor: {motor.__version__}")
+        print(f"✅ Motor: available")
     except ImportError as e:
         print(f"❌ Motor import failed: {e}")
         return False
