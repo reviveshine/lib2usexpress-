@@ -99,7 +99,10 @@ async def health_check():
     
     if db_connected:
         database = get_database()
-        response["database_name"] = database.name if database else "unknown"
+        if database is not None:
+            response["database_name"] = database.name
+        else:
+            response["database_name"] = "unknown"
     
     return response
 
