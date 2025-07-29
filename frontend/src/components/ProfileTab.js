@@ -10,6 +10,8 @@ const ProfileTab = () => {
   const [showAddressModal, setShowAddressModal] = useState(false);
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [showIdentityModal, setShowIdentityModal] = useState(false);
+  const [showProfilePictureModal, setShowProfilePictureModal] = useState(false);
+  const [newProfilePicture, setNewProfilePicture] = useState('');
 
   // Form states
   const [newAddress, setNewAddress] = useState({
