@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 import uvicorn
-from database import connect_to_mongo, close_mongo_connection, get_database
+from database import connect_to_mongo, close_mongo_connection, get_database, is_database_connected
 
 # Load environment variables
 load_dotenv()
