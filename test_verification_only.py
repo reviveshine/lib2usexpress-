@@ -188,15 +188,17 @@ class VerificationTester:
         try:
             headers = {"Authorization": f"Bearer {self.seller_token}"}
             
-            # Create a sample document (base64 encoded image)
-            sample_image_b64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChAI9jU77yQAAAABJRU5ErkJggg=="
+            # Create a proper base64 encoded PNG image (1x1 pixel)
+            import base64
+            png_bytes = base64.b64decode("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChAI9jU77yQAAAABJRU5ErkJggg==")
+            sample_image_b64 = base64.b64encode(png_bytes).decode('utf-8')
             
             document_data = {
                 "document_type": "national_id",
                 "document_name": "National_ID_Mary_Johnson.png",
                 "file_content": sample_image_b64,
                 "file_type": "image/png",
-                "file_size": len(sample_image_b64)
+                "file_size": len(png_bytes)
             }
             
             response = requests.post(
@@ -228,15 +230,17 @@ class VerificationTester:
         try:
             headers = {"Authorization": f"Bearer {self.seller_token}"}
             
-            # Create a sample utility bill document
-            sample_pdf_b64 = "JVBERi0xLjQKJcOkw7zDtsO4CjIgMCBvYmoKPDwKL0xlbmd0aCAzIDAgUgo+PgpzdHJlYW0KeJzLSM3PyckBAAAGAAL//2Q9CmVuZHN0cmVhbQplbmRvYmoK"
+            # Create a proper base64 encoded PDF
+            import base64
+            pdf_content = b"%PDF-1.4\n1 0 obj\n<<\n/Type /Catalog\n/Pages 2 0 R\n>>\nendobj\n2 0 obj\n<<\n/Type /Pages\n/Kids [3 0 R]\n/Count 1\n>>\nendobj\n3 0 obj\n<<\n/Type /Page\n/Parent 2 0 R\n/MediaBox [0 0 612 792]\n>>\nendobj\nxref\n0 4\n0000000000 65535 f \n0000000009 00000 n \n0000000074 00000 n \n0000000120 00000 n \ntrailer\n<<\n/Size 4\n/Root 1 0 R\n>>\nstartxref\n179\n%%EOF"
+            sample_pdf_b64 = base64.b64encode(pdf_content).decode('utf-8')
             
             document_data = {
                 "document_type": "utility_bill",
                 "document_name": "Utility_Bill_Mary_Johnson.pdf",
                 "file_content": sample_pdf_b64,
                 "file_type": "application/pdf",
-                "file_size": len(sample_pdf_b64)
+                "file_size": len(pdf_content)
             }
             
             response = requests.post(
