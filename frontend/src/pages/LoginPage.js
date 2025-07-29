@@ -30,8 +30,8 @@ const LoginPage = () => {
       const response = await axios.post(`${API_BASE}/api/auth/login`, formData);
       
       if (response.data.success) {
-        localStorage.setItem('auth_token', response.data.token);
-        localStorage.setItem('user_data', JSON.stringify(response.data.user));
+        // Use AuthContext login method instead of manual localStorage
+        login(response.data.user, response.data.token);
         
         // Role-based redirection
         const userType = response.data.user.userType;
