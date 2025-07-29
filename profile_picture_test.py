@@ -98,33 +98,28 @@ class ProfilePictureTester:
                 else:
                     print("❌ Seller login failed - invalid response")
             else:
-                # Try to create new seller
-                print("🔄 Creating new seller account...")
-                seller_data = {
-                    "firstName": "Sarah",
-                    "lastName": "Wilson",
+                # Try different seller credentials
+                print("🔄 Trying alternative seller credentials...")
+                alt_login_data = {
                     "email": "sarah.wilson@email.com",
-                    "password": "SecurePass789!",
-                    "userType": "seller",
-                    "location": "Monrovia, Liberia",
-                    "phone": "+231-555-0789"
+                    "password": "SecurePass789!"
                 }
                 
-                reg_response = requests.post(
-                    f"{self.base_url}/api/auth/register",
-                    json=seller_data,
+                alt_response = requests.post(
+                    f"{self.base_url}/api/auth/login",
+                    json=alt_login_data,
                     timeout=10
                 )
                 
-                if reg_response.status_code == 200:
-                    reg_data = reg_response.json()
-                    if reg_data.get("success") and reg_data.get("token"):
-                        self.seller_token = reg_data["token"]
-                        print("✅ New seller created and authenticated")
+                if alt_response.status_code == 200:
+                    alt_data = alt_response.json()
+                    if alt_data.get("success") and alt_data.get("token"):
+                        self.seller_token = alt_data["token"]
+                        print("✅ Alternative seller authentication successful")
                     else:
-                        print("❌ Seller registration failed - invalid response")
+                        print("❌ Alternative seller login failed - invalid response")
                 else:
-                    print(f"❌ Seller registration failed - HTTP {reg_response.status_code}")
+                    print(f"❌ Alternative seller login failed - HTTP {alt_response.status_code}")
         except Exception as e:
             print(f"❌ Seller authentication failed - {str(e)}")
         
