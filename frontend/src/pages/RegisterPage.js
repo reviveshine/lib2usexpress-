@@ -135,6 +135,14 @@ const RegisterPage = () => {
       }
     } catch (error) {
       console.error('🔐 Registration request failed:', error);
+      console.error('🔐 Error details:', {
+        message: error.message,
+        code: error.code,
+        request: !!error.request,
+        response: !!error.response,
+        responseStatus: error.response?.status,
+        responseData: error.response?.data
+      });
       
       if (error.response) {
         if (error.response.status === 422) {
@@ -151,7 +159,9 @@ const RegisterPage = () => {
           setError(error.response.data.message || error.response.data.detail || 'Registration failed');
         }
       } else if (error.request) {
-        setError('Network error: Please check your internet connection and try again');
+        // More detailed network error message
+        console.error('🔐 Network request details:', error.request);
+        setError(`Network error: Unable to connect to server. Please check that the backend is running at ${API_BASE}`);
       } else {
         setError('Registration failed. Please try again.');
       }
