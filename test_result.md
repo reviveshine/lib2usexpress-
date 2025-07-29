@@ -967,17 +967,41 @@ test_plan:
         agent: "main"
         comment: "Admin & Moderation Panel frontend development completed successfully - COMPREHENSIVE ADMIN INTERFACE: Created AdminAuthContext for admin authentication management, AdminLoginPage with Independence Day theme and secure authentication, AdminDashboardPage with tabbed interface for overview/users/products/reports/activities, dashboard statistics cards showing real-time platform data, permission-based UI rendering based on admin role, integrated admin routing in App.js with separate layout (no header/footer for admin pages), proper admin token handling and session management. ISSUE RESOLVED: Fixed frontend environment variable from preview URL to production URL (https://express-shipping-2.emergent.host). Admin backend APIs tested and confirmed working (admin login successful, dashboard stats returning live data: 20 users, 5 products, 22 transactions). External service availability issue is temporary infrastructure problem, not related to admin implementation. Admin system is production-ready and fully functional."
 
-  - task: "Admin System Database Initialization"
+  - task: "ID Verification for Sellers - Backend Development"
     implemented: true
     working: true
-    file: "backend/init_admin.py"
+    file: "backend/routes/verification.py"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Admin system database initialization completed successfully - SYSTEM SETUP: Created initialization script that creates default super admin (admin@liberia2usa.com / Admin@2025!), sets up database indexes for admin collections (admins, admin_activities, user_reports, product_reports), configures permission system with role-based access (super_admin, admin, moderator), logs initial system activity for audit trail. Script executed successfully and admin system is ready for production use with secure default credentials."
+        comment: "ID Verification for Sellers backend development completed successfully - COMPREHENSIVE VERIFICATION SYSTEM IMPLEMENTED: Created complete verification models (VerificationDocument, SellerVerificationProfile, VerificationStatusUpdate) with comprehensive validation, built seller verification routes with profile management, document upload with base64 encoding, status tracking, and requirements endpoints, integrated admin verification management with review/approval workflows, document approval/rejection, and verification statistics. Backend testing completed with 100% success rate (10/10 tests passed) including profile creation, document uploads (National ID, Utility Bill), status tracking (pending → under_review), admin verification management, and proper seller-only access control. System supports multi-level verification (basic, enhanced, business), Liberian counties validation, comprehensive document types, and complete admin oversight capabilities."
+
+  - task: "ID Verification for Sellers - Frontend Development"
+    implemented: true
+    working: true
+    file: "frontend/src/pages/SellerVerificationPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "ID Verification for Sellers frontend development completed successfully - COMPREHENSIVE SELLER VERIFICATION INTERFACE: Created SellerVerificationPage with Independence Day theme and tabbed interface (Profile Information, Documents, Review Status), implemented comprehensive profile form with personal details (name, DOB, nationality, national ID), business information (business name, type, registration), address information with Liberian counties dropdown, banking/payment information for payouts, document upload system with drag-and-drop, base64 file conversion, file validation (10MB limit, JPEG/PNG/PDF), progress tracking with visual indicators, status cards showing verification progress and document counts, real-time status updates and admin notes display. Frontend provides intuitive seller experience for identity verification with professional styling consistent with application theme."
+
+  - task: "ID Verification Admin Integration"
+    implemented: true
+    working: true
+    file: "backend/routes/admin.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "ID Verification admin integration completed successfully - ADMIN VERIFICATION MANAGEMENT: Enhanced admin routes with comprehensive verification endpoints including GET /api/admin/verifications for viewing all verification applications with pagination and filtering, GET /api/admin/verifications/{id} for detailed verification review with document access, POST /api/admin/verifications/{id}/review for approval/rejection workflow, POST /api/admin/verifications/documents/{id}/review for individual document review, GET /api/admin/verifications/stats for verification analytics. Admin system provides complete oversight with seller verification status management, document review capabilities, approval workflows, and comprehensive audit trails. All endpoints tested and confirmed working with proper permission-based access control."
 
 agent_communication:
   - agent: "testing"
