@@ -22,10 +22,14 @@ security = HTTPBearer()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
+    print("🚀 Starting Liberia2USA Express API...")
     await connect_to_mongo()
+    print("✅ Application startup completed")
     yield
     # Shutdown
+    print("🔄 Shutting down Liberia2USA Express API...")
     await close_mongo_connection()
+    print("✅ Application shutdown completed")
 
 # Create FastAPI application
 app = FastAPI(
