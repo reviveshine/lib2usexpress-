@@ -97,6 +97,7 @@ const RegisterPage = () => {
         ...registrationData,
         password: '[HIDDEN]'
       });
+      console.log('🔐 Using API_BASE:', API_BASE);
       
       const response = await axios.post(`${API_BASE}/api/auth/register`, registrationData);
 
@@ -134,6 +135,7 @@ const RegisterPage = () => {
         setError(errorMessage);
       }
     } catch (error) {
+      const API_BASE = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
       console.error('🔐 Registration request failed:', error);
       console.error('🔐 Error details:', {
         message: error.message,
@@ -161,7 +163,7 @@ const RegisterPage = () => {
       } else if (error.request) {
         // More detailed network error message
         console.error('🔐 Network request details:', error.request);
-        setError(`Network error: Unable to connect to server. Please check that the backend is running at ${API_BASE}`);
+        setError(`Network error: Unable to connect to server at ${API_BASE}. Please check that the backend is running.`);
       } else {
         setError('Registration failed. Please try again.');
       }
