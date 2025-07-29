@@ -377,6 +377,71 @@ async def set_default_address(
         "message": "Default address updated successfully"
     }
 
+@router.put("/profile/picture", response_model=dict)
+async def update_profile_picture(
+    picture_data: UpdateProfilePictureRequest,
+    current_user_id: str = Depends(get_current_user)
+):
+    """Update user's profile picture"""
+    
+    database = get_database()
+    
+    # Get profile
+    profile = await database.user_profiles.find_one({"user_id": current_user_id})
+    if not profile:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Profile not found"
+        )
+    
+    # Update profile picture
+    await database.user_profiles.update_one(
+        {"user_id": current_user_id},
+        {
+            "$set": {
+                "profile_picture": picture_data.profile_picture,
+                "updated_at": datetime.utcnow()
+            }
+        }
+    )
+    
+    return {
+        "success": True,
+        "message": "Profile picture updated successfully"
+    }
+
+@router.delete("/profile/picture", response_model=dict)
+async def remove_profile_picture(
+    current_user_id: str = Depends(get_current_user)
+):
+    """Remove user's profile picture"""
+    
+    database = get_database()
+    
+    # Get profile
+    profile = await database.user_profiles.find_one({"user_id": current_user_id})
+    if not profile:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Profile not found"
+        )
+    
+    # Remove profile picture
+    await database.user_profiles.update_one(
+        {"user_id": current_user_id},
+        {
+            "$set": {
+                "profile_picture": None,
+                "updated_at": datetime.utcnow()
+            }
+        }
+    )
+    
+    return {
+        "success": True,
+        "message": "Profile picture removed successfully"
+    }
+
 @router.put("/profile/mobile-wallet/{wallet_id}/default", response_model=dict)
 async def set_default_wallet(
     wallet_id: str,
