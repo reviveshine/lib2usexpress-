@@ -17,6 +17,7 @@ import CheckoutPage from './pages/CheckoutPage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
 import OrdersPage from './pages/OrdersPage';
 import SellerVerificationPage from './pages/SellerVerificationPage';
+import NetworkTestPage from './pages/NetworkTestPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 
@@ -30,6 +31,7 @@ function App() {
               {/* Admin Routes - No Header/Footer */}
               <Route path="/admin/login" element={<AdminLoginPage />} />
               <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+              <Route path="/network-test" element={<NetworkTestPage />} />
               
               {/* Regular Routes - With Header/Footer */}
               <Route path="/*" element={
