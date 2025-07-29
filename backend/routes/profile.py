@@ -5,7 +5,7 @@ import uuid
 from models.profile import (
     UserProfile, UpdateProfileRequest, AddIdentityDocumentRequest,
     ProfileResponse, AddressModel, ShippingAddressModel, 
-    MobileMoneyWallet, BankAccount, IdentityDocument
+    MobileMoneyWallet, BankAccount, IdentityDocument, UpdateProfilePictureRequest
 )
 from database import get_database
 from server import get_current_user
