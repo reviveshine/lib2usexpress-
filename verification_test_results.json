@@ -1,0 +1,109 @@
+[
+  {
+    "test": "Get Verification Requirements",
+    "success": true,
+    "message": "Requirements loaded - Basic: 2, Enhanced: 3, Business: 4 docs, 15 counties",
+    "details": null,
+    "timestamp": "2025-07-29T00:20:26.368545"
+  },
+  {
+    "test": "Create Verification Profile",
+    "success": true,
+    "message": "Seller verification profile created successfully",
+    "details": null,
+    "timestamp": "2025-07-29T00:20:26.489338"
+  },
+  {
+    "test": "Get Verification Profile",
+    "success": true,
+    "message": "Profile retrieved - Status: pending",
+    "details": null,
+    "timestamp": "2025-07-29T00:20:26.582608"
+  },
+  {
+    "test": "Upload Verification Document",
+    "success": false,
+    "message": "HTTP 400",
+    "details": "{\"detail\":\"Invalid file content\"}",
+    "timestamp": "2025-07-29T00:20:26.615836"
+  },
+  {
+    "test": "Upload Utility Bill Document",
+    "success": false,
+    "message": "HTTP 400",
+    "details": "{\"detail\":\"Invalid file content\"}",
+    "timestamp": "2025-07-29T00:20:26.648883"
+  },
+  {
+    "test": "Get Verification Documents",
+    "success": false,
+    "message": "Invalid response format or insufficient documents",
+    "details": {
+      "success": true,
+      "documents": []
+    },
+    "timestamp": "2025-07-29T00:20:26.711590"
+  },
+  {
+    "test": "Get Verification Status",
+    "success": true,
+    "message": "Status: pending, Progress: 0.0%, Documents: 0/2",
+    "details": null,
+    "timestamp": "2025-07-29T00:20:26.808811"
+  },
+  {
+    "test": "Verification Buyer Access Denied",
+    "success": true,
+    "message": "Buyers correctly blocked from verification endpoints",
+    "details": null,
+    "timestamp": "2025-07-29T00:20:26.841495"
+  },
+  {
+    "test": "Admin Get All Verifications",
+    "success": false,
+    "message": "Invalid response format",
+    "details": {
+      "success": true,
+      "verifications": [
+        {
+          "id": "1c06ed9a-4eb5-4116-8f52-9f6b8befc2da",
+          "seller": {
+            "id": "83a1a7b6-afe4-4087-929c-98b6325207e3",
+            "name": "Mary Johnson",
+            "email": "mary.johnson.verification@email.com",
+            "location": "Monrovia, Liberia",
+            "phone": "+231-555-0456"
+          },
+          "full_name": "Mary Johnson",
+          "business_name": "Johnson's Crafts & Textiles",
+          "business_type": "sole_proprietorship",
+          "county": "Montserrado",
+          "city": "Monrovia",
+          "verification_status": "pending",
+          "verification_level": "basic",
+          "documents_uploaded": 0,
+          "documents_approved": 0,
+          "required_documents": 2,
+          "created_at": "2025-07-29T00:20:26.431000",
+          "updated_at": "2025-07-29T00:20:26.431000",
+          "verified_at": null
+        }
+      ],
+      "pagination": {
+        "currentPage": 1,
+        "totalPages": 1,
+        "totalCount": 1,
+        "hasNextPage": false,
+        "hasPrevPage": false
+      }
+    },
+    "timestamp": "2025-07-29T00:20:27.025652"
+  },
+  {
+    "test": "Admin Verification Stats",
+    "success": false,
+    "message": "HTTP 404",
+    "details": "{\"detail\":\"Verification not found\"}",
+    "timestamp": "2025-07-29T00:20:27.088533"
+  }
+]
