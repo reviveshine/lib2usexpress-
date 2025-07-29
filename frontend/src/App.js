@@ -20,6 +20,8 @@ import SellerVerificationPage from './pages/SellerVerificationPage';
 import NetworkTestPage from './pages/NetworkTestPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 function App() {
   return (
