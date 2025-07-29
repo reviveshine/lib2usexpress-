@@ -656,7 +656,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Admin API endpoints tested successfully"
+    - "Password Reset - Forgot Password Page"
+    - "Password Reset - Reset Password Page"
+    - "Password Reset - Login Page Integration"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
