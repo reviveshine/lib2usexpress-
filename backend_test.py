@@ -2087,6 +2087,609 @@ class BackendTester:
             self.log_test("Admin Verification Stats", False, "Request failed", str(e))
             return False
 
+    # ==================== PROFILE SYSTEM TESTS ====================
+    
+    def test_get_profile_creates_default(self):
+        """Test GET /api/profile/profile - creates default profile with system-generated user ID"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/profile/profile",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("profile") and
+                    data.get("user") and
+                    data["profile"].get("system_user_id") and
+                    data["profile"]["system_user_id"].startswith("LIB2USA-")):
+                    
+                    # Store system_user_id for other tests
+                    self.buyer_system_id = data["profile"]["system_user_id"]
+                    self.log_test("Get Profile - Default Creation", True, f"Default profile created with system ID: {self.buyer_system_id}")
+                    return True
+                else:
+                    self.log_test("Get Profile - Default Creation", False, "Invalid response format or missing system_user_id", data)
+                    return False
+            else:
+                self.log_test("Get Profile - Default Creation", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Get Profile - Default Creation", False, "Request failed", str(e))
+            return False
+    
+    def test_add_address_home(self):
+        """Test POST /api/profile/profile/address - add home address"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            address_data = {
+                "type": "home",
+                "street": "123 Main Street",
+                "city": "New York",
+                "state": "NY",
+                "country": "USA",
+                "postal_code": "10001"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/profile/profile/address",
+                json=address_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("address") and
+                    data["address"]["id"] and
+                    data["address"]["is_default"] == True):  # First address should be default
+                    
+                    self.buyer_address_id = data["address"]["id"]
+                    self.log_test("Add Address - Home", True, f"Home address added successfully (ID: {self.buyer_address_id}, default: True)")
+                    return True
+                else:
+                    self.log_test("Add Address - Home", False, "Invalid response format or not set as default", data)
+                    return False
+            else:
+                self.log_test("Add Address - Home", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Add Address - Home", False, "Request failed", str(e))
+            return False
+    
+    def test_add_address_work(self):
+        """Test POST /api/profile/profile/address - add work address"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            address_data = {
+                "type": "work",
+                "street": "456 Business Ave",
+                "city": "Manhattan",
+                "state": "NY",
+                "country": "USA",
+                "postal_code": "10002"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/profile/profile/address",
+                json=address_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("address") and
+                    data["address"]["id"] and
+                    data["address"]["is_default"] == False):  # Second address should not be default
+                    
+                    self.buyer_work_address_id = data["address"]["id"]
+                    self.log_test("Add Address - Work", True, f"Work address added successfully (ID: {self.buyer_work_address_id}, default: False)")
+                    return True
+                else:
+                    self.log_test("Add Address - Work", False, "Invalid response format or incorrectly set as default", data)
+                    return False
+            else:
+                self.log_test("Add Address - Work", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Add Address - Work", False, "Request failed", str(e))
+            return False
+    
+    def test_add_seller_address_liberia(self):
+        """Test POST /api/profile/profile/address - add seller address in Liberia"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            address_data = {
+                "type": "home",
+                "street": "15 Broad Street",
+                "city": "Monrovia",
+                "state": "Montserrado County",
+                "country": "Liberia",
+                "postal_code": "1000"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/profile/profile/address",
+                json=address_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("address") and
+                    data["address"]["id"] and
+                    data["address"]["country"] == "Liberia"):
+                    
+                    self.seller_address_id = data["address"]["id"]
+                    self.log_test("Add Address - Seller Liberia", True, f"Seller address in Liberia added successfully (ID: {self.seller_address_id})")
+                    return True
+                else:
+                    self.log_test("Add Address - Seller Liberia", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Add Address - Seller Liberia", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Add Address - Seller Liberia", False, "Request failed", str(e))
+            return False
+    
+    def test_add_shipping_address(self):
+        """Test POST /api/profile/profile/shipping-address - add shipping address for buyer"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            shipping_data = {
+                "recipient_name": "John Smith",
+                "street": "789 Delivery Lane",
+                "city": "Brooklyn",
+                "state": "NY",
+                "country": "USA",
+                "postal_code": "11201",
+                "phone": "+1-555-0789"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/profile/profile/shipping-address",
+                json=shipping_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("address") and
+                    data["address"]["id"] and
+                    data["address"]["recipient_name"] == "John Smith" and
+                    data["address"]["is_default"] == True):  # First shipping address should be default
+                    
+                    self.buyer_shipping_id = data["address"]["id"]
+                    self.log_test("Add Shipping Address", True, f"Shipping address added successfully (ID: {self.buyer_shipping_id}, default: True)")
+                    return True
+                else:
+                    self.log_test("Add Shipping Address", False, "Invalid response format or not set as default", data)
+                    return False
+            else:
+                self.log_test("Add Shipping Address", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Add Shipping Address", False, "Request failed", str(e))
+            return False
+    
+    def test_add_mobile_wallet_mtn(self):
+        """Test POST /api/profile/profile/mobile-wallet - add MTN mobile wallet"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            wallet_data = {
+                "provider": "MTN",
+                "phone_number": "+231-777-123456",
+                "account_name": "Mary Johnson"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/profile/profile/mobile-wallet",
+                json=wallet_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("wallet") and
+                    data["wallet"]["id"] and
+                    data["wallet"]["provider"] == "MTN" and
+                    data["wallet"]["is_default"] == True):  # First wallet should be default
+                    
+                    self.seller_wallet_id = data["wallet"]["id"]
+                    self.log_test("Add Mobile Wallet - MTN", True, f"MTN wallet added successfully (ID: {self.seller_wallet_id}, default: True)")
+                    return True
+                else:
+                    self.log_test("Add Mobile Wallet - MTN", False, "Invalid response format or not set as default", data)
+                    return False
+            else:
+                self.log_test("Add Mobile Wallet - MTN", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Add Mobile Wallet - MTN", False, "Request failed", str(e))
+            return False
+    
+    def test_add_mobile_wallet_orange(self):
+        """Test POST /api/profile/profile/mobile-wallet - add Orange mobile wallet"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            wallet_data = {
+                "provider": "Orange",
+                "phone_number": "+231-888-654321",
+                "account_name": "Mary Johnson"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/profile/profile/mobile-wallet",
+                json=wallet_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("wallet") and
+                    data["wallet"]["id"] and
+                    data["wallet"]["provider"] == "Orange" and
+                    data["wallet"]["is_default"] == False):  # Second wallet should not be default
+                    
+                    self.seller_orange_wallet_id = data["wallet"]["id"]
+                    self.log_test("Add Mobile Wallet - Orange", True, f"Orange wallet added successfully (ID: {self.seller_orange_wallet_id}, default: False)")
+                    return True
+                else:
+                    self.log_test("Add Mobile Wallet - Orange", False, "Invalid response format or incorrectly set as default", data)
+                    return False
+            else:
+                self.log_test("Add Mobile Wallet - Orange", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Add Mobile Wallet - Orange", False, "Request failed", str(e))
+            return False
+    
+    def test_add_bank_account(self):
+        """Test POST /api/profile/profile/bank-account - add bank account"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            bank_data = {
+                "bank_name": "Chase Bank",
+                "account_number": "1234567890",
+                "account_name": "John Smith",
+                "routing_number": "021000021"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/profile/profile/bank-account",
+                json=bank_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("bank_account") and
+                    data["bank_account"]["id"] and
+                    data["bank_account"]["bank_name"] == "Chase Bank" and
+                    data["bank_account"]["is_default"] == True):  # First bank account should be default
+                    
+                    self.buyer_bank_id = data["bank_account"]["id"]
+                    self.log_test("Add Bank Account", True, f"Bank account added successfully (ID: {self.buyer_bank_id}, default: True)")
+                    return True
+                else:
+                    self.log_test("Add Bank Account", False, "Invalid response format or not set as default", data)
+                    return False
+            else:
+                self.log_test("Add Bank Account", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Add Bank Account", False, "Request failed", str(e))
+            return False
+    
+    def test_add_identity_document_national_id(self):
+        """Test POST /api/profile/profile/identity-document - add national ID"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # Create a simple base64 encoded image for testing
+            import base64
+            test_image = base64.b64encode(b"fake_national_id_image_data").decode('utf-8')
+            
+            document_data = {
+                "document_type": "national_id",
+                "document_number": "LIB123456789",
+                "issuing_authority": "National Identification Registry of Liberia",
+                "document_image": f"data:image/jpeg;base64,{test_image}"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/profile/profile/identity-document",
+                json=document_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("document") and
+                    data["document"]["id"] and
+                    data["document"]["document_type"] == "national_id" and
+                    data["document"]["verification_status"] == "pending"):
+                    
+                    self.seller_document_id = data["document"]["id"]
+                    self.log_test("Add Identity Document - National ID", True, f"National ID uploaded successfully (ID: {self.seller_document_id}, status: pending)")
+                    return True
+                else:
+                    self.log_test("Add Identity Document - National ID", False, "Invalid response format or incorrect verification status", data)
+                    return False
+            else:
+                self.log_test("Add Identity Document - National ID", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Add Identity Document - National ID", False, "Request failed", str(e))
+            return False
+    
+    def test_add_identity_document_passport(self):
+        """Test POST /api/profile/profile/identity-document - add passport"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            
+            # Create a simple base64 encoded image for testing
+            import base64
+            test_image = base64.b64encode(b"fake_passport_image_data").decode('utf-8')
+            
+            from datetime import datetime, timedelta
+            expiry_date = (datetime.now() + timedelta(days=365*5)).isoformat()  # 5 years from now
+            
+            document_data = {
+                "document_type": "passport",
+                "document_number": "USA987654321",
+                "issuing_authority": "U.S. Department of State",
+                "expiry_date": expiry_date,
+                "document_image": f"data:image/jpeg;base64,{test_image}"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/profile/profile/identity-document",
+                json=document_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("document") and
+                    data["document"]["id"] and
+                    data["document"]["document_type"] == "passport" and
+                    data["document"]["verification_status"] == "pending"):
+                    
+                    self.buyer_document_id = data["document"]["id"]
+                    self.log_test("Add Identity Document - Passport", True, f"Passport uploaded successfully (ID: {self.buyer_document_id}, status: pending)")
+                    return True
+                else:
+                    self.log_test("Add Identity Document - Passport", False, "Invalid response format or incorrect verification status", data)
+                    return False
+            else:
+                self.log_test("Add Identity Document - Passport", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Add Identity Document - Passport", False, "Request failed", str(e))
+            return False
+    
+    def test_delete_address(self):
+        """Test DELETE /api/profile/profile/address/{id} - delete work address"""
+        if not hasattr(self, 'buyer_work_address_id') or not self.buyer_work_address_id:
+            self.log_test("Delete Address", False, "No work address ID available", "Address creation may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.delete(
+                f"{self.base_url}/api/profile/profile/address/{self.buyer_work_address_id}",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "deleted successfully" in data.get("message", ""):
+                    self.log_test("Delete Address", True, f"Work address deleted successfully (ID: {self.buyer_work_address_id})")
+                    return True
+                else:
+                    self.log_test("Delete Address", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Delete Address", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Delete Address", False, "Request failed", str(e))
+            return False
+    
+    def test_delete_mobile_wallet(self):
+        """Test DELETE /api/profile/profile/mobile-wallet/{id} - delete Orange wallet"""
+        if not hasattr(self, 'seller_orange_wallet_id') or not self.seller_orange_wallet_id:
+            self.log_test("Delete Mobile Wallet", False, "No Orange wallet ID available", "Wallet creation may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            response = requests.delete(
+                f"{self.base_url}/api/profile/profile/mobile-wallet/{self.seller_orange_wallet_id}",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "deleted successfully" in data.get("message", ""):
+                    self.log_test("Delete Mobile Wallet", True, f"Orange wallet deleted successfully (ID: {self.seller_orange_wallet_id})")
+                    return True
+                else:
+                    self.log_test("Delete Mobile Wallet", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Delete Mobile Wallet", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Delete Mobile Wallet", False, "Request failed", str(e))
+            return False
+    
+    def test_set_default_address(self):
+        """Test PUT /api/profile/profile/address/{id}/default - set home address as default"""
+        if not hasattr(self, 'buyer_address_id') or not self.buyer_address_id:
+            self.log_test("Set Default Address", False, "No home address ID available", "Address creation may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.put(
+                f"{self.base_url}/api/profile/profile/address/{self.buyer_address_id}/default",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "Default address updated" in data.get("message", ""):
+                    self.log_test("Set Default Address", True, f"Home address set as default successfully (ID: {self.buyer_address_id})")
+                    return True
+                else:
+                    self.log_test("Set Default Address", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Set Default Address", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Set Default Address", False, "Request failed", str(e))
+            return False
+    
+    def test_set_default_wallet(self):
+        """Test PUT /api/profile/profile/mobile-wallet/{id}/default - set MTN wallet as default"""
+        if not hasattr(self, 'seller_wallet_id') or not self.seller_wallet_id:
+            self.log_test("Set Default Wallet", False, "No MTN wallet ID available", "Wallet creation may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            response = requests.put(
+                f"{self.base_url}/api/profile/profile/mobile-wallet/{self.seller_wallet_id}/default",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "Default mobile wallet updated" in data.get("message", ""):
+                    self.log_test("Set Default Wallet", True, f"MTN wallet set as default successfully (ID: {self.seller_wallet_id})")
+                    return True
+                else:
+                    self.log_test("Set Default Wallet", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Set Default Wallet", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Set Default Wallet", False, "Request failed", str(e))
+            return False
+    
+    def test_get_complete_profile(self):
+        """Test GET /api/profile/profile - verify complete profile with all data"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/profile/profile",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("profile") and
+                    data.get("user")):
+                    
+                    profile = data["profile"]
+                    user = data["user"]
+                    
+                    # Verify system user ID format
+                    if not (profile.get("system_user_id") and profile["system_user_id"].startswith("LIB2USA-")):
+                        self.log_test("Get Complete Profile", False, "Invalid system_user_id format", profile.get("system_user_id"))
+                        return False
+                    
+                    # Verify addresses (should have 1 after deletion)
+                    addresses = profile.get("addresses", [])
+                    if len(addresses) != 1:
+                        self.log_test("Get Complete Profile", False, f"Expected 1 address, found {len(addresses)}", addresses)
+                        return False
+                    
+                    # Verify shipping addresses
+                    shipping_addresses = profile.get("shipping_addresses", [])
+                    if len(shipping_addresses) != 1:
+                        self.log_test("Get Complete Profile", False, f"Expected 1 shipping address, found {len(shipping_addresses)}", shipping_addresses)
+                        return False
+                    
+                    # Verify bank accounts
+                    bank_accounts = profile.get("bank_accounts", [])
+                    if len(bank_accounts) != 1:
+                        self.log_test("Get Complete Profile", False, f"Expected 1 bank account, found {len(bank_accounts)}", bank_accounts)
+                        return False
+                    
+                    # Verify identity documents
+                    identity_docs = profile.get("identity_documents", [])
+                    if len(identity_docs) != 1:
+                        self.log_test("Get Complete Profile", False, f"Expected 1 identity document, found {len(identity_docs)}", identity_docs)
+                        return False
+                    
+                    # Verify user info
+                    if not (user.get("firstName") and user.get("lastName") and user.get("email")):
+                        self.log_test("Get Complete Profile", False, "Missing user information", user)
+                        return False
+                    
+                    self.log_test("Get Complete Profile", True, f"Complete profile retrieved successfully - System ID: {profile['system_user_id']}, Addresses: {len(addresses)}, Shipping: {len(shipping_addresses)}, Banks: {len(bank_accounts)}, Documents: {len(identity_docs)}")
+                    return True
+                else:
+                    self.log_test("Get Complete Profile", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Get Complete Profile", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Get Complete Profile", False, "Request failed", str(e))
+            return False
+    
+    def test_profile_authentication_required(self):
+        """Test that profile endpoints require authentication"""
+        try:
+            # Test without authentication
+            response = requests.get(
+                f"{self.base_url}/api/profile/profile",
+                timeout=10
+            )
+            
+            if response.status_code == 403:  # Should be forbidden without auth
+                self.log_test("Profile Authentication Required", True, "Profile endpoints correctly require authentication")
+                return True
+            else:
+                self.log_test("Profile Authentication Required", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Profile Authentication Required", False, "Request failed", str(e))
+            return False
+
     # ==================== ADMIN API TESTS ====================
     
     def test_admin_login(self):
