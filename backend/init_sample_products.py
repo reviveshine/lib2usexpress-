@@ -19,6 +19,13 @@ async def create_sample_products():
     
     database = get_database()
     
+    # Wait a bit for database connection
+    if database is None:
+        print("❌ Database connection failed")
+        return
+    
+    print(f"✅ Connected to database: {database.name}")
+    
     # First, create sample sellers
     sample_sellers = [
         {
