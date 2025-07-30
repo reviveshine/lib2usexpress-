@@ -129,10 +129,83 @@ const DashboardPage = () => {
                 textAlign: 'center',
                 border: '2px solid #ffd700'
               }}>
-                <h4 style={{ color: '#dc2626', marginBottom: '0.5rem' }}>💰 Total Revenue</h4>
-                <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1f2937' }}>$0</p>
-                <p style={{ fontSize: '0.9rem', color: '#6b7280' }}>Total earnings</p>
+                <h4 style={{ color: '#dc2626', marginBottom: '0.5rem' }}>👥 Users Online</h4>
+                <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1f2937' }}>{onlineUsers.length}</p>
+                <p style={{ fontSize: '0.9rem', color: '#6b7280' }}>Active now</p>
               </div>
+            </div>
+
+            {/* Online Users Section */}
+            <div style={{
+              background: 'white',
+              padding: '2rem',
+              borderRadius: '10px',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+              marginBottom: '2rem'
+            }}>
+              <h4 style={{ color: '#1f2937', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                🟢 Online Users ({onlineUsers.length})
+              </h4>
+              
+              {onlineUsers.length > 0 ? (
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+                  gap: '1rem'
+                }}>
+                  {onlineUsers.map((onlineUser) => (
+                    <div key={onlineUser.user_id} style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.75rem',
+                      padding: '0.75rem',
+                      background: '#f9fafb',
+                      borderRadius: '8px',
+                      border: '1px solid #e5e7eb'
+                    }}>
+                      <div style={{
+                        width: '10px',
+                        height: '10px',
+                        borderRadius: '50%',
+                        backgroundColor: onlineUser.status === 'online' ? '#10b981' : '#f59e0b'
+                      }} />
+                      <div style={{ flex: 1 }}>
+                        <p style={{ 
+                          margin: 0, 
+                          fontWeight: '500', 
+                          color: '#1f2937',
+                          fontSize: '0.9rem'
+                        }}>
+                          {onlineUser.name}
+                        </p>
+                        <p style={{ 
+                          margin: 0, 
+                          color: '#6b7280', 
+                          fontSize: '0.8rem',
+                          textTransform: 'capitalize'
+                        }}>
+                          {onlineUser.userType === 'seller' ? '🏪 Seller' : '🛍️ Buyer'}
+                        </p>
+                      </div>
+                      <span style={{
+                        fontSize: '0.7rem',
+                        color: onlineUser.status === 'online' ? '#10b981' : '#f59e0b',
+                        textTransform: 'capitalize'
+                      }}>
+                        {onlineUser.status}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div style={{
+                  textAlign: 'center',
+                  padding: '2rem',
+                  color: '#6b7280'
+                }}>
+                  <p>No users currently online</p>
+                </div>
+              )}
             </div>
             
             <div style={{
