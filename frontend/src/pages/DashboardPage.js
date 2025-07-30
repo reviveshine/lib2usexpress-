@@ -29,6 +29,19 @@ const DashboardPage = () => {
     }
   }, [user, loading, navigate]);
 
+  const loadOnlineUsers = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/user/online-users`);
+      const data = await response.json();
+      
+      if (data.success) {
+        setOnlineUsers(data.online_users);
+      }
+    } catch (error) {
+      console.error('Error loading online users:', error);
+    }
+  };
+
   if (loading || !user) {
     return (
       <div className="page">
