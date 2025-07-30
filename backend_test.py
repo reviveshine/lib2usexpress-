@@ -4905,7 +4905,21 @@ class BackendTester:
             self.test_get_user_transactions,
             self.test_transactions_require_auth,
             self.test_payment_status_access_control,
-            self.test_checkout_requires_auth
+            self.test_checkout_requires_auth,
+            # New user status system tests
+            self.test_update_user_status_online,
+            self.test_update_user_status_away,
+            self.test_update_user_status_offline,
+            self.test_update_user_status_authentication_required,
+            self.test_get_user_status_existing_user,
+            self.test_get_user_status_nonexistent_user,
+            self.test_user_heartbeat,
+            self.test_user_heartbeat_authentication_required,
+            self.test_get_online_users_list,
+            self.test_bulk_user_status_retrieval,
+            self.test_bulk_user_status_with_nonexistent_users,
+            self.test_user_status_online_detection_5_minute_window,
+            self.test_user_status_lifecycle_complete
         ]
         
         passed = 0
