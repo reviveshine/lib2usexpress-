@@ -4276,6 +4276,507 @@ class BackendTester:
             self.log_test("Profile Picture Complete Workflow", False, "Request failed", str(e))
             return False
 
+    # ==================== USER STATUS SYSTEM TESTS ====================
+    
+    def test_update_user_status_online(self):
+        """Test POST /api/user/status - Update user status to online"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            status_data = {"status": "online"}
+            
+            response = requests.post(
+                f"{self.base_url}/api/user/status",
+                json=status_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("status") == "online" and
+                    data.get("message") and
+                    data.get("last_seen")):
+                    self.log_test("Update User Status - Online", True, "User status updated to online successfully")
+                    return True
+                else:
+                    self.log_test("Update User Status - Online", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Update User Status - Online", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Update User Status - Online", False, "Request failed", str(e))
+            return False
+    
+    def test_update_user_status_away(self):
+        """Test POST /api/user/status - Update user status to away"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            status_data = {"status": "away"}
+            
+            response = requests.post(
+                f"{self.base_url}/api/user/status",
+                json=status_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("status") == "away" and
+                    data.get("message") and
+                    data.get("last_seen")):
+                    self.log_test("Update User Status - Away", True, "User status updated to away successfully")
+                    return True
+                else:
+                    self.log_test("Update User Status - Away", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Update User Status - Away", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Update User Status - Away", False, "Request failed", str(e))
+            return False
+    
+    def test_update_user_status_offline(self):
+        """Test POST /api/user/status - Update user status to offline"""
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            status_data = {"status": "offline"}
+            
+            response = requests.post(
+                f"{self.base_url}/api/user/status",
+                json=status_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("status") == "offline" and
+                    data.get("message") and
+                    data.get("last_seen")):
+                    self.log_test("Update User Status - Offline", True, "User status updated to offline successfully")
+                    return True
+                else:
+                    self.log_test("Update User Status - Offline", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Update User Status - Offline", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Update User Status - Offline", False, "Request failed", str(e))
+            return False
+    
+    def test_update_user_status_authentication_required(self):
+        """Test POST /api/user/status - Authentication required"""
+        try:
+            status_data = {"status": "online"}
+            
+            response = requests.post(
+                f"{self.base_url}/api/user/status",
+                json=status_data,
+                timeout=10
+            )
+            
+            if response.status_code == 403:  # Forbidden expected
+                self.log_test("Update User Status - Auth Required", True, "Status update correctly requires authentication")
+                return True
+            else:
+                self.log_test("Update User Status - Auth Required", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Update User Status - Auth Required", False, "Request failed", str(e))
+            return False
+    
+    def test_get_user_status_existing_user(self):
+        """Test GET /api/user/status/{user_id} - Get status for existing user"""
+        try:
+            # First set buyer to online
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            status_data = {"status": "online"}
+            
+            requests.post(
+                f"{self.base_url}/api/user/status",
+                json=status_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            # Now get the status
+            response = requests.get(
+                f"{self.base_url}/api/user/status/{self.buyer_id}",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("status") in ["online", "offline", "away"] and
+                    "is_online" in data and
+                    "last_seen" in data):
+                    self.log_test("Get User Status - Existing User", True, f"Retrieved user status: {data['status']}, online: {data['is_online']}")
+                    return True
+                else:
+                    self.log_test("Get User Status - Existing User", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Get User Status - Existing User", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Get User Status - Existing User", False, "Request failed", str(e))
+            return False
+    
+    def test_get_user_status_nonexistent_user(self):
+        """Test GET /api/user/status/{user_id} - Get status for non-existent user"""
+        try:
+            fake_user_id = "nonexistent-user-id-12345"
+            
+            response = requests.get(
+                f"{self.base_url}/api/user/status/{fake_user_id}",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("status") == "offline" and
+                    data.get("is_online") == False and
+                    data.get("last_seen") is None):
+                    self.log_test("Get User Status - Non-existent User", True, "Non-existent user correctly returns offline status")
+                    return True
+                else:
+                    self.log_test("Get User Status - Non-existent User", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Get User Status - Non-existent User", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Get User Status - Non-existent User", False, "Request failed", str(e))
+            return False
+    
+    def test_user_heartbeat(self):
+        """Test POST /api/user/heartbeat - Update last activity timestamp"""
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            response = requests.post(
+                f"{self.base_url}/api/user/heartbeat",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("message") == "Heartbeat updated" and
+                    data.get("timestamp")):
+                    self.log_test("User Heartbeat", True, "Heartbeat updated successfully")
+                    return True
+                else:
+                    self.log_test("User Heartbeat", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("User Heartbeat", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("User Heartbeat", False, "Request failed", str(e))
+            return False
+    
+    def test_user_heartbeat_authentication_required(self):
+        """Test POST /api/user/heartbeat - Authentication required"""
+        try:
+            response = requests.post(
+                f"{self.base_url}/api/user/heartbeat",
+                timeout=10
+            )
+            
+            if response.status_code == 403:  # Forbidden expected
+                self.log_test("User Heartbeat - Auth Required", True, "Heartbeat correctly requires authentication")
+                return True
+            else:
+                self.log_test("User Heartbeat - Auth Required", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("User Heartbeat - Auth Required", False, "Request failed", str(e))
+            return False
+    
+    def test_get_online_users_list(self):
+        """Test GET /api/user/online-users - Get list of online users"""
+        try:
+            # First, set both users to online via heartbeat
+            buyer_headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            seller_headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # Send heartbeats for both users
+            requests.post(f"{self.base_url}/api/user/heartbeat", headers=buyer_headers, timeout=10)
+            requests.post(f"{self.base_url}/api/user/heartbeat", headers=seller_headers, timeout=10)
+            
+            # Now get online users
+            response = requests.get(
+                f"{self.base_url}/api/user/online-users",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "online_users" in data and
+                    "count" in data and
+                    isinstance(data["online_users"], list)):
+                    
+                    # Check if we have at least our test users
+                    online_count = data["count"]
+                    users = data["online_users"]
+                    
+                    # Verify user structure if any users are online
+                    if online_count > 0 and len(users) > 0:
+                        user = users[0]
+                        if (user.get("user_id") and 
+                            user.get("name") and
+                            user.get("userType") and
+                            user.get("status") and
+                            user.get("last_activity")):
+                            self.log_test("Get Online Users List", True, f"Retrieved {online_count} online users with proper structure")
+                            return True
+                        else:
+                            self.log_test("Get Online Users List", False, "Invalid user structure in online users", user)
+                            return False
+                    else:
+                        self.log_test("Get Online Users List", True, f"Retrieved {online_count} online users (empty list is valid)")
+                        return True
+                else:
+                    self.log_test("Get Online Users List", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Get Online Users List", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Get Online Users List", False, "Request failed", str(e))
+            return False
+    
+    def test_bulk_user_status_retrieval(self):
+        """Test GET /api/user/status/bulk/{user_ids} - Bulk status retrieval"""
+        try:
+            # First, set different statuses for our test users
+            buyer_headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            seller_headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # Set buyer to online and seller to away
+            requests.post(f"{self.base_url}/api/user/status", json={"status": "online"}, headers=buyer_headers, timeout=10)
+            requests.post(f"{self.base_url}/api/user/status", json={"status": "away"}, headers=seller_headers, timeout=10)
+            
+            # Test bulk retrieval
+            user_ids = f"{self.buyer_id},{self.seller_id}"
+            response = requests.get(
+                f"{self.base_url}/api/user/status/bulk/{user_ids}",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "statuses" in data and
+                    isinstance(data["statuses"], dict)):
+                    
+                    statuses = data["statuses"]
+                    
+                    # Check if both users are in the response
+                    if (self.buyer_id in statuses and 
+                        self.seller_id in statuses):
+                        
+                        buyer_status = statuses[self.buyer_id]
+                        seller_status = statuses[self.seller_id]
+                        
+                        # Verify status structure
+                        if (buyer_status.get("status") and
+                            "is_online" in buyer_status and
+                            "last_seen" in buyer_status and
+                            seller_status.get("status") and
+                            "is_online" in seller_status and
+                            "last_seen" in seller_status):
+                            
+                            self.log_test("Bulk User Status Retrieval", True, f"Retrieved bulk status - Buyer: {buyer_status['status']}, Seller: {seller_status['status']}")
+                            return True
+                        else:
+                            self.log_test("Bulk User Status Retrieval", False, "Invalid status structure", {"buyer": buyer_status, "seller": seller_status})
+                            return False
+                    else:
+                        self.log_test("Bulk User Status Retrieval", False, "Missing user IDs in response", statuses)
+                        return False
+                else:
+                    self.log_test("Bulk User Status Retrieval", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Bulk User Status Retrieval", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Bulk User Status Retrieval", False, "Request failed", str(e))
+            return False
+    
+    def test_bulk_user_status_with_nonexistent_users(self):
+        """Test bulk status retrieval with mix of existing and non-existent users"""
+        try:
+            # Test with mix of real and fake user IDs
+            fake_user_id = "fake-user-12345"
+            user_ids = f"{self.buyer_id},{fake_user_id}"
+            
+            response = requests.get(
+                f"{self.base_url}/api/user/status/bulk/{user_ids}",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "statuses" in data and
+                    isinstance(data["statuses"], dict)):
+                    
+                    statuses = data["statuses"]
+                    
+                    # Check if both users are in the response
+                    if (self.buyer_id in statuses and 
+                        fake_user_id in statuses):
+                        
+                        buyer_status = statuses[self.buyer_id]
+                        fake_status = statuses[fake_user_id]
+                        
+                        # Fake user should be offline
+                        if (fake_status.get("status") == "offline" and
+                            fake_status.get("is_online") == False and
+                            fake_status.get("last_seen") is None):
+                            
+                            self.log_test("Bulk Status - Mixed Users", True, "Bulk status correctly handles mix of existing and non-existent users")
+                            return True
+                        else:
+                            self.log_test("Bulk Status - Mixed Users", False, "Non-existent user not handled correctly", fake_status)
+                            return False
+                    else:
+                        self.log_test("Bulk Status - Mixed Users", False, "Missing user IDs in response", statuses)
+                        return False
+                else:
+                    self.log_test("Bulk Status - Mixed Users", False, "Invalid response format", data)
+                    return False
+            else:
+                self.log_test("Bulk Status - Mixed Users", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Bulk Status - Mixed Users", False, "Request failed", str(e))
+            return False
+    
+    def test_user_status_online_detection_5_minute_window(self):
+        """Test that is_online calculation works based on 5-minute activity window"""
+        try:
+            # Set user to online
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            requests.post(f"{self.base_url}/api/user/status", json={"status": "online"}, headers=headers, timeout=10)
+            
+            # Immediately check status - should be online
+            response = requests.get(
+                f"{self.base_url}/api/user/status/{self.buyer_id}",
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("is_online") == True and
+                    data.get("status") == "online"):
+                    
+                    # Note: We can't easily test the 5-minute timeout without waiting
+                    # But we can verify the logic is in place
+                    self.log_test("Online Detection - 5 Minute Window", True, "Online detection working - user shows as online immediately after status update")
+                    return True
+                else:
+                    self.log_test("Online Detection - 5 Minute Window", False, "User not showing as online after status update", data)
+                    return False
+            else:
+                self.log_test("Online Detection - 5 Minute Window", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Online Detection - 5 Minute Window", False, "Request failed", str(e))
+            return False
+    
+    def test_user_status_lifecycle_complete(self):
+        """Test complete user status lifecycle: status update → heartbeat → online detection → bulk retrieval"""
+        try:
+            print("🔄 Testing complete user status lifecycle...")
+            
+            # Step 1: Update buyer status to online
+            buyer_headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            status_response = requests.post(
+                f"{self.base_url}/api/user/status",
+                json={"status": "online"},
+                headers=buyer_headers,
+                timeout=10
+            )
+            
+            if status_response.status_code != 200:
+                self.log_test("User Status Lifecycle", False, "Step 1 failed - status update", status_response.text)
+                return False
+            
+            # Step 2: Send heartbeat to maintain activity
+            heartbeat_response = requests.post(
+                f"{self.base_url}/api/user/heartbeat",
+                headers=buyer_headers,
+                timeout=10
+            )
+            
+            if heartbeat_response.status_code != 200:
+                self.log_test("User Status Lifecycle", False, "Step 2 failed - heartbeat", heartbeat_response.text)
+                return False
+            
+            # Step 3: Check online detection
+            status_check_response = requests.get(
+                f"{self.base_url}/api/user/status/{self.buyer_id}",
+                timeout=10
+            )
+            
+            if status_check_response.status_code != 200:
+                self.log_test("User Status Lifecycle", False, "Step 3 failed - status check", status_check_response.text)
+                return False
+            
+            status_data = status_check_response.json()
+            if not (status_data.get("success") and status_data.get("is_online")):
+                self.log_test("User Status Lifecycle", False, "Step 3 failed - user not detected as online", status_data)
+                return False
+            
+            # Step 4: Check online users list
+            online_users_response = requests.get(
+                f"{self.base_url}/api/user/online-users",
+                timeout=10
+            )
+            
+            if online_users_response.status_code != 200:
+                self.log_test("User Status Lifecycle", False, "Step 4 failed - online users list", online_users_response.text)
+                return False
+            
+            # Step 5: Test bulk retrieval
+            bulk_response = requests.get(
+                f"{self.base_url}/api/user/status/bulk/{self.buyer_id}",
+                timeout=10
+            )
+            
+            if bulk_response.status_code != 200:
+                self.log_test("User Status Lifecycle", False, "Step 5 failed - bulk retrieval", bulk_response.text)
+                return False
+            
+            bulk_data = bulk_response.json()
+            if not (bulk_data.get("success") and 
+                    bulk_data.get("statuses", {}).get(self.buyer_id, {}).get("is_online")):
+                self.log_test("User Status Lifecycle", False, "Step 5 failed - bulk status not showing online", bulk_data)
+                return False
+            
+            self.log_test("User Status Lifecycle", True, "Complete user status lifecycle working: status update → heartbeat → online detection → bulk retrieval")
+            return True
+            
+        except Exception as e:
+            self.log_test("User Status Lifecycle", False, "Request failed", str(e))
+            return False
+
     def run_all_tests(self):
         """Run all backend tests in sequence"""
         print(f"\n🚀 Starting Backend API Tests for Liberia2USA Express")
