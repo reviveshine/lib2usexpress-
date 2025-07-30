@@ -7,6 +7,7 @@ import ProfileTab from '../components/ProfileTab';
 const DashboardPage = () => {
   const { user, loading } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
+  const [onlineUsers, setOnlineUsers] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
