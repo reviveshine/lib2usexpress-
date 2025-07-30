@@ -386,39 +386,65 @@ const MarketplacePage = () => {
                       fontSize: '0.8rem',
                       color: '#6b7280'
                     }}>
-                      <span>Seller: {product.sellerName}</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span>Seller: {product.sellerName}</span>
+                        {/* Online Status Indicator */}
+                        {sellerStatuses[product.sellerId || product.seller_id] && (
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.25rem'
+                          }}>
+                            <div style={{
+                              width: '8px',
+                              height: '8px',
+                              borderRadius: '50%',
+                              backgroundColor: sellerStatuses[product.sellerId || product.seller_id]?.is_online 
+                                ? '#10b981' // Green for online
+                                : '#6b7280' // Gray for offline
+                            }} />
+                            <span style={{ 
+                              fontSize: '0.7rem',
+                              color: sellerStatuses[product.sellerId || product.seller_id]?.is_online 
+                                ? '#10b981' 
+                                : '#6b7280'
+                            }}>
+                              {sellerStatuses[product.sellerId || product.seller_id]?.is_online ? 'Online' : 'Offline'}
+                            </span>
+                          </div>
+                        )}
+                      </div>
                       <span>👁️ {product.views} views</span>
                     </div>
                     
                     {/* Action Buttons */}
                     <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem' }}>
-                      {user && user.userType === 'buyer' && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleAddToCart(product);
-                          }}
-                          style={{
-                            flex: '1',
-                            padding: '0.5rem',
-                            backgroundColor: '#16a34a',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '5px',
-                            fontSize: '0.8rem',
-                            cursor: 'pointer',
-                            transition: 'background-color 0.3s'
-                          }}
-                          onMouseEnter={(e) => {
-                            e.target.style.backgroundColor = '#15803d';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.backgroundColor = '#16a34a';
-                          }}
-                        >
-                          🛒 Add to Cart
-                        </button>
-                      )}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAddToCart(product);
+                        }}
+                        style={{
+                          flex: '1',
+                          padding: '0.5rem',
+                          backgroundColor: '#16a34a',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '5px',
+                          fontSize: '0.8rem',
+                          cursor: 'pointer',
+                          transition: 'background-color 0.3s'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.backgroundColor = '#15803d';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.backgroundColor = '#16a34a';
+                        }}
+                      >
+                        🛒 Add to Cart
+                      </button>
+                      
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
