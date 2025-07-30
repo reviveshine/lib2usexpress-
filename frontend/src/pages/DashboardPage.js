@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import { useUserStatus } from '../hooks/useUserStatus';
 import ProfileTab from '../components/ProfileTab';
 
 const DashboardPage = () => {
