@@ -26,6 +26,13 @@ const DashboardPage = () => {
       }
       
       console.log('🏪 Seller dashboard access granted for:', user.firstName, user.lastName);
+      
+      // Load online users initially
+      loadOnlineUsers();
+      
+      // Set up interval to refresh online users every 30 seconds
+      const interval = setInterval(loadOnlineUsers, 30000);
+      return () => clearInterval(interval);
     }
   }, [user, loading, navigate]);
 
