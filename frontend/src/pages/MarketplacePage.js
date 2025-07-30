@@ -85,43 +85,42 @@ const MarketplacePage = () => {
     }
   };
 
-  const handleAddToCart = (product) => {
-    console.log('🛒 Add to Cart clicked for product:', product.name);
-    
-    if (!user) {
-      alert('Please login to add items to cart');
-      navigate('/login');
-      return;
-    }
-
-    if (user.userType !== 'buyer') {
-      alert('Only buyers can add items to cart');
-      return;
-    }
-
-    if (user.id === product.seller_id) {
-      alert('You cannot buy your own products!');
-      return;
-    }
-
-    // Transform product data for cart with proper field mapping
-    const cartItem = {
-      id: product._id || product.id, // Handle both MongoDB _id and UUID id
-      name: product.name,
-      price: product.price,
-      image_urls: product.images || product.image_urls || [],
-      seller_id: product.seller_id,
-      seller_name: product.seller_name || product.sellerName || 'Unknown Seller',
-      stock: product.stock || 1,
-      category: product.category,
-      quantity: 1
-    };
-
-    console.log('🛒 Cart item to add:', cartItem);
-
+  const handleAddToCart = async (product) => {
+    // Allow both logged in and guest users to add to cart
     try {
+      const cartItem = {
+        id: product._id || product.id,
+        name: product.title || product.name,
+        price: product.price,
+        quantity: 1,
+        image: product.images ? product.images[0] : 'https://via.placeholder.com/150x150?text=Product',
+        sellerId: product.sellerId || product.seller_id,
+        sellerName: product.sellerName || product.seller_name || 'Unknown Seller'
+      };
+
       addToCart(cartItem);
-      alert('Product added to cart successfully!');
+      
+      // Show success message
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #16a34a;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        font-weight: 500;
+      `;
+      notification.textContent = `✅ ${cartItem.name} added to cart!`;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        document.body.removeChild(notification);
+      }, 3000);
+      
     } catch (error) {
       console.error('🛒 Error adding to cart:', error);
       alert('Failed to add product to cart. Please try again.');
