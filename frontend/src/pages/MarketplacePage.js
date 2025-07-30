@@ -8,6 +8,7 @@ const MarketplacePage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sellerStatuses, setSellerStatuses] = useState({});
   const [filters, setFilters] = useState({
     search: '',
     category: '',
@@ -22,6 +23,31 @@ const MarketplacePage = () => {
   useEffect(() => {
     loadProducts();
   }, [currentPage, filters]);
+
+  useEffect(() => {
+    // Load seller statuses when products change
+    if (products.length > 0) {
+      loadSellerStatuses();
+    }
+  }, [products]);
+
+  const loadSellerStatuses = async () => {
+    try {
+      const sellerIds = [...new Set(products.map(p => p.sellerId || p.seller_id))].filter(Boolean);
+      
+      if (sellerIds.length > 0) {
+        const response = await axios.get(
+          `${API_BASE}/api/user/status/bulk/${sellerIds.join(',')}`
+        );
+        
+        if (response.data.success) {
+          setSellerStatuses(response.data.statuses);
+        }
+      }
+    } catch (error) {
+      console.error('Error loading seller statuses:', error);
+    }
+  };
 
 
   const contactSeller = async (product) => {
