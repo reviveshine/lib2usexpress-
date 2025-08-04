@@ -119,7 +119,8 @@ async def login_user(login_data: UserLogin):
         "success": True,
         "message": "Login successful",
         "user": user_response.dict(),
-        "token": access_token
+        "token": access_token,
+        "refresh_token": refresh_token
     }
 
 @router.get("/me", response_model=dict)
