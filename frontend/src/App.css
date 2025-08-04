@@ -1,17 +1,84 @@
+/* Liberia2USA Express - Red, White, Blue Theme with Gold Liberia Map */
+
+/* Root color variables */
+:root {
+  --primary-red: #dc2626;
+  --primary-blue: #1d4ed8;
+  --primary-white: #ffffff;
+  --gold: #ffd700;
+  --deep-blue: #1e3a8a;
+  --light-blue: #3b82f6;
+  --cloud-white: #f8fafc;
+  --shadow-blue: rgba(29, 78, 216, 0.1);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Global body styling with cloud background */
 body {
+  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f8f9fa;
+  background: linear-gradient(135deg, #1d4ed8 0%, #ffffff 50%, #dc2626 100%);
+  background-attachment: fixed;
+  position: relative;
+  min-height: 100vh;
 }
+
+/* Cloud background elements */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(ellipse 200px 100px at 20% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse 300px 150px at 80% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse 250px 120px at 60% 60%, rgba(255, 255, 255, 0.25) 0%, transparent 50%),
+    radial-gradient(ellipse 180px 90px at 90% 80%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse 220px 110px at 10% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+  animation: cloudFloat 20s ease-in-out infinite;
+}
+
+/* Cloud floating animation */
+@keyframes cloudFloat {
+  0%, 100% { transform: translateX(0px); }
+  33% { transform: translateX(10px); }
+  66% { transform: translateX(-5px); }
+}
+
+/* Liberia map background element */
+.liberia-map-bg {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 300px;
+  opacity: 0.1;
+  z-index: -1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath d='M50 50 Q80 30 120 40 L180 45 Q220 50 250 60 L300 80 Q320 100 310 140 L300 180 Q280 220 250 240 L200 250 Q150 245 120 230 L80 200 Q50 150 50 100 Z' fill='%23ffd700' stroke='%23ffd700' stroke-width='2'/%3E%3Ccircle cx='100' cy='100' r='3' fill='%23ffd700'/%3E%3Ctext x='150' y='160' font-family='Arial' font-size='12' fill='%23ffd700' text-anchor='middle'%3ELiberia%3C/text%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: mapPulse 15s ease-in-out infinite;
+}
+
+/* Map pulsing animation */
+@keyframes mapPulse {
+  0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.15; transform: translate(-50%, -50%) scale(1.05); }
 
 /* Independence Day Banner Styles */
 .independence-banner {
