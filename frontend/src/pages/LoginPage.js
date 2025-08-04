@@ -276,7 +276,7 @@ const LoginPage = () => {
                 textDecoration: 'none',
                 borderRadius: '25px',
                 fontWeight: '600',
-                border: '2px solid #ffd700',
+                border: '2px solid #DAA520',
                 transition: 'all 0.3s ease',
                 backdropFilter: 'blur(10px)'
               }}
