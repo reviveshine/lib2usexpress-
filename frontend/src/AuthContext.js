@@ -14,9 +14,20 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [tokenRefreshInterval, setTokenRefreshInterval] = useState(null);
+
+  // Get API base URL
+  const API_BASE = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
   useEffect(() => {
     checkAuthStatus();
+    
+    // Cleanup interval on unmount
+    return () => {
+      if (tokenRefreshInterval) {
+        clearInterval(tokenRefreshInterval);
+      }
+    };
   }, []);
 
   const checkAuthStatus = () => {
