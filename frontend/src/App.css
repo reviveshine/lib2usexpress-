@@ -80,59 +80,52 @@ body::before {
   0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
   50% { opacity: 0.15; transform: translate(-50%, -50%) scale(1.05); }
 
-/* Independence Day Banner Styles */
-.independence-banner {
-  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 50%, #dc2626 100%);
-  color: white;
-  padding: 15px 0;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  border-bottom: 3px solid #ffd700;
-}
-
-.independence-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  position: relative;
-}
-
-.liberian-flag {
-  width: 60px;
-  height: 40px;
-  object-fit: cover;
-  border: 2px solid #ffd700;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-  animation: flagWave 2s ease-in-out infinite;
-}
-
-.independence-text {
+/* Main app container */
+.App {
   text-align: center;
   position: relative;
+  min-height: 100vh;
 }
 
-.happy-text {
-  display: block;
-  font-size: 1.8rem;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  animation: textGlow 2s ease-in-out infinite alternate;
-  letter-spacing: 3px;
+/* Page containers with enhanced styling */
+.page {
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
 }
 
-.liberia-text {
-  display: block;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-top: 5px;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-  animation: textPulse 1.5s ease-in-out infinite;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Enhanced header styles */
+.header {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-red) 100%);
+  color: white;
+  padding: 1rem 0;
+  box-shadow: 0 4px 20px var(--shadow-blue);
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'%3E%3Cpath d='M0 10 Q25 5 50 10 T100 10 V20 H0 Z' fill='%23ffd700' opacity='0.3'/%3E%3C/svg%3E");
+  background-size: 100px 20px;
+  background-repeat: repeat-x;
+  background-position: bottom;
 }
 
 /* Sparkle Animations */
