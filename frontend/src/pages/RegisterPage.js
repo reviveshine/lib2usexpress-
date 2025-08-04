@@ -583,7 +583,7 @@ const RegisterPage = () => {
                       backdropFilter: 'blur(10px)'
                     }}
                     onFocus={(e) => {
-                      e.target.style.borderColor = '#ffd700';
+                      e.target.style.borderColor = '#DAA520';
                       e.target.style.boxShadow = '0 0 15px rgba(218, 165, 32, 0.3)';
                     }}
                     onBlur={(e) => {
