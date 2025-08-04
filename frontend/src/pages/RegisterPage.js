@@ -106,8 +106,8 @@ const RegisterPage = () => {
       console.log('🔐 Registration response:', response.status);
       
       if (response.data.success) {
-        // Use AuthContext login method instead of manual localStorage
-        login(response.data.user, response.data.token);
+        // Use AuthContext login method with refresh token
+        login(response.data.user, response.data.token, response.data.refresh_token);
         
         // Role-based redirection with success message
         const userType = response.data.user.userType;
