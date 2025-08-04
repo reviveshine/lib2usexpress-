@@ -245,6 +245,64 @@ async def get_current_user_info(current_user_id: str = Depends(get_current_user)
     
     return user
 
+# Token refresh endpoint
+@app.post("/api/auth/refresh")
+async def refresh_access_token(request: dict):
+    """Refresh access token using refresh token"""
+    try:
+        refresh_token = request.get("refresh_token")
+        if not refresh_token:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Refresh token is required"
+            )
+        
+        # Validate refresh token
+        user_id = await validate_refresh_token(refresh_token)
+        if not user_id:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid or expired refresh token"
+            )
+        
+        # Get user info
+        database = get_database()
+        if not database:
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Database connection unavailable"
+            )
+        
+        user = await database.users.find_one({"id": user_id})
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="User no longer exists"
+            )
+        
+        # Create new access token
+        new_access_token = create_access_token({"sub": user_id})
+        
+        # Optionally create new refresh token (rotation strategy)
+        new_refresh_token = create_refresh_token({"sub": user_id})
+        await store_refresh_token(user_id, new_refresh_token)
+        
+        return {
+            "success": True,
+            "access_token": new_access_token,
+            "refresh_token": new_refresh_token,
+            "token_type": "bearer"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error in refresh token endpoint: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error during token refresh"
+        )
+
 # Health check endpoint - must not depend on database for Kubernetes health checks
 @app.get("/api/health")
 async def health_check():
