@@ -32,19 +32,35 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuthStatus = () => {
     const token = localStorage.getItem('auth_token');
+    const refreshToken = localStorage.getItem('refresh_token');
     const userData = localStorage.getItem('user_data');
     
     if (token && userData) {
       try {
         const parsedUser = JSON.parse(userData);
         setUser(parsedUser);
+        
+        // Set up token refresh if we have a refresh token
+        if (refreshToken) {
+          setupTokenRefresh(refreshToken);
+        }
       } catch (error) {
         console.error('Error parsing user data:', error);
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('user_data');
+        clearAuthData();
       }
     }
     setLoading(false);
+  };
+
+  const clearAuthData = () => {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('user_data');
+    localStorage.removeItem('cart');
+    if (tokenRefreshInterval) {
+      clearInterval(tokenRefreshInterval);
+      setTokenRefreshInterval(null);
+    }
   };
 
   const login = (userData, token) => {
