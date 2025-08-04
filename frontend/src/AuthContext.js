@@ -148,6 +148,11 @@ export const AuthProvider = ({ children }) => {
     refreshAccessToken
   };
 
+  // Set auth context reference for axios interceptor
+  useEffect(() => {
+    setAuthContext(value);
+  }, [user, loading]);
+
   return (
     <AuthContext.Provider value={value}>
       {!loading && children}
