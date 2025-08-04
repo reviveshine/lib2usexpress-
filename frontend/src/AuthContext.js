@@ -60,10 +60,63 @@ export const AuthProvider = ({ children }) => {
     if (tokenRefreshInterval) {
       clearInterval(tokenRefreshInterval);
       setTokenRefreshInterval(null);
+  const setupTokenRefresh = (refreshToken) => {
+    // Clear any existing interval
+    if (tokenRefreshInterval) {
+      clearInterval(tokenRefreshInterval);
     }
+    
+    // Refresh token every 6 hours (access token expires in 7 days, but refresh proactively)
+    const refreshIntervalMs = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+    
+    const interval = setInterval(async () => {
+      await refreshAccessToken(refreshToken);
+    }, refreshIntervalMs);
+    
+    setTokenRefreshInterval(interval);
   };
 
-  const login = (userData, token) => {
+  const refreshAccessToken = async (currentRefreshToken = null) => {
+    try {
+      const refreshToken = currentRefreshToken || localStorage.getItem('refresh_token');
+      
+      if (!refreshToken) {
+        console.warn('No refresh token available');
+        logout();
+        return null;
+      }
+
+      const response = await axios.post(`${API_BASE}/api/auth/refresh`, {
+        refresh_token: refreshToken
+      });
+
+      if (response.data.success) {
+        const { access_token, refresh_token: new_refresh_token } = response.data;
+        
+        // Update tokens in localStorage
+        localStorage.setItem('auth_token', access_token);
+        if (new_refresh_token) {
+          localStorage.setItem('refresh_token', new_refresh_token);
+          setupTokenRefresh(new_refresh_token);
+        }
+        
+        console.log('🔄 Token refreshed successfully');
+        return access_token;
+      } else {
+        throw new Error('Token refresh failed');
+      }
+      
+    } catch (error) {
+      console.error('🔄 Token refresh error:', error);
+      
+      if (error.response?.status === 401) {
+        console.warn('🔄 Refresh token expired, logging out');
+        logout();
+      }
+      
+      return null;
+    }
+  };
     localStorage.setItem('auth_token', token);
     localStorage.setItem('user_data', JSON.stringify(userData));
     setUser(userData);
