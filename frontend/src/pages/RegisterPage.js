@@ -208,7 +208,7 @@ const RegisterPage = () => {
           padding: '3rem',
           boxShadow: '0 20px 60px rgba(29, 78, 216, 0.2)',
           backdropFilter: 'blur(20px)',
-          border: '3px solid rgba(255, 215, 0, 0.3)',
+          border: '3px solid rgba(218, 165, 32, 0.3)',
           position: 'relative',
           overflow: 'hidden'
         }}>
