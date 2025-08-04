@@ -52,12 +52,77 @@ app.add_middleware(
 )
 
 # Utility functions
-def create_access_token(data: dict):
+def create_access_token(data: dict, expires_delta: timedelta = None):
+    """Create JWT access token"""
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(hours=JWT_EXPIRE_HOURS)
-    to_encode.update({"exp": expire})
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(hours=JWT_EXPIRE_HOURS)
+    to_encode.update({"exp": expire, "type": "access"})
     encoded_jwt = jwt.encode(to_encode, JWT_SECRET, algorithm=JWT_ALGORITHM)
     return encoded_jwt
+
+def create_refresh_token(data: dict):
+    """Create JWT refresh token with longer expiration"""
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
+    to_encode.update({"exp": expire, "type": "refresh"})
+    encoded_jwt = jwt.encode(to_encode, JWT_SECRET, algorithm=JWT_ALGORITHM)
+    return encoded_jwt
+
+async def store_refresh_token(user_id: str, refresh_token: str):
+    """Store refresh token in database"""
+    database = get_database()
+    if database:
+        # Update user with new refresh token and expiration
+        expire_at = datetime.utcnow() + timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
+        await database.users.update_one(
+            {"id": user_id},
+            {
+                "$set": {
+                    "refresh_token": refresh_token,
+                    "refresh_token_expires_at": expire_at
+                }
+            }
+        )
+
+async def validate_refresh_token(refresh_token: str):
+    """Validate refresh token and return user_id if valid"""
+    try:
+        # Decode the refresh token
+        payload = jwt.decode(refresh_token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        
+        # Check if it's a refresh token
+        if payload.get("type") != "refresh":
+            return None
+            
+        user_id = payload.get("sub")
+        if not user_id:
+            return None
+        
+        # Check if refresh token exists in database and hasn't expired
+        database = get_database()
+        if not database:
+            return None
+            
+        user = await database.users.find_one({
+            "id": user_id,
+            "refresh_token": refresh_token,
+            "refresh_token_expires_at": {"$gt": datetime.utcnow()}
+        })
+        
+        if not user:
+            return None
+            
+        return user_id
+        
+    except jwt.ExpiredSignatureError:
+        return None
+    except jwt.JWTError:
+        return None
+    except Exception:
+        return None
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     """Get current user from JWT token with enhanced error handling"""
