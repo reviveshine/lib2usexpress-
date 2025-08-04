@@ -98,6 +98,7 @@ body::before {
 @keyframes mapPulse {
   0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
   50% { opacity: 0.15; transform: translate(-50%, -50%) scale(1.05); }
+}
 
 /* Main app container */
 .App {
