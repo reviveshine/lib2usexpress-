@@ -5,82 +5,116 @@ const HomePage = () => {
   return (
     <div className="page">
       <section style={{
-        background: 'linear-gradient(135deg, #1d4ed8 0%, rgba(255, 255, 255, 0.9) 50%, #dc2626 100%)',
-        padding: '6rem 0',
+        background: `
+          linear-gradient(135deg, 
+            #3C3B6E 0%, 
+            rgba(255, 255, 255, 0.9) 40%, 
+            rgba(255, 255, 255, 0.95) 60%, 
+            #B22234 100%
+          ),
+          url('https://images.unsplash.com/photo-1532154078493-c1c3eef2023c')
+        `,
+        backgroundSize: 'cover, 100% auto',
+        backgroundPosition: 'center, center right',
+        backgroundBlendMode: 'overlay, normal',
+        padding: '8rem 0',
         position: 'relative',
         overflow: 'hidden',
-        minHeight: '80vh',
+        minHeight: '85vh',
         display: 'flex',
         alignItems: 'center'
       }}>
-        {/* Background Map */}
+        {/* Realistic Liberia Map Background */}
         <div style={{
           position: 'absolute',
-          top: '10%',
-          right: '-5%',
-          width: '500px',
-          height: '400px',
-          backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 500 400\'%3E%3Cpath d=\'M80 100 Q150 50 220 80 L280 90 Q350 110 380 160 L370 240 Q340 300 280 320 L220 330 Q150 320 100 280 L80 220 Q70 160 80 100 Z\' fill=\'%23ffd700\' opacity=\'0.2\' stroke=\'%23ffd700\' stroke-width=\'2\'/%3E%3Ccircle cx=\'180\' cy=\'200\' r=\'4\' fill=\'%23ffd700\'/%3E%3Ctext x=\'220\' y=\'250\' font-family=\'Arial\' font-size=\'20\' fill=\'%23ffd700\' text-anchor=\'middle\' opacity=\'0.7\'%3ELiberia%3C/text%3E%3C/svg%3E")',
+          top: '8%',
+          right: '-3%',
+          width: '550px',
+          height: '450px',
+          backgroundImage: 'url("https://images.unsplash.com/photo-1709226660708-38e861588890")',
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
-          opacity: 0.3,
-          animation: 'mapFloat 20s ease-in-out infinite'
+          opacity: 0.12,
+          filter: 'sepia(90%) saturate(120%) hue-rotate(25deg) brightness(1.4)',
+          animation: 'mapFloatRealistic 25s ease-in-out infinite',
+          zIndex: 1
+        }}></div>
+
+        {/* Professional overlay pattern */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cg fill='%23DAA520' opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3Ccircle cx='10' cy='10' r='0.5'/%3E%3Ccircle cx='50' cy='10' r='0.7'/%3E%3Ccircle cx='10' cy='50' r='0.6'/%3E%3Ccircle cx='50' cy='50' r='0.8'/%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundSize: '60px 60px',
+          zIndex: 0
         }}></div>
 
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <div style={{ textAlign: 'center', color: 'white' }}>
             <h1 style={{
-              fontSize: '4rem',
-              fontWeight: 'bold',
-              marginBottom: '1rem',
-              textShadow: '3px 3px 6px rgba(0,0,0,0.5)',
-              background: 'linear-gradient(45deg, #dc2626, #ffd700, #1d4ed8, #ffffff)',
+              fontSize: '4.5rem',
+              fontWeight: '900',
+              marginBottom: '1.5rem',
+              textShadow: '4px 4px 8px rgba(0,0,0,0.4)',
+              background: 'linear-gradient(45deg, #B22234 0%, #DAA520 20%, #ffffff 40%, #DAA520 60%, #3C3B6E 80%, #B22234 100%)',
+              backgroundSize: '600% 100%',
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              animation: 'textShimmer 4s ease-in-out infinite',
-              backgroundSize: '400% 400%'
+              animation: 'textShimmerRealistic 6s ease-in-out infinite',
+              fontFamily: 'Georgia, serif',
+              letterSpacing: '2px'
             }}>
               Liberia2USA Express
             </h1>
             
             <p style={{
-              fontSize: '1.4rem',
-              marginBottom: '2rem',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
+              fontSize: '1.5rem',
+              marginBottom: '2.5rem',
+              textShadow: '2px 2px 6px rgba(0,0,0,0.6)',
               color: 'white',
-              maxWidth: '800px',
-              margin: '0 auto 2rem'
+              maxWidth: '900px',
+              margin: '0 auto 2.5rem',
+              lineHeight: '1.5',
+              fontWeight: '300'
             }}>
-              🌍 Bridging Two Nations Through Commerce 🌍<br />
-              Your premier platform for authentic Liberian products delivered across America
+              🌍 Bridging Two Nations Through Authentic Commerce 🌍<br />
+              <span style={{ fontSize: '1.2rem', opacity: '0.95' }}>
+                Your premier destination for genuine Liberian products delivered across America
+              </span>
             </p>
             
             <div style={{ 
-              background: 'rgba(255, 215, 0, 0.2)', 
-              padding: '2rem', 
-              borderRadius: '20px', 
-              marginBottom: '3rem',
-              border: '2px solid rgba(255, 215, 0, 0.5)',
-              backdropFilter: 'blur(10px)',
-              maxWidth: '600px',
-              margin: '0 auto 3rem'
+              background: 'rgba(218, 165, 32, 0.15)', 
+              padding: '2.5rem', 
+              borderRadius: '25px', 
+              marginBottom: '3.5rem',
+              border: '2px solid rgba(218, 165, 32, 0.3)',
+              backdropFilter: 'blur(15px)',
+              maxWidth: '750px',
+              margin: '0 auto 3.5rem',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
             }}>
               <p style={{ 
-                fontSize: '1.3rem', 
-                fontWeight: 'bold', 
-                color: '#ffd700',
-                textShadow: '1px 1px 3px rgba(0,0,0,0.8)',
-                marginBottom: '0.5rem'
+                fontSize: '1.4rem', 
+                fontWeight: '700', 
+                color: '#DAA520',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
+                marginBottom: '0.8rem'
               }}>
-                🤝 Connecting Liberian Sellers with American Buyers
+                🤝 Connecting Liberian Heritage with American Opportunity
               </p>
               <p style={{
-                fontSize: '1rem',
+                fontSize: '1.1rem',
                 color: 'white',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
+                textShadow: '1px 1px 3px rgba(0,0,0,0.7)',
+                fontWeight: '400',
+                opacity: '0.95'
               }}>
-                From traditional crafts to premium coffee - bringing Liberian excellence to your doorstep
+                From traditional crafts to premium coffee beans - experience authentic Liberian excellence delivered to your doorstep with care and cultural pride
               </p>
             </div>
             
