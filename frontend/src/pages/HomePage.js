@@ -354,59 +354,95 @@ const HomePage = () => {
             </div>
           </div>
           
-          {/* Call to Action Section */}
+          {/* Enhanced Call to Action Section */}
           <div style={{
-            background: 'linear-gradient(135deg, #1d4ed8 0%, #dc2626 100%)',
-            padding: '3rem',
-            borderRadius: '25px',
+            background: 'linear-gradient(135deg, #3C3B6E 0%, #B22234 100%)',
+            padding: '4rem',
+            borderRadius: '30px',
             textAlign: 'center',
             color: 'white',
             position: 'relative',
             overflow: 'hidden'
           }}>
+            {/* Background Pattern */}
             <div style={{
               position: 'absolute',
               top: 0,
               left: 0,
               right: 0,
               bottom: 0,
-              backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 200 100\'%3E%3Cpath d=\'M0 30 Q50 20 100 30 T200 30 L200 100 L0 100 Z\' fill=\'%23ffd700\' opacity=\'0.1\'/%3E%3C/svg%3E")',
-              backgroundSize: '200px 100px',
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Cpath d='M0 50 Q100 30 200 50 T400 50 L400 200 L0 200 Z' fill='%23DAA520' opacity='0.08'/%3E%3Cpath d='M0 120 Q150 100 300 120 T600 120 L600 200 L0 200 Z' fill='%23ffffff' opacity='0.03'/%3E%3C/svg%3E")`,
+              backgroundSize: '400px 200px',
               backgroundRepeat: 'repeat-x',
               backgroundPosition: 'bottom'
             }}></div>
+
+            {/* Subtle map overlay */}
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              right: '5%',
+              transform: 'translateY(-50%)',
+              width: '200px',
+              height: '150px',
+              backgroundImage: 'url("https://images.unsplash.com/photo-1709226660708-38e861588890")',
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              opacity: 0.05,
+              filter: 'sepia(100%) saturate(200%) hue-rotate(30deg) brightness(2)'
+            }}></div>
             
             <h3 style={{ 
-              fontSize: '2.5rem', 
-              marginBottom: '1rem',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+              fontSize: '3rem', 
+              marginBottom: '1.5rem',
+              textShadow: '3px 3px 6px rgba(0,0,0,0.4)',
               position: 'relative',
-              zIndex: 1
+              zIndex: 1,
+              fontWeight: '900',
+              fontFamily: 'Georgia, serif'
             }}>
               🌍 Ready to Bridge Two Worlds? 🌍
             </h3>
             <p style={{ 
-              fontSize: '1.2rem', 
-              marginBottom: '2rem',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+              fontSize: '1.3rem', 
+              marginBottom: '2.5rem',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.4)',
               position: 'relative',
-              zIndex: 1
+              zIndex: 1,
+              opacity: '0.95',
+              maxWidth: '700px',
+              margin: '0 auto 2.5rem'
             }}>
-              Join thousands connecting Liberian excellence with American opportunity
+              Join thousands of satisfied customers connecting authentic Liberian excellence with American opportunity. Experience the culture, taste the heritage, support the artisans.
             </p>
             <Link to="/register" style={{
-              background: 'rgba(255, 255, 255, 0.95)',
-              color: '#1d4ed8',
-              padding: '1.2rem 3rem',
-              borderRadius: '30px',
+              background: 'rgba(255, 255, 255, 0.98)',
+              color: '#3C3B6E',
+              padding: '1.5rem 4rem',
+              borderRadius: '35px',
               textDecoration: 'none',
-              fontSize: '1.3rem',
-              fontWeight: 'bold',
-              border: '3px solid #ffd700',
-              boxShadow: '0 8px 25px rgba(255, 215, 0, 0.3)',
-              transition: 'all 0.3s ease',
+              fontSize: '1.4rem',
+              fontWeight: '800',
+              border: '3px solid #DAA520',
+              boxShadow: '0 12px 35px rgba(218, 165, 32, 0.25)',
+              transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
               position: 'relative',
-              zIndex: 1
+              zIndex: 1,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.8rem'
+            }}
+            onMouseOver={(e) => {
+              e.target.style.background = '#DAA520';
+              e.target.style.color = '#3C3B6E';
+              e.target.style.transform = 'translateY(-5px) scale(1.05)';
+              e.target.style.boxShadow = '0 18px 50px rgba(218, 165, 32, 0.4)';
+            }}
+            onMouseOut={(e) => {
+              e.target.style.background = 'rgba(255, 255, 255, 0.98)';
+              e.target.style.color = '#3C3B6E';
+              e.target.style.transform = 'translateY(0) scale(1)';
+              e.target.style.boxShadow = '0 12px 35px rgba(218, 165, 32, 0.25)';
             }}>
               🚀 Start Your Journey Today
             </Link>
