@@ -188,13 +188,33 @@ const MarketplacePage = () => {
 
   return (
     <div className="page">
-      <section style={{ padding: '2rem 0', backgroundColor: '#f8f9fa' }}>
+      <section style={{ 
+        padding: '3rem 0', 
+        background: 'rgba(255, 255, 255, 0.98)',
+        borderBottom: '3px solid #DAA520' 
+      }}>
         <div className="container">
-          <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            Explore Our Marketplace
+          <h1 style={{ 
+            textAlign: 'center', 
+            marginBottom: '2rem',
+            background: 'linear-gradient(45deg, #B22234, #3C3B6E, #DAA520)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontSize: '3rem',
+            fontWeight: '900',
+            fontFamily: 'Georgia, serif'
+          }}>
+            🌍 Discover Authentic Liberian Products 🌍
           </h1>
-          <p style={{ textAlign: 'center', color: '#6b7280', marginBottom: '2rem' }}>
-            Discover products from verified sellers in Liberia
+          <p style={{ 
+            textAlign: 'center', 
+            color: '#374151', 
+            marginBottom: '2.5rem',
+            fontSize: '1.2rem',
+            fontWeight: '400'
+          }}>
+            Explore handcrafted treasures from verified Liberian sellers
           </p>
           
           {/* Search and Filter Bar */}
