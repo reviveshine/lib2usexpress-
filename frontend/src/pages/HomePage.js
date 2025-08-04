@@ -188,40 +188,52 @@ const HomePage = () => {
       </section>
       
       <section style={{ 
-        padding: '5rem 0', 
-        background: 'rgba(255, 255, 255, 0.95)',
-        position: 'relative'
+        padding: '6rem 0', 
+        background: 'rgba(255, 255, 255, 0.98)',
+        position: 'relative',
+        borderTop: '4px solid #DAA520'
       }}>
         <div className="container">
           <h2 style={{ 
             textAlign: 'center', 
-            marginBottom: '4rem', 
-            background: 'linear-gradient(45deg, #dc2626, #1d4ed8)',
+            marginBottom: '5rem', 
+            background: 'linear-gradient(45deg, #B22234, #3C3B6E, #DAA520)',
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            fontSize: '3rem',
-            fontWeight: 'bold'
+            fontSize: '3.5rem',
+            fontWeight: '900',
+            fontFamily: 'Georgia, serif',
+            textShadow: '0 2px 4px rgba(0,0,0,0.1)'
           }}>
             🌟 Why Choose Liberia2USA Express? 🌟
           </h2>
           
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
-            gap: '2.5rem',
-            marginBottom: '4rem'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
+            gap: '3rem',
+            marginBottom: '5rem'
           }}>
             <div style={{
-              background: 'rgba(255, 255, 255, 0.95)',
-              padding: '2.5rem',
-              borderRadius: '20px',
-              boxShadow: '0 10px 40px rgba(29, 78, 216, 0.15)',
+              background: 'rgba(255, 255, 255, 0.98)',
+              padding: '3rem',
+              borderRadius: '25px',
+              boxShadow: '0 15px 50px rgba(0, 0, 0, 0.08)',
               textAlign: 'center',
-              border: '3px solid rgba(255, 215, 0, 0.3)',
-              backdropFilter: 'blur(10px)',
+              border: '3px solid rgba(218, 165, 32, 0.2)',
+              backdropFilter: 'blur(20px)',
               position: 'relative',
-              overflow: 'hidden'
+              overflow: 'hidden',
+              transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px)';
+              e.currentTarget.style.boxShadow = '0 25px 70px rgba(0, 0, 0, 0.12)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 15px 50px rgba(0, 0, 0, 0.08)';
             }}>
               <div style={{
                 position: 'absolute',
@@ -229,32 +241,45 @@ const HomePage = () => {
                 left: 0,
                 right: 0,
                 height: '6px',
-                background: 'linear-gradient(90deg, #dc2626, #ffd700, #1d4ed8)'
+                background: 'linear-gradient(90deg, #B22234, #DAA520, #3C3B6E)'
               }}></div>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🇱🇷</div>
+              <div style={{ fontSize: '4.5rem', marginBottom: '1.5rem' }}>🇱🇷</div>
               <h3 style={{ 
-                color: '#1d4ed8', 
-                marginBottom: '1rem',
-                fontSize: '1.5rem',
-                fontWeight: 'bold'
+                color: '#3C3B6E', 
+                marginBottom: '1.5rem',
+                fontSize: '1.7rem',
+                fontWeight: '700'
               }}>
-                Authentic Liberian Products
+                Authentic Liberian Heritage
               </h3>
-              <p style={{ color: '#374151', lineHeight: '1.6' }}>
-                Direct from Liberian artisans and farmers. Every product tells a story of rich cultural heritage and exceptional craftsmanship.
+              <p style={{ 
+                color: '#374151', 
+                lineHeight: '1.7',
+                fontSize: '1.1rem'
+              }}>
+                Direct from skilled Liberian artisans, farmers, and craftspeople. Every product carries the authentic spirit of Liberian culture, tradition, and exceptional craftsmanship passed down through generations.
               </p>
             </div>
             
             <div style={{
-              background: 'rgba(255, 255, 255, 0.95)',
-              padding: '2.5rem',
-              borderRadius: '20px',
-              boxShadow: '0 10px 40px rgba(29, 78, 216, 0.15)',
+              background: 'rgba(255, 255, 255, 0.98)',
+              padding: '3rem',
+              borderRadius: '25px',
+              boxShadow: '0 15px 50px rgba(0, 0, 0, 0.08)',
               textAlign: 'center',
-              border: '3px solid rgba(255, 215, 0, 0.3)',
-              backdropFilter: 'blur(10px)',
+              border: '3px solid rgba(218, 165, 32, 0.2)',
+              backdropFilter: 'blur(20px)',
               position: 'relative',
-              overflow: 'hidden'
+              overflow: 'hidden',
+              transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px)';
+              e.currentTarget.style.boxShadow = '0 25px 70px rgba(0, 0, 0, 0.12)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 15px 50px rgba(0, 0, 0, 0.08)';
             }}>
               <div style={{
                 position: 'absolute',
@@ -262,32 +287,45 @@ const HomePage = () => {
                 left: 0,
                 right: 0,
                 height: '6px',
-                background: 'linear-gradient(90deg, #dc2626, #ffd700, #1d4ed8)'
+                background: 'linear-gradient(90deg, #B22234, #DAA520, #3C3B6E)'
               }}></div>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🚚</div>
+              <div style={{ fontSize: '4.5rem', marginBottom: '1.5rem' }}>🚚</div>
               <h3 style={{ 
-                color: '#dc2626', 
-                marginBottom: '1rem',
-                fontSize: '1.5rem',
-                fontWeight: 'bold'
+                color: '#B22234', 
+                marginBottom: '1.5rem',
+                fontSize: '1.7rem',
+                fontWeight: '700'
               }}>
-                Reliable International Shipping
+                Professional International Shipping
               </h3>
-              <p style={{ color: '#374151', lineHeight: '1.6' }}>
-                Professional shipping services with real-time tracking. Your Liberian treasures delivered safely to any U.S. address.
+              <p style={{ 
+                color: '#374151', 
+                lineHeight: '1.7',
+                fontSize: '1.1rem'
+              }}>
+                Secure, reliable shipping services with comprehensive tracking and insurance. Your precious Liberian treasures are delivered safely to any U.S. address with professional care and attention.
               </p>
             </div>
             
             <div style={{
-              background: 'rgba(255, 255, 255, 0.95)',
-              padding: '2.5rem',
-              borderRadius: '20px',
-              boxShadow: '0 10px 40px rgba(29, 78, 216, 0.15)',
+              background: 'rgba(255, 255, 255, 0.98)',
+              padding: '3rem',
+              borderRadius: '25px',
+              boxShadow: '0 15px 50px rgba(0, 0, 0, 0.08)',
               textAlign: 'center',
-              border: '3px solid rgba(255, 215, 0, 0.3)',
-              backdropFilter: 'blur(10px)',
+              border: '3px solid rgba(218, 165, 32, 0.2)',
+              backdropFilter: 'blur(20px)',
               position: 'relative',
-              overflow: 'hidden'
+              overflow: 'hidden',
+              transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px)';
+              e.currentTarget.style.boxShadow = '0 25px 70px rgba(0, 0, 0, 0.12)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 15px 50px rgba(0, 0, 0, 0.08)';
             }}>
               <div style={{
                 position: 'absolute',
@@ -295,19 +333,23 @@ const HomePage = () => {
                 left: 0,
                 right: 0,
                 height: '6px',
-                background: 'linear-gradient(90deg, #dc2626, #ffd700, #1d4ed8)'
+                background: 'linear-gradient(90deg, #B22234, #DAA520, #3C3B6E)'
               }}></div>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🤝</div>
+              <div style={{ fontSize: '4.5rem', marginBottom: '1.5rem' }}>🤝</div>
               <h3 style={{ 
-                color: '#1d4ed8', 
-                marginBottom: '1rem',
-                fontSize: '1.5rem',
-                fontWeight: 'bold'
+                color: '#3C3B6E', 
+                marginBottom: '1.5rem',
+                fontSize: '1.7rem',
+                fontWeight: '700'
               }}>
-                Community & Trust
+                Trust & Cultural Connection
               </h3>
-              <p style={{ color: '#374151', lineHeight: '1.6' }}>
-                Built by Liberians for Americans who love Liberian culture. Secure transactions and verified sellers you can trust.
+              <p style={{ 
+                color: '#374151', 
+                lineHeight: '1.7',
+                fontSize: '1.1rem'
+              }}>
+                Built by Liberians for Americans who appreciate authentic African culture. Secure transactions, verified sellers, and a community that celebrates the rich heritage connecting our two great nations.
               </p>
             </div>
           </div>
