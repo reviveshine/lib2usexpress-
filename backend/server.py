@@ -98,6 +98,8 @@ async def health_check():
         else:
             response["database_name"] = "unknown"
     
+    return response
+    
 # Debug endpoint for troubleshooting network issues
 @app.get("/api/debug/network")
 async def debug_network():
