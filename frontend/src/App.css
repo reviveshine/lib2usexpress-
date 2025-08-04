@@ -128,93 +128,79 @@ body::before {
   background-position: bottom;
 }
 
-/* Sparkle Animations */
-.sparkles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+/* Card components with new theme */
+.card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(29, 78, 216, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  position: relative;
   overflow: hidden;
 }
 
-.sparkle {
-  position: absolute;
-  font-size: 1.5rem;
-  animation: sparkleMove 3s linear infinite;
-  opacity: 0.8;
-}
-
-.sparkle-1 {
-  top: 20%;
-  left: 10%;
-  animation-delay: 0s;
-}
-
-.sparkle-2 {
-  top: 60%;
-  left: 80%;
-  animation-delay: 0.5s;
-}
-
-.sparkle-3 {
-  top: 10%;
-  left: 70%;
-  animation-delay: 1s;
-}
-
-.sparkle-4 {
-  top: 80%;
-  left: 20%;
-  animation-delay: 1.5s;
-}
-
-.sparkle-5 {
-  top: 40%;
-  left: 90%;
-  animation-delay: 2s;
-}
-
-.sparkle-6 {
-  top: 70%;
-  left: 5%;
-  animation-delay: 2.5s;
-}
-
-/* Smoke Effects */
-.smoke-effects {
+.card::before {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-red), var(--gold), var(--primary-blue));
+}
+
+/* Button styles with new theme */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-red) 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(29, 78, 216, 0.3);
+  position: relative;
   overflow: hidden;
 }
 
-.smoke {
+.btn-primary::before {
+  content: '';
   position: absolute;
-  width: 60px;
-  height: 60px;
-  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
-  border-radius: 50%;
-  animation: smokeRise 4s linear infinite;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+  transition: left 0.5s;
 }
 
-.smoke-1 {
-  left: 15%;
-  animation-delay: 0s;
+.btn-primary:hover::before {
+  left: 100%;
 }
 
-.smoke-2 {
-  left: 50%;
-  animation-delay: 1.5s;
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(29, 78, 216, 0.4);
 }
 
-.smoke-3 {
-  left: 75%;
-  animation-delay: 3s;
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--primary-blue);
+  border: 2px solid var(--gold);
+  padding: 0.75rem 2rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+  background: var(--gold);
+  color: var(--primary-blue);
+  transform: translateY(-2px);
 }
 
 /* Keyframe Animations */
