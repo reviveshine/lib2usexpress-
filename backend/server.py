@@ -267,7 +267,7 @@ async def refresh_access_token(request: dict):
         
         # Get user info
         database = get_database()
-        if not database:
+        if database is None:
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail="Database connection unavailable"
