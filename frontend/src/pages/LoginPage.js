@@ -160,7 +160,7 @@ const LoginPage = () => {
                   backdropFilter: 'blur(10px)'
                 }}
                 onFocus={(e) => {
-                  e.target.style.borderColor = '#ffd700';
+                  e.target.style.borderColor = '#DAA520';
                   e.target.style.boxShadow = '0 0 15px rgba(255, 215, 0, 0.3)';
                 }}
                 onBlur={(e) => {
