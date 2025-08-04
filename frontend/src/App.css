@@ -292,7 +292,6 @@ body::before {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   50% { transform: translateY(-20px) rotate(2deg); }
 }
-}
 
 /* Stats cards with patriotic theme */
 .stats-card {
