@@ -164,7 +164,7 @@ const LoginPage = () => {
                   e.target.style.boxShadow = '0 0 15px rgba(255, 215, 0, 0.3)';
                 }}
                 onBlur={(e) => {
-                  e.target.style.borderColor = 'rgba(255, 215, 0, 0.3)';
+                  e.target.style.borderColor = 'rgba(218, 165, 32, 0.3)';
                   e.target.style.boxShadow = 'none';
                 }}
               />
