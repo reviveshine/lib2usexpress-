@@ -74,7 +74,7 @@ def create_refresh_token(data: dict):
 async def store_refresh_token(user_id: str, refresh_token: str):
     """Store refresh token in database"""
     database = get_database()
-    if database:
+    if database is not None:
         # Update user with new refresh token and expiration
         expire_at = datetime.utcnow() + timedelta(days=REFRESH_TOKEN_EXPIRE_DAYS)
         await database.users.update_one(
