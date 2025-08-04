@@ -19,6 +19,7 @@ JWT_ALGORITHM = "HS256"
 JWT_EXPIRE_HOURS = 168  # 7 days instead of 24 hours
 
 security = HTTPBearer()
+optional_security = HTTPBearer(auto_error=False)  # Don't raise error if no token provided
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
