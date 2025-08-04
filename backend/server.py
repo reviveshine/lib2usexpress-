@@ -132,6 +132,15 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
         # Decode token with detailed error handling
         try:
             payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+            
+            # Check if it's an access token (not refresh token)
+            if payload.get("type") != "access":
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid token type. Access token required.",
+                    headers={"WWW-Authenticate": "Bearer"},
+                )
+                
         except jwt.ExpiredSignatureError:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
