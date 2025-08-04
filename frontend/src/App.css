@@ -1,15 +1,18 @@
-/* Liberia2USA Express - Red, White, Blue Theme with Gold Liberia Map */
+/* Liberia2USA Express - Realistic Red, White, Blue Theme with Gold Liberia Map */
 
 /* Root color variables */
 :root {
-  --primary-red: #dc2626;
-  --primary-blue: #1d4ed8;
+  --primary-red: #B22234; /* US Flag Red */
+  --primary-blue: #3C3B6E; /* US Flag Blue */
   --primary-white: #ffffff;
-  --gold: #ffd700;
+  --liberia-red: #C31E39; /* Liberia Flag Red */
+  --liberia-blue: #002868; /* Liberia Flag Blue */
+  --gold: #DAA520; /* Realistic gold */
   --deep-blue: #1e3a8a;
-  --light-blue: #3b82f6;
+  --light-blue: #4169E1; /* Royal Blue */
   --cloud-white: #f8fafc;
-  --shadow-blue: rgba(29, 78, 216, 0.1);
+  --shadow-blue: rgba(60, 59, 110, 0.1);
+  --realistic-shadow: rgba(0, 0, 0, 0.15);
 }
 
 * {
@@ -18,7 +21,7 @@
   box-sizing: border-box;
 }
 
-/* Global body styling with cloud background */
+/* Global body styling with realistic background */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -26,14 +29,36 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #1d4ed8 0%, #ffffff 50%, #dc2626 100%);
+  background: 
+    linear-gradient(135deg, var(--primary-blue) 0%, rgba(255, 255, 255, 0.9) 30%, rgba(255, 255, 255, 0.95) 70%, var(--primary-red) 100%),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="0.5" fill="%23DAA520" opacity="0.1"/><circle cx="25" cy="25" r="0.3" fill="%23DAA520" opacity="0.05"/><circle cx="75" cy="75" r="0.4" fill="%23DAA520" opacity="0.08"/></svg>');
   background-attachment: fixed;
+  background-size: auto, 50px 50px;
   position: relative;
   min-height: 100vh;
 }
 
-/* Cloud background elements */
+/* Realistic Liberia Map Background */
 body::before {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 400px;
+  background-image: url('https://images.unsplash.com/photo-1709226660708-38e861588890');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.06;
+  z-index: -2;
+  filter: sepia(100%) saturate(200%) hue-rotate(35deg) brightness(1.2);
+  animation: mapGlow 15s ease-in-out infinite;
+}
+
+/* Realistic cloud effects */
+body::after {
   content: '';
   position: fixed;
   top: 0;
@@ -41,21 +66,26 @@ body::before {
   width: 100%;
   height: 100%;
   background-image: 
-    radial-gradient(ellipse 200px 100px at 20% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
-    radial-gradient(ellipse 300px 150px at 80% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
-    radial-gradient(ellipse 250px 120px at 60% 60%, rgba(255, 255, 255, 0.25) 0%, transparent 50%),
-    radial-gradient(ellipse 180px 90px at 90% 80%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
-    radial-gradient(ellipse 220px 110px at 10% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+    radial-gradient(ellipse 400px 200px at 15% 25%, rgba(255, 255, 255, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 350px 180px at 85% 15%, rgba(255, 255, 255, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 300px 150px at 65% 75%, rgba(255, 255, 255, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 250px 120px at 20% 85%, rgba(255, 255, 255, 0.14) 0%, transparent 60%);
   pointer-events: none;
   z-index: -1;
-  animation: cloudFloat 20s ease-in-out infinite;
+  animation: cloudDrift 25s ease-in-out infinite;
 }
 
-/* Cloud floating animation */
-@keyframes cloudFloat {
-  0%, 100% { transform: translateX(0px); }
-  33% { transform: translateX(10px); }
-  66% { transform: translateX(-5px); }
+/* Enhanced animations */
+@keyframes cloudDrift {
+  0%, 100% { transform: translateX(0px) translateY(0px); }
+  25% { transform: translateX(15px) translateY(-8px); }
+  50% { transform: translateX(-10px) translateY(5px); }
+  75% { transform: translateX(8px) translateY(-12px); }
+}
+
+@keyframes mapGlow {
+  0%, 100% { opacity: 0.06; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.12; transform: translate(-50%, -50%) scale(1.02); }
 }
 
 /* Flag waving animation */
