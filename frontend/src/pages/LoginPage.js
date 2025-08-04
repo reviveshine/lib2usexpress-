@@ -26,9 +26,8 @@ const LoginPage = () => {
     setError('');
 
     try {
-      const API_BASE = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
-      const response = await axios.post(`${API_BASE}/api/auth/login`, formData);
-      
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/auth/login`, formData);
+
       if (response.data.success) {
         // Use AuthContext login method instead of manual localStorage
         login(response.data.user, response.data.token);
@@ -44,47 +43,103 @@ const LoginPage = () => {
           console.log('🛍️ Redirecting buyer to marketplace');
           navigate('/marketplace');
         }
-      } else {
-        setError(response.data.message || 'Login failed');
       }
     } catch (error) {
-      console.error('Login error:', error);
-      setError(error.response?.data?.message || 'Login failed. Please try again.');
+      setError(error.response?.data?.message || 'Login failed');
+    } finally {
+      setLoading(false);
     }
-    
-    setLoading(false);
   };
 
   return (
-    <div className="page">
-      <div className="container" style={{ maxWidth: '400px', margin: '4rem auto' }}>
+    <div className="page" style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
+      {/* Background Elements */}
+      <div style={{
+        position: 'absolute',
+        top: '20%',
+        right: '10%',
+        width: '300px',
+        height: '200px',
+        backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 300 200\'%3E%3Cpath d=\'M50 80 Q100 40 150 60 L200 70 Q250 80 270 120 L260 160 Q240 180 200 185 L150 188 Q100 185 70 160 L50 130 Q45 105 50 80 Z\' fill=\'%23ffd700\' opacity=\'0.15\'/%3E%3Ctext x=\'150\' y=\'140\' font-family=\'Arial\' font-size=\'12\' fill=\'%23ffd700\' text-anchor=\'middle\' opacity=\'0.6\'%3ELiberia%3C/text%3E%3C/svg%3E")',
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat',
+        opacity: 0.6,
+        animation: 'mapFloat 25s ease-in-out infinite'
+      }}></div>
+
+      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         <div style={{
-          background: 'white',
-          padding: '2rem',
-          borderRadius: '10px',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+          maxWidth: '450px',
+          margin: '0 auto',
+          background: 'rgba(255, 255, 255, 0.95)',
+          borderRadius: '25px',
+          padding: '3rem',
+          boxShadow: '0 20px 60px rgba(29, 78, 216, 0.2)',
+          backdropFilter: 'blur(20px)',
+          border: '3px solid rgba(255, 215, 0, 0.3)',
+          position: 'relative',
+          overflow: 'hidden'
         }}>
-          <h2 style={{ textAlign: 'center', marginBottom: '2rem', color: '#1f2937' }}>
-            Login to Your Account
-          </h2>
-          
+          {/* Patriotic Header Stripe */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '8px',
+            background: 'linear-gradient(90deg, #dc2626, #ffd700, #1d4ed8)'
+          }}></div>
+
+          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+            <h2 style={{
+              background: 'linear-gradient(45deg, #dc2626, #1d4ed8)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              fontSize: '2.5rem',
+              fontWeight: 'bold',
+              marginBottom: '0.5rem'
+            }}>
+              Welcome Back! 🇺🇸
+            </h2>
+            <p style={{
+              color: '#6b7280',
+              fontSize: '1.1rem'
+            }}>
+              Sign in to your Liberia2USA Express account
+            </p>
+          </div>
+
           {error && (
             <div style={{
-              background: '#fef2f2',
+              background: 'rgba(220, 38, 38, 0.1)',
               color: '#dc2626',
-              padding: '0.75rem',
-              borderRadius: '5px',
+              padding: '1rem',
+              borderRadius: '10px',
               marginBottom: '1rem',
-              border: '1px solid #fecaca'
+              border: '1px solid rgba(220, 38, 38, 0.2)',
+              textAlign: 'center'
             }}>
-              {error}
+              ⚠️ {error}
             </div>
           )}
-          
+
           <form onSubmit={handleSubmit}>
-            <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151' }}>
-                Email Address
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                color: '#374151',
+                fontWeight: '600'
+              }}>
+                📧 Email Address
               </label>
               <input
                 type="email"
@@ -94,17 +149,33 @@ const LoginPage = () => {
                 required
                 style={{
                   width: '100%',
-                  padding: '0.75rem',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '5px',
-                  fontSize: '1rem'
+                  padding: '1rem',
+                  border: '2px solid rgba(255, 215, 0, 0.3)',
+                  borderRadius: '12px',
+                  fontSize: '1rem',
+                  background: 'rgba(255, 255, 255, 0.9)',
+                  transition: 'all 0.3s ease',
+                  backdropFilter: 'blur(10px)'
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#ffd700';
+                  e.target.style.boxShadow = '0 0 15px rgba(255, 215, 0, 0.3)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = 'rgba(255, 215, 0, 0.3)';
+                  e.target.style.boxShadow = 'none';
                 }}
               />
             </div>
-            
+
             <div style={{ marginBottom: '1.5rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', color: '#374151' }}>
-                Password
+              <label style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                color: '#374151',
+                fontWeight: '600'
+              }}>
+                🔒 Password
               </label>
               <input
                 type="password"
@@ -114,53 +185,112 @@ const LoginPage = () => {
                 required
                 style={{
                   width: '100%',
-                  padding: '0.75rem',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '5px',
-                  fontSize: '1rem'
+                  padding: '1rem',
+                  border: '2px solid rgba(255, 215, 0, 0.3)',
+                  borderRadius: '12px',
+                  fontSize: '1rem',
+                  background: 'rgba(255, 255, 255, 0.9)',
+                  transition: 'all 0.3s ease',
+                  backdropFilter: 'blur(10px)'
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#ffd700';
+                  e.target.style.boxShadow = '0 0 15px rgba(255, 215, 0, 0.3)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = 'rgba(255, 215, 0, 0.3)';
+                  e.target.style.boxShadow = 'none';
                 }}
               />
               <div style={{ textAlign: 'right', marginTop: '0.5rem' }}>
                 <Link 
                   to="/forgot-password" 
                   style={{ 
-                    color: '#dc2626', 
+                    color: '#1d4ed8', 
                     textDecoration: 'none',
                     fontSize: '0.9rem',
-                    fontWeight: '500'
+                    fontWeight: '500',
+                    transition: 'color 0.3s ease'
                   }}
+                  onMouseEnter={(e) => e.target.style.color = '#dc2626'}
+                  onMouseLeave={(e) => e.target.style.color = '#1d4ed8'}
                 >
                   Forgot Password?
                 </Link>
               </div>
             </div>
-            
+
             <button
               type="submit"
               disabled={loading}
               style={{
                 width: '100%',
-                padding: '0.75rem',
-                backgroundColor: loading ? '#9ca3af' : '#dc2626',
+                padding: '1rem',
+                background: loading ? '#9ca3af' : 'linear-gradient(135deg, #1d4ed8 0%, #dc2626 100%)',
                 color: 'white',
                 border: 'none',
-                borderRadius: '5px',
-                fontSize: '1rem',
+                borderRadius: '15px',
+                fontSize: '1.1rem',
+                fontWeight: 'bold',
                 cursor: loading ? 'not-allowed' : 'pointer',
-                transition: 'background-color 0.3s'
+                transition: 'all 0.3s ease',
+                boxShadow: '0 8px 25px rgba(29, 78, 216, 0.3)',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+              onMouseEnter={(e) => {
+                if (!loading) {
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 12px 35px rgba(29, 78, 216, 0.4)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!loading) {
+                  e.target.style.transform = 'translateY(0px)';
+                  e.target.style.boxShadow = '0 8px 25px rgba(29, 78, 216, 0.3)';
+                }
               }}
             >
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? '🔄 Signing In...' : '🚀 Sign In to Your Account'}
             </button>
           </form>
-          
-          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <p style={{ color: '#6b7280' }}>
-              Don't have an account?{' '}
-              <Link to="/register" style={{ color: '#dc2626', textDecoration: 'none' }}>
-                Register here
-              </Link>
+
+          <div style={{
+            textAlign: 'center',
+            marginTop: '2rem',
+            paddingTop: '2rem',
+            borderTop: '2px solid rgba(255, 215, 0, 0.2)'
+          }}>
+            <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
+              New to Liberia2USA Express?
             </p>
+            <Link
+              to="/register"
+              style={{
+                display: 'inline-block',
+                padding: '0.75rem 2rem',
+                background: 'rgba(255, 255, 255, 0.9)',
+                color: '#1d4ed8',
+                textDecoration: 'none',
+                borderRadius: '25px',
+                fontWeight: '600',
+                border: '2px solid #ffd700',
+                transition: 'all 0.3s ease',
+                backdropFilter: 'blur(10px)'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = '#ffd700';
+                e.target.style.color = '#1d4ed8';
+                e.target.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = 'rgba(255, 255, 255, 0.9)';
+                e.target.style.color = '#1d4ed8';
+                e.target.style.transform = 'translateY(0px)';
+              }}
+            >
+              🌟 Create New Account
+            </Link>
           </div>
         </div>
       </div>
