@@ -438,7 +438,7 @@ const RegisterPage = () => {
                   style={{
                     width: '100%',
                     padding: '1rem',
-                    border: '2px solid rgba(255, 215, 0, 0.3)',
+                    border: '2px solid rgba(218, 165, 32, 0.3)',
                     borderRadius: '12px',
                     fontSize: '1rem',
                     background: 'rgba(255, 255, 255, 0.9)',
@@ -447,10 +447,10 @@ const RegisterPage = () => {
                   }}
                   onFocus={(e) => {
                     e.target.style.borderColor = '#ffd700';
-                    e.target.style.boxShadow = '0 0 15px rgba(255, 215, 0, 0.3)';
+                    e.target.style.boxShadow = '0 0 15px rgba(218, 165, 32, 0.3)';
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(255, 215, 0, 0.3)';
+                    e.target.style.borderColor = 'rgba(218, 165, 32, 0.3)';
                     e.target.style.boxShadow = 'none';
                   }}
                 />
