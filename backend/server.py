@@ -17,6 +17,7 @@ load_dotenv()
 JWT_SECRET = os.getenv("JWT_SECRET", "your_super_secure_jwt_secret_key_here_2025")
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRE_HOURS = 168  # 7 days instead of 24 hours
+REFRESH_TOKEN_EXPIRE_DAYS = 30  # Refresh tokens last 30 days
 
 security = HTTPBearer()
 optional_security = HTTPBearer(auto_error=False)  # Don't raise error if no token provided
