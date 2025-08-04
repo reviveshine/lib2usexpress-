@@ -70,7 +70,8 @@ async def register_user(user_data: UserCreate):
         "success": True,
         "message": "User registered successfully",
         "user": user_response.dict(),
-        "token": access_token
+        "token": access_token,
+        "refresh_token": refresh_token
     }
 
 @router.post("/login", response_model=dict)
