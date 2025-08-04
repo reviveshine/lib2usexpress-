@@ -28,31 +28,150 @@ const Header = () => {
 
   return (
     <>
-      {/* Independence Day Banner */}
-      <div className="independence-banner">
-        <div className="independence-content">
-          <img 
-            src="https://images.pexels.com/photos/28209667/pexels-photo-28209667.jpeg?auto=compress&cs=tinysrgb&w=100&h=60&fit=crop" 
-            alt="Liberian Flag" 
-            className="liberian-flag"
-          />
-          <div className="independence-text">
-            <span className="happy-text">HAPPY INDEPENDENCE DAY</span>
-            <span className="liberia-text">🇱🇷 LIBERIA 🇱🇷</span>
+      {/* Liberia Map Background Element */}
+      <div className="liberia-map-bg"></div>
+      
+      {/* Patriotic Header Banner */}
+      <div style={{
+        background: 'linear-gradient(135deg, #1d4ed8 0%, #ffffff 50%, #dc2626 100%)',
+        color: 'white',
+        padding: '20px 0',
+        position: 'relative',
+        overflow: 'hidden',
+        boxShadow: '0 4px 20px rgba(29, 78, 216, 0.3)',
+        borderBottom: '3px solid #ffd700'
+      }}>
+        {/* Background Pattern */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 20\'%3E%3Cpath d=\'M0 10 Q25 5 50 10 T100 10 V20 H0 Z\' fill=\'%23ffd700\' opacity=\'0.2\'/%3E%3C/svg%3E")',
+          backgroundSize: '100px 20px',
+          backgroundRepeat: 'repeat-x',
+          backgroundPosition: 'bottom'
+        }}></div>
+        
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '0 2rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '25px',
+          position: 'relative',
+          zIndex: 1
+        }}>
+          {/* USA Flag */}
+          <div style={{
+            width: '60px',
+            height: '40px',
+            background: 'linear-gradient(to bottom, #dc2626 0%, #dc2626 33%, #ffffff 33%, #ffffff 66%, #1d4ed8 66%)',
+            borderRadius: '8px',
+            border: '2px solid #ffd700',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+            position: 'relative',
+            animation: 'flagWave 3s ease-in-out infinite'
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: '2px',
+              left: '2px',
+              width: '20px',
+              height: '12px',
+              background: '#1d4ed8',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '8px'
+            }}>
+              ⭐
+            </div>
           </div>
-          <div className="sparkles">
-            <div className="sparkle sparkle-1">✨</div>
-            <div className="sparkle sparkle-2">⭐</div>
-            <div className="sparkle sparkle-3">💫</div>
-            <div className="sparkle sparkle-4">✨</div>
-            <div className="sparkle sparkle-5">⭐</div>
-            <div className="sparkle sparkle-6">💫</div>
+          
+          {/* Bridge Text */}
+          <div style={{ textAlign: 'center' }}>
+            <span style={{
+              display: 'block',
+              fontSize: '2rem',
+              fontWeight: 'bold',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+              background: 'linear-gradient(45deg, #dc2626, #ffd700, #1d4ed8)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              animation: 'textShimmer 3s ease-in-out infinite',
+              letterSpacing: '3px'
+            }}>
+              BRIDGING NATIONS
+            </span>
+            <span style={{
+              display: 'block',
+              fontSize: '1.2rem',
+              fontWeight: '600',
+              marginTop: '5px',
+              textShadow: '1px 1px 3px rgba(0,0,0,0.7)',
+              color: '#ffd700'
+            }}>
+              🌍 LIBERIA ↔ USA 🌍
+            </span>
           </div>
-          <div className="smoke-effects">
-            <div className="smoke smoke-1"></div>
-            <div className="smoke smoke-2"></div>
-            <div className="smoke smoke-3"></div>
+          
+          {/* Liberia Flag */}
+          <div style={{
+            width: '60px',
+            height: '40px',
+            background: 'linear-gradient(to bottom, #dc2626 0%, #dc2626 20%, #ffffff 20%, #ffffff 40%, #dc2626 40%, #dc2626 60%, #ffffff 60%, #ffffff 80%, #dc2626 80%)',
+            borderRadius: '8px',
+            border: '2px solid #ffd700',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+            position: 'relative',
+            animation: 'flagWave 3s ease-in-out infinite reverse'
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: '2px',
+              left: '2px',
+              width: '20px',
+              height: '16px',
+              background: '#1d4ed8',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '10px'
+            }}>
+              ⭐
+            </div>
           </div>
+          
+          {/* Floating Stars */}
+          <div style={{
+            position: 'absolute',
+            top: '10%',
+            left: '10%',
+            fontSize: '1.5rem',
+            animation: 'starFloat 4s ease-in-out infinite',
+            color: '#ffd700'
+          }}>✨</div>
+          <div style={{
+            position: 'absolute',
+            top: '20%',
+            right: '15%',
+            fontSize: '1.2rem',
+            animation: 'starFloat 5s ease-in-out infinite 0.5s',
+            color: '#ffd700'
+          }}>⭐</div>
+          <div style={{
+            position: 'absolute',
+            bottom: '15%',
+            left: '80%',
+            fontSize: '1rem',
+            animation: 'starFloat 3.5s ease-in-out infinite 1s',
+            color: '#ffd700'
+          }}>💫</div>
         </div>
       </div>
       
