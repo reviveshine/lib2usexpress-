@@ -31,27 +31,42 @@ const Header = () => {
       {/* Liberia Map Background Element */}
       <div className="liberia-map-bg"></div>
       
-      {/* Patriotic Header Banner */}
+      {/* Realistic Patriotic Header Banner */}
       <div style={{
-        background: 'linear-gradient(135deg, #1d4ed8 0%, #ffffff 50%, #dc2626 100%)',
+        background: 'linear-gradient(135deg, #3C3B6E 0%, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.15) 70%, #B22234 100%)',
         color: 'white',
-        padding: '20px 0',
+        padding: '25px 0',
         position: 'relative',
         overflow: 'hidden',
-        boxShadow: '0 4px 20px rgba(29, 78, 216, 0.3)',
-        borderBottom: '3px solid #ffd700'
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15)',
+        borderBottom: '4px solid #DAA520'
       }}>
-        {/* Background Pattern */}
+        {/* Realistic Background Pattern */}
         <div style={{
           position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 20\'%3E%3Cpath d=\'M0 10 Q25 5 50 10 T100 10 V20 H0 Z\' fill=\'%23ffd700\' opacity=\'0.2\'/%3E%3C/svg%3E")',
-          backgroundSize: '100px 20px',
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60'%3E%3Cpath d='M0 30 Q150 15 300 30 T600 30 T900 30 T1200 30 V60 H0 Z' fill='%23DAA520' opacity='0.12'/%3E%3Cpath d='M0 45 Q200 30 400 45 T800 45 T1200 45 V60 H0 Z' fill='%23C31E39' opacity='0.08'/%3E%3C/svg%3E")`,
+          backgroundSize: '1200px 60px',
           backgroundRepeat: 'repeat-x',
           backgroundPosition: 'bottom'
+        }}></div>
+        
+        {/* Subtle Liberia Map Background */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: 'url("https://images.unsplash.com/photo-1709226660708-38e861588890")',
+          backgroundSize: '800px auto',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center right',
+          opacity: 0.04,
+          filter: 'sepia(100%) saturate(200%) hue-rotate(30deg) brightness(1.5)'
         }}></div>
         
         <div style={{
@@ -61,117 +76,155 @@ const Header = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '25px',
+          gap: '30px',
           position: 'relative',
           zIndex: 1
         }}>
-          {/* USA Flag */}
+          {/* Professional USA Flag */}
           <div style={{
-            width: '60px',
-            height: '40px',
-            background: 'linear-gradient(to bottom, #dc2626 0%, #dc2626 33%, #ffffff 33%, #ffffff 66%, #1d4ed8 66%)',
-            borderRadius: '8px',
-            border: '2px solid #ffd700',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+            width: '70px',
+            height: '45px',
+            background: `
+              linear-gradient(to bottom, 
+                #B22234 0%, #B22234 7.7%, 
+                #ffffff 7.7%, #ffffff 15.4%, 
+                #B22234 15.4%, #B22234 23.1%, 
+                #ffffff 23.1%, #ffffff 30.8%, 
+                #B22234 30.8%, #B22234 38.5%, 
+                #ffffff 38.5%, #ffffff 46.2%, 
+                #B22234 46.2%, #B22234 53.9%, 
+                #ffffff 53.9%, #ffffff 100%)
+            `,
+            borderRadius: '10px',
+            border: '3px solid #DAA520',
+            boxShadow: '0 6px 20px rgba(0,0,0,0.2)',
             position: 'relative',
-            animation: 'flagWave 3s ease-in-out infinite'
+            animation: 'flagWaveRealistic 4s ease-in-out infinite',
+            transform: 'perspective(100px) rotateY(-5deg)'
           }}>
             <div style={{
               position: 'absolute',
-              top: '2px',
-              left: '2px',
-              width: '20px',
-              height: '12px',
-              background: '#1d4ed8',
+              top: '3px',
+              left: '3px',
+              width: '25px',
+              height: '18px',
+              background: '#3C3B6E',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '8px'
+              fontSize: '10px',
+              borderRadius: '2px'
             }}>
               ⭐
             </div>
           </div>
           
-          {/* Bridge Text */}
+          {/* Enhanced Bridge Text */}
           <div style={{ textAlign: 'center' }}>
             <span style={{
               display: 'block',
-              fontSize: '2rem',
-              fontWeight: 'bold',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-              background: 'linear-gradient(45deg, #dc2626, #ffd700, #1d4ed8)',
+              fontSize: '2.5rem',
+              fontWeight: '900',
+              textShadow: '3px 3px 6px rgba(0,0,0,0.4)',
+              background: 'linear-gradient(45deg, #B22234 0%, #DAA520 25%, #ffffff 50%, #DAA520 75%, #3C3B6E 100%)',
+              backgroundSize: '400% 100%',
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              animation: 'textShimmer 3s ease-in-out infinite',
-              letterSpacing: '3px'
+              animation: 'textShimmerRealistic 4s ease-in-out infinite',
+              letterSpacing: '4px',
+              fontFamily: 'Georgia, serif'
             }}>
               BRIDGING NATIONS
             </span>
             <span style={{
               display: 'block',
-              fontSize: '1.2rem',
+              fontSize: '1.3rem',
               fontWeight: '600',
-              marginTop: '5px',
-              textShadow: '1px 1px 3px rgba(0,0,0,0.7)',
-              color: '#ffd700'
+              marginTop: '8px',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.6)',
+              color: '#DAA520',
+              letterSpacing: '2px'
             }}>
-              🌍 LIBERIA ↔ USA 🌍
+              🌍 LIBERIA ⟷ USA 🌍
             </span>
           </div>
           
-          {/* Liberia Flag */}
+          {/* Professional Liberia Flag */}
           <div style={{
-            width: '60px',
-            height: '40px',
-            background: 'linear-gradient(to bottom, #dc2626 0%, #dc2626 20%, #ffffff 20%, #ffffff 40%, #dc2626 40%, #dc2626 60%, #ffffff 60%, #ffffff 80%, #dc2626 80%)',
-            borderRadius: '8px',
-            border: '2px solid #ffd700',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+            width: '70px',
+            height: '45px',
+            background: `
+              linear-gradient(to bottom, 
+                #C31E39 0%, #C31E39 9.09%, 
+                #ffffff 9.09%, #ffffff 18.18%, 
+                #C31E39 18.18%, #C31E39 27.27%, 
+                #ffffff 27.27%, #ffffff 36.36%, 
+                #C31E39 36.36%, #C31E39 45.45%, 
+                #ffffff 45.45%, #ffffff 54.54%, 
+                #C31E39 54.54%, #C31E39 63.63%, 
+                #ffffff 63.63%, #ffffff 72.72%, 
+                #C31E39 72.72%, #C31E39 81.81%, 
+                #ffffff 81.81%, #ffffff 90.90%, 
+                #C31E39 90.90%, #C31E39 100%)
+            `,
+            borderRadius: '10px',
+            border: '3px solid #DAA520',
+            boxShadow: '0 6px 20px rgba(0,0,0,0.2)',
             position: 'relative',
-            animation: 'flagWave 3s ease-in-out infinite reverse'
+            animation: 'flagWaveRealistic 4s ease-in-out infinite reverse',
+            transform: 'perspective(100px) rotateY(5deg)'
           }}>
             <div style={{
               position: 'absolute',
-              top: '2px',
-              left: '2px',
-              width: '20px',
-              height: '16px',
-              background: '#1d4ed8',
+              top: '3px',
+              left: '3px',
+              width: '25px',
+              height: '20px',
+              background: '#002868',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '10px'
+              fontSize: '12px',
+              borderRadius: '2px'
             }}>
               ⭐
             </div>
           </div>
           
-          {/* Floating Stars */}
+          {/* Professional Floating Stars */}
           <div style={{
             position: 'absolute',
-            top: '10%',
-            left: '10%',
-            fontSize: '1.5rem',
-            animation: 'starFloat 4s ease-in-out infinite',
-            color: '#ffd700'
+            top: '15%',
+            left: '8%',
+            fontSize: '1.8rem',
+            animation: 'starFloatRealistic 5s ease-in-out infinite',
+            color: '#DAA520'
           }}>✨</div>
           <div style={{
             position: 'absolute',
-            top: '20%',
-            right: '15%',
-            fontSize: '1.2rem',
-            animation: 'starFloat 5s ease-in-out infinite 0.5s',
-            color: '#ffd700'
+            top: '25%',
+            right: '12%',
+            fontSize: '1.5rem',
+            animation: 'starFloatRealistic 6s ease-in-out infinite 0.7s',
+            color: '#DAA520'
           }}>⭐</div>
           <div style={{
             position: 'absolute',
-            bottom: '15%',
-            left: '80%',
-            fontSize: '1rem',
-            animation: 'starFloat 3.5s ease-in-out infinite 1s',
-            color: '#ffd700'
+            bottom: '20%',
+            left: '85%',
+            fontSize: '1.3rem',
+            animation: 'starFloatRealistic 4.5s ease-in-out infinite 1.2s',
+            color: '#DAA520'
           }}>💫</div>
+          <div style={{
+            position: 'absolute',
+            top: '10%',
+            left: '30%',
+            fontSize: '1rem',
+            animation: 'starFloatRealistic 7s ease-in-out infinite 2s',
+            color: '#DAA520'
+          }}>🌟</div>
         </div>
       </div>
       
