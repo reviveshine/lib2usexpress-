@@ -212,34 +212,36 @@ const RegisterPage = () => {
           position: 'relative',
           overflow: 'hidden'
         }}>
-          {/* Patriotic Header Stripe */}
+          {/* Professional Patriotic Header Stripe */}
           <div style={{
             position: 'absolute',
             top: 0,
             left: 0,
             right: 0,
-            height: '8px',
-            background: 'linear-gradient(90deg, #dc2626, #ffd700, #1d4ed8)'
+            height: '6px',
+            background: 'linear-gradient(90deg, #B22234, #DAA520, #3C3B6E)'
           }}></div>
 
-          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
             <h2 style={{
-              background: 'linear-gradient(45deg, #dc2626, #1d4ed8)',
+              background: 'linear-gradient(45deg, #B22234, #3C3B6E, #DAA520)',
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              fontSize: '2.8rem',
-              fontWeight: 'bold',
-              marginBottom: '0.5rem'
+              fontSize: '3.2rem',
+              fontWeight: '900',
+              marginBottom: '0.8rem',
+              fontFamily: 'Georgia, serif'
             }}>
               Join Our Community! 🇱🇷🇺🇸
             </h2>
             <p style={{
               color: '#6b7280',
-              fontSize: '1.2rem',
-              lineHeight: '1.6'
+              fontSize: '1.3rem',
+              lineHeight: '1.6',
+              fontWeight: '400'
             }}>
-              🌟 <span style={{color: '#ffd700', fontWeight: 'bold'}}>Bridge Two Nations</span> 🌟<br />
+              🌟 <span style={{color: '#DAA520', fontWeight: 'bold'}}>Bridge Two Nations</span> 🌟<br />
               Create your Liberia2USA Express account today
             </p>
           </div>
