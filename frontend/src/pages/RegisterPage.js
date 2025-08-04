@@ -617,7 +617,7 @@ const RegisterPage = () => {
               style={{
                 width: '100%',
                 padding: '1.2rem',
-                background: loading ? '#9ca3af' : 'linear-gradient(135deg, #1d4ed8 0%, #dc2626 100%)',
+                background: loading ? '#9ca3af' : 'linear-gradient(135deg, #3C3B6E 0%, #B22234 100%)',
                 color: 'white',
                 border: 'none',
                 borderRadius: '15px',
@@ -625,7 +625,7 @@ const RegisterPage = () => {
                 fontWeight: 'bold',
                 cursor: loading ? 'not-allowed' : 'pointer',
                 transition: 'all 0.3s ease',
-                boxShadow: '0 8px 25px rgba(29, 78, 216, 0.3)',
+                boxShadow: '0 8px 25px rgba(60, 59, 110, 0.3)',
                 position: 'relative',
                 overflow: 'hidden',
                 marginBottom: '2rem'
@@ -633,13 +633,13 @@ const RegisterPage = () => {
               onMouseEnter={(e) => {
                 if (!loading) {
                   e.target.style.transform = 'translateY(-2px)';
-                  e.target.style.boxShadow = '0 12px 35px rgba(29, 78, 216, 0.4)';
+                  e.target.style.boxShadow = '0 12px 35px rgba(60, 59, 110, 0.4)';
                 }
               }}
               onMouseLeave={(e) => {
                 if (!loading) {
                   e.target.style.transform = 'translateY(0px)';
-                  e.target.style.boxShadow = '0 8px 25px rgba(29, 78, 216, 0.3)';
+                  e.target.style.boxShadow = '0 8px 25px rgba(60, 59, 110, 0.3)';
                 }
               }}
             >
