@@ -58,6 +58,25 @@ body::before {
   66% { transform: translateX(-5px); }
 }
 
+/* Flag waving animation */
+@keyframes flagWave {
+  0%, 100% { transform: rotate(-1deg) scale(1); }
+  50% { transform: rotate(1deg) scale(1.02); }
+}
+
+/* Text shimmer animation */
+@keyframes textShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Star floating animation */
+@keyframes starFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+  50% { transform: translateY(-10px) rotate(180deg); opacity: 1; }
+}
+
 /* Liberia map background element */
 .liberia-map-bg {
   position: fixed;
