@@ -458,79 +458,117 @@ const MarketplacePage = () => {
                       </div>
                     )}
                   </div>
-                  <div style={{ padding: '1rem' }}>
+                  {/* Enhanced Product Content */}
+                  <div style={{ padding: '1.8rem' }}>
                     <h3 style={{ 
-                      margin: '0 0 0.5rem 0', 
-                      fontSize: '1.1rem',
-                      color: '#1f2937'
+                      margin: '0 0 1rem 0', 
+                      fontSize: '1.3rem',
+                      color: '#1f2937',
+                      fontWeight: '700',
+                      lineHeight: '1.3'
                     }}>
                       {product.name}
                     </h3>
                     <p style={{ 
                       color: '#6b7280', 
-                      fontSize: '0.9rem',
-                      margin: '0 0 1rem 0',
-                      lineHeight: '1.4'
+                      fontSize: '1rem',
+                      margin: '0 0 1.5rem 0',
+                      lineHeight: '1.6'
                     }}>
-                      {product.description.substring(0, 80)}...
+                      {product.description.substring(0, 100)}...
                     </p>
+                    
+                    {/* Price and Stock Section */}
                     <div style={{
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      marginBottom: '0.5rem'
+                      marginBottom: '1rem',
+                      paddingBottom: '1rem',
+                      borderBottom: '1px solid rgba(218, 165, 32, 0.1)'
                     }}>
                       <div style={{ 
-                        fontSize: '1.25rem', 
-                        fontWeight: 'bold',
-                        color: '#dc2626'
+                        fontSize: '1.5rem', 
+                        fontWeight: '800',
+                        color: '#B22234',
+                        fontFamily: 'Georgia, serif'
                       }}>
                         ${product.price.toFixed(2)}
                       </div>
-                      <div style={{ fontSize: '0.8rem', color: '#6b7280' }}>
-                        Stock: {product.stock}
+                      <div style={{ 
+                        fontSize: '0.9rem', 
+                        color: '#10b981',
+                        background: 'rgba(16, 185, 129, 0.1)',
+                        padding: '0.3rem 0.8rem',
+                        borderRadius: '15px',
+                        fontWeight: '600'
+                      }}>
+                        📦 Stock: {product.stock}
                       </div>
                     </div>
+                    
+                    {/* Seller and Status Section */}
                     <div style={{
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      fontSize: '0.8rem',
-                      color: '#6b7280'
+                      fontSize: '0.9rem',
+                      color: '#6b7280',
+                      marginBottom: '1.5rem'
                     }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <span>Seller: {product.sellerName}</span>
-                        {/* Online Status Indicator */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                        <span style={{ fontWeight: '600' }}>👤 {product.sellerName}</span>
+                        {/* Enhanced Online Status Indicator */}
                         {sellerStatuses[product.sellerId || product.seller_id] && (
                           <div style={{
                             display: 'flex',
                             alignItems: 'center',
-                            gap: '0.25rem'
+                            gap: '0.4rem',
+                            padding: '0.3rem 0.8rem',
+                            borderRadius: '20px',
+                            background: sellerStatuses[product.sellerId || product.seller_id]?.is_online 
+                              ? 'rgba(16, 185, 129, 0.1)' 
+                              : 'rgba(107, 114, 128, 0.1)',
+                            border: `1px solid ${sellerStatuses[product.sellerId || product.seller_id]?.is_online 
+                              ? 'rgba(16, 185, 129, 0.2)' 
+                              : 'rgba(107, 114, 128, 0.15)'}`
                           }}>
                             <div style={{
                               width: '8px',
                               height: '8px',
                               borderRadius: '50%',
                               backgroundColor: sellerStatuses[product.sellerId || product.seller_id]?.is_online 
-                                ? '#10b981' // Green for online
-                                : '#6b7280' // Gray for offline
+                                ? '#10b981' 
+                                : '#9ca3af',
+                              boxShadow: sellerStatuses[product.sellerId || product.seller_id]?.is_online 
+                                ? '0 0 8px rgba(16, 185, 129, 0.6)' 
+                                : 'none',
+                              animation: sellerStatuses[product.sellerId || product.seller_id]?.is_online 
+                                ? 'pulse 2s infinite' 
+                                : 'none'
                             }} />
                             <span style={{ 
-                              fontSize: '0.7rem',
+                              fontSize: '0.8rem',
                               color: sellerStatuses[product.sellerId || product.seller_id]?.is_online 
-                                ? '#10b981' 
-                                : '#6b7280'
+                                ? '#059669' 
+                                : '#6b7280',
+                              fontWeight: '600'
                             }}>
                               {sellerStatuses[product.sellerId || product.seller_id]?.is_online ? 'Online' : 'Offline'}
                             </span>
                           </div>
                         )}
                       </div>
-                      <span>👁️ {product.views} views</span>
+                      <span style={{ 
+                        color: '#9ca3af',
+                        fontSize: '0.8rem'
+                      }}>
+                        👁️ {product.views} views
+                      </span>
                     </div>
                     
-                    {/* Action Buttons */}
-                    <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem' }}>
+                    {/* Professional Action Buttons */}
+                    <div style={{ display: 'flex', gap: '1rem' }}>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -538,20 +576,26 @@ const MarketplacePage = () => {
                         }}
                         style={{
                           flex: '1',
-                          padding: '0.5rem',
-                          backgroundColor: '#16a34a',
+                          padding: '0.8rem 1rem',
+                          backgroundColor: '#10b981',
                           color: 'white',
                           border: 'none',
-                          borderRadius: '5px',
-                          fontSize: '0.8rem',
+                          borderRadius: '15px',
+                          fontSize: '0.9rem',
+                          fontWeight: '600',
                           cursor: 'pointer',
-                          transition: 'background-color 0.3s'
+                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          boxShadow: '0 4px 15px rgba(16, 185, 129, 0.25)'
                         }}
                         onMouseEnter={(e) => {
-                          e.target.style.backgroundColor = '#15803d';
+                          e.target.style.backgroundColor = '#059669';
+                          e.target.style.transform = 'translateY(-2px)';
+                          e.target.style.boxShadow = '0 6px 20px rgba(16, 185, 129, 0.35)';
                         }}
                         onMouseLeave={(e) => {
-                          e.target.style.backgroundColor = '#16a34a';
+                          e.target.style.backgroundColor = '#10b981';
+                          e.target.style.transform = 'translateY(0)';
+                          e.target.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.25)';
                         }}
                       >
                         🛒 Add to Cart
@@ -564,20 +608,26 @@ const MarketplacePage = () => {
                         }}
                         style={{
                           flex: '1',
-                          padding: '0.5rem',
-                          backgroundColor: '#dc2626',
+                          padding: '0.8rem 1rem',
+                          backgroundColor: '#3C3B6E',
                           color: 'white',
                           border: 'none',
-                          borderRadius: '5px',
-                          fontSize: '0.8rem',
+                          borderRadius: '15px',
+                          fontSize: '0.9rem',
+                          fontWeight: '600',
                           cursor: 'pointer',
-                          transition: 'background-color 0.3s'
+                          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                          boxShadow: '0 4px 15px rgba(60, 59, 110, 0.25)'
                         }}
                         onMouseEnter={(e) => {
-                          e.target.style.backgroundColor = '#b91c1c';
+                          e.target.style.backgroundColor = '#B22234';
+                          e.target.style.transform = 'translateY(-2px)';
+                          e.target.style.boxShadow = '0 6px 20px rgba(178, 34, 52, 0.35)';
                         }}
                         onMouseLeave={(e) => {
-                          e.target.style.backgroundColor = '#dc2626';
+                          e.target.style.backgroundColor = '#3C3B6E';
+                          e.target.style.transform = 'translateY(0)';
+                          e.target.style.boxShadow = '0 4px 15px rgba(60, 59, 110, 0.25)';
                         }}
                       >
                         💬 Contact Seller
