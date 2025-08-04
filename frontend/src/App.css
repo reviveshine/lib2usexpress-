@@ -88,46 +88,27 @@ body::after {
   50% { opacity: 0.12; transform: translate(-50%, -50%) scale(1.02); }
 }
 
-/* Flag waving animation */
-@keyframes flagWave {
-  0%, 100% { transform: rotate(-1deg) scale(1); }
-  50% { transform: rotate(1deg) scale(1.02); }
+/* Realistic flag animations */
+@keyframes flagWaveRealistic {
+  0%, 100% { transform: rotate(-0.5deg) scale(1) skew(0deg); }
+  25% { transform: rotate(0.8deg) scale(1.01) skew(0.3deg); }
+  50% { transform: rotate(-0.3deg) scale(1.02) skew(-0.2deg); }
+  75% { transform: rotate(0.6deg) scale(1.01) skew(0.4deg); }
 }
 
-/* Text shimmer animation */
-@keyframes textShimmer {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* Professional text shimmer */
+@keyframes textShimmerRealistic {
+  0% { background-position: 0% 50%; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+  25% { background-position: 25% 50%; text-shadow: 3px 3px 6px rgba(218, 165, 32, 0.4); }
+  50% { background-position: 100% 50%; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+  75% { background-position: 75% 50%; text-shadow: 3px 3px 6px rgba(195, 30, 57, 0.4); }
+  100% { background-position: 0% 50%; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
 }
 
-/* Star floating animation */
-@keyframes starFloat {
-  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
-  50% { transform: translateY(-10px) rotate(180deg); opacity: 1; }
-}
-
-/* Liberia map background element */
-.liberia-map-bg {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  height: 300px;
-  opacity: 0.1;
-  z-index: -1;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath d='M50 50 Q80 30 120 40 L180 45 Q220 50 250 60 L300 80 Q320 100 310 140 L300 180 Q280 220 250 240 L200 250 Q150 245 120 230 L80 200 Q50 150 50 100 Z' fill='%23ffd700' stroke='%23ffd700' stroke-width='2'/%3E%3Ccircle cx='100' cy='100' r='3' fill='%23ffd700'/%3E%3Ctext x='150' y='160' font-family='Arial' font-size='12' fill='%23ffd700' text-anchor='middle'%3ELiberia%3C/text%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  animation: mapPulse 15s ease-in-out infinite;
-}
-
-/* Map pulsing animation */
-@keyframes mapPulse {
-  0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 0.15; transform: translate(-50%, -50%) scale(1.05); }
+/* Elegant star floating */
+@keyframes starFloatRealistic {
+  0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; filter: drop-shadow(0 2px 4px rgba(218, 165, 32, 0.3)); }
+  50% { transform: translateY(-8px) rotate(45deg); opacity: 0.9; filter: drop-shadow(0 4px 8px rgba(218, 165, 32, 0.5)); }
 }
 
 /* Main app container */
@@ -137,14 +118,14 @@ body::after {
   min-height: 100vh;
 }
 
-/* Page containers with enhanced styling */
+/* Page containers with professional styling */
 .page {
   min-height: 100vh;
   padding: 0;
   margin: 0;
   position: relative;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(15px);
 }
 
 .container {
@@ -155,14 +136,15 @@ body::after {
   z-index: 1;
 }
 
-/* Enhanced header styles */
+/* Professional header styles */
 .header {
-  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-red) 100%);
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--liberia-blue) 50%, var(--primary-red) 100%);
   color: white;
   padding: 1rem 0;
-  box-shadow: 0 4px 20px var(--shadow-blue);
+  box-shadow: 0 8px 32px var(--realistic-shadow);
   position: relative;
   overflow: hidden;
+  border-bottom: 3px solid var(--gold);
 }
 
 .header::before {
@@ -172,22 +154,23 @@ body::after {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'%3E%3Cpath d='M0 10 Q25 5 50 10 T100 10 V20 H0 Z' fill='%23ffd700' opacity='0.3'/%3E%3C/svg%3E");
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'%3E%3Cpath d='M0 10 Q25 5 50 10 T100 10 V20 H0 Z' fill='%23DAA520' opacity='0.15'/%3E%3C/svg%3E");
   background-size: 100px 20px;
   background-repeat: repeat-x;
   background-position: bottom;
 }
 
-/* Card components with new theme */
+/* Professional card components */
 .card {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 20px;
   padding: 2rem;
-  box-shadow: 0 8px 32px rgba(29, 78, 216, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 0 12px 40px var(--realistic-shadow);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(218, 165, 32, 0.15);
   position: relative;
   overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card::before {
@@ -197,22 +180,31 @@ body::after {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--primary-red), var(--gold), var(--primary-blue));
+  background: linear-gradient(90deg, var(--liberia-red), var(--gold), var(--primary-blue));
+  opacity: 0.8;
 }
 
-/* Button styles with new theme */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 60px var(--realistic-shadow);
+}
+
+/* Professional button styles */
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-red) 100%);
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--liberia-red) 100%);
   color: white;
   border: none;
-  padding: 0.75rem 2rem;
-  border-radius: 25px;
+  padding: 0.8rem 2.5rem;
+  border-radius: 30px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(29, 78, 216, 0.3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(60, 59, 110, 0.25);
   position: relative;
   overflow: hidden;
+  text-transform: none;
+  font-size: 1rem;
+  border: 2px solid transparent;
 }
 
 .btn-primary::before {
@@ -222,8 +214,8 @@ body::after {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
-  transition: left 0.5s;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
 }
 
 .btn-primary:hover::before {
@@ -231,69 +223,81 @@ body::after {
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(29, 78, 216, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(60, 59, 110, 0.35);
+  border-color: var(--gold);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   color: var(--primary-blue);
   border: 2px solid var(--gold);
-  padding: 0.75rem 2rem;
-  border-radius: 25px;
+  padding: 0.8rem 2.5rem;
+  border-radius: 30px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(15px);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .btn-secondary:hover {
   background: var(--gold);
   color: var(--primary-blue);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(218, 165, 32, 0.3);
 }
 
-/* Form elements with new theme */
+/* Professional form elements */
 .form-input {
-  background: rgba(255, 255, 255, 0.9);
-  border: 2px solid rgba(255, 215, 0, 0.3);
-  border-radius: 10px;
-  padding: 0.75rem;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(218, 165, 32, 0.2);
+  border-radius: 15px;
+  padding: 0.8rem 1.2rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(15px);
+  font-size: 1rem;
 }
 
 .form-input:focus {
   outline: none;
   border-color: var(--gold);
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 20px rgba(218, 165, 32, 0.2);
+  background: rgba(255, 255, 255, 1);
 }
 
-/* Navigation styles */
+/* Professional navigation styles */
 .nav {
-  background: rgba(29, 78, 216, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 2px solid var(--gold);
+  background: rgba(60, 59, 110, 0.95);
+  backdrop-filter: blur(15px);
+  border-bottom: 3px solid var(--gold);
+  padding: 0.5rem 0;
 }
 
 .nav-link {
   color: white;
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  transition: all 0.3s ease;
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  font-weight: 500;
 }
 
 .nav-link:hover {
-  background: rgba(255, 215, 0, 0.2);
+  background: rgba(218, 165, 32, 0.15);
   color: var(--gold);
+  transform: translateY(-2px);
 }
 
 .nav-link.active {
   background: var(--gold);
   color: var(--primary-blue);
-  font-weight: 600;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(218, 165, 32, 0.3);
 }
 
 /* Hero section with map integration */
