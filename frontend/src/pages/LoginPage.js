@@ -152,7 +152,7 @@ const LoginPage = () => {
                 style={{
                   width: '100%',
                   padding: '1rem',
-                  border: '2px solid rgba(255, 215, 0, 0.3)',
+                  border: '2px solid rgba(218, 165, 32, 0.3)',
                   borderRadius: '12px',
                   fontSize: '1rem',
                   background: 'rgba(255, 255, 255, 0.9)',
