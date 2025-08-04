@@ -670,7 +670,7 @@ const RegisterPage = () => {
                 backdropFilter: 'blur(10px)'
               }}
               onMouseEnter={(e) => {
-                e.target.style.background = '#ffd700';
+                e.target.style.background = '#DAA520';
                 e.target.style.color = '#1d4ed8';
                 e.target.style.transform = 'translateY(-2px)';
               }}
