@@ -95,8 +95,12 @@ async def login_user(login_data: UserLogin):
             detail="Invalid email or password"
         )
     
-    # Create access token
+    # Create access and refresh tokens
     access_token = create_access_token(data={"sub": user["id"]})
+    refresh_token = create_refresh_token(data={"sub": user["id"]})
+    
+    # Store refresh token in database
+    await store_refresh_token(user["id"], refresh_token)
     
     # Return response (excluding password_hash)
     user_response = UserResponse(
