@@ -103,7 +103,7 @@ async def validate_refresh_token(refresh_token: str):
         
         # Check if refresh token exists in database and hasn't expired
         database = get_database()
-        if not database:
+        if database is None:
             return None
             
         user = await database.users.find_one({
