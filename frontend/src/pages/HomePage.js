@@ -120,38 +120,65 @@ const HomePage = () => {
             
             <div style={{ 
               display: 'flex', 
-              gap: '1.5rem', 
+              gap: '2rem', 
               justifyContent: 'center', 
-              flexWrap: 'wrap'
+              flexWrap: 'wrap',
+              marginTop: '1rem'
             }}>
               <Link to="/marketplace" style={{
-                background: 'linear-gradient(135deg, #1d4ed8 0%, #dc2626 100%)',
+                background: 'linear-gradient(135deg, #3C3B6E 0%, #B22234 100%)',
                 color: 'white',
-                padding: '1rem 2.5rem',
-                borderRadius: '30px',
+                padding: '1.2rem 3rem',
+                borderRadius: '35px',
                 textDecoration: 'none',
-                fontSize: '1.2rem',
-                fontWeight: 'bold',
-                boxShadow: '0 8px 25px rgba(29, 78, 216, 0.4)',
-                transition: 'all 0.3s ease',
-                border: '2px solid #ffd700',
+                fontSize: '1.3rem',
+                fontWeight: '700',
+                boxShadow: '0 10px 30px rgba(60, 59, 110, 0.3)',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                border: '3px solid #DAA520',
                 position: 'relative',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+              onMouseOver={(e) => {
+                e.target.style.transform = 'translateY(-5px) scale(1.02)';
+                e.target.style.boxShadow = '0 15px 40px rgba(60, 59, 110, 0.4)';
+              }}
+              onMouseOut={(e) => {
+                e.target.style.transform = 'translateY(0) scale(1)';
+                e.target.style.boxShadow = '0 10px 30px rgba(60, 59, 110, 0.3)';
               }}>
                 🛍️ Explore Marketplace
               </Link>
               <Link to="/register" style={{
-                background: 'rgba(255, 255, 255, 0.95)',
-                color: '#1d4ed8',
-                padding: '1rem 2.5rem',
-                borderRadius: '30px',
+                background: 'rgba(255, 255, 255, 0.98)',
+                color: '#3C3B6E',
+                padding: '1.2rem 3rem',
+                borderRadius: '35px',
                 textDecoration: 'none',
-                fontSize: '1.2rem',
-                fontWeight: 'bold',
-                border: '2px solid #ffd700',
-                transition: 'all 0.3s ease',
-                backdropFilter: 'blur(10px)',
-                boxShadow: '0 8px 25px rgba(255, 215, 0, 0.3)'
+                fontSize: '1.3rem',
+                fontWeight: '700',
+                border: '3px solid #DAA520',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                backdropFilter: 'blur(15px)',
+                boxShadow: '0 10px 30px rgba(218, 165, 32, 0.25)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+              onMouseOver={(e) => {
+                e.target.style.background = '#DAA520';
+                e.target.style.color = '#3C3B6E';
+                e.target.style.transform = 'translateY(-5px) scale(1.02)';
+                e.target.style.boxShadow = '0 15px 40px rgba(218, 165, 32, 0.4)';
+              }}
+              onMouseOut={(e) => {
+                e.target.style.background = 'rgba(255, 255, 255, 0.98)';
+                e.target.style.color = '#3C3B6E';
+                e.target.style.transform = 'translateY(0) scale(1)';
+                e.target.style.boxShadow = '0 10px 30px rgba(218, 165, 32, 0.25)';
               }}>
                 🚀 Become a Seller
               </Link>
