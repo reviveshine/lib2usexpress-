@@ -121,6 +121,53 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
             headers={"WWW-Authenticate": "Bearer"},
         )
 
+async def get_optional_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Get current user from JWT token, return None if not authenticated (for optional auth)"""
+    try:
+        if not credentials or not credentials.credentials:
+            return None
+            
+        token = credentials.credentials
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        user_id: str = payload.get("sub")
+        
+        if user_id is None:
+            return None
+        
+        # Verify user still exists in database
+        database = get_database()
+        if database is None:
+            return None
+        
+        user = await database.users.find_one({"id": user_id})
+        if not user:
+            return None
+            
+        return user_id
+        
+    except:
+        # For optional auth, any error just returns None
+        return None
+
+# Add a function to get current user info with full user data
+async def get_current_user_info(current_user_id: str = Depends(get_current_user)):
+    """Get full user information for current user"""
+    database = get_database()
+    if database is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Database connection unavailable"
+        )
+    
+    user = await database.users.find_one({"id": current_user_id})
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User no longer exists"
+        )
+    
+    return user
+
 # Health check endpoint - must not depend on database for Kubernetes health checks
 @app.get("/api/health")
 async def health_check():
