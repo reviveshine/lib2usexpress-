@@ -76,19 +76,48 @@ const DashboardPage = () => {
         return (
           <div>
             <div style={{ 
-              background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+              background: 'linear-gradient(135deg, #B22234 0%, #3C3B6E 100%)',
               color: 'white',
-              padding: '2rem',
-              borderRadius: '15px',
-              marginBottom: '2rem',
-              textAlign: 'center'
+              padding: '3rem',
+              borderRadius: '25px',
+              marginBottom: '3rem',
+              textAlign: 'center',
+              position: 'relative',
+              overflow: 'hidden',
+              boxShadow: '0 15px 50px rgba(178, 34, 52, 0.2)'
             }}>
-              <h3 style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>
-                🏪 Welcome to Your Seller Dashboard, {user.firstName}!
-              </h3>
-              <p style={{ fontSize: '1.1rem', opacity: '0.9' }}>
-                🇱🇷 Happy Independence Day! Manage your Liberian products and reach customers in the USA
-              </p>
+              {/* Background pattern */}
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Cpath d='M0 50 Q100 30 200 50 T400 50 L400 200 L0 200 Z' fill='%23DAA520' opacity='0.08'/%3E%3C/svg%3E")`,
+                backgroundSize: '400px 200px',
+                backgroundRepeat: 'repeat-x',
+                backgroundPosition: 'bottom'
+              }}></div>
+
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <h3 style={{ 
+                  fontSize: '2.2rem', 
+                  marginBottom: '1rem',
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                  fontFamily: 'Georgia, serif',
+                  fontWeight: '900'
+                }}>
+                  🏪 Welcome to Your Seller Dashboard, {user.firstName}!
+                </h3>
+                <p style={{ 
+                  fontSize: '1.2rem', 
+                  opacity: '0.95',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.3)',
+                  fontWeight: '400'
+                }}>
+                  🌍 Manage your authentic Liberian products and connect with American customers
+                </p>
+              </div>
             </div>
             
             <div style={{
