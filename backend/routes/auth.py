@@ -46,8 +46,12 @@ async def register_user(user_data: UserCreate):
     # Insert user into database
     await database.users.insert_one(user_doc)
     
-    # Create access token
+    # Create access and refresh tokens
     access_token = create_access_token(data={"sub": user_doc["id"]})
+    refresh_token = create_refresh_token(data={"sub": user_doc["id"]})
+    
+    # Store refresh token in database
+    await store_refresh_token(user_doc["id"], refresh_token)
     
     # Return response (excluding password_hash)
     user_response = UserResponse(
