@@ -123,7 +123,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-async def get_optional_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+async def get_optional_user(credentials: Optional[HTTPAuthorizationCredentials] = Depends(optional_security)):
     """Get current user from JWT token, return None if not authenticated (for optional auth)"""
     try:
         if not credentials or not credentials.credentials:
