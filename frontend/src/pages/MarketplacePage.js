@@ -217,59 +217,96 @@ const MarketplacePage = () => {
             Explore handcrafted treasures from verified Liberian sellers
           </p>
           
-          {/* Search and Filter Bar */}
+          {/* Professional Search and Filter Bar */}
           <div style={{
-            background: 'white',
-            padding: '1.5rem',
-            borderRadius: '10px',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-            marginBottom: '2rem'
+            background: 'rgba(255, 255, 255, 0.98)',
+            padding: '2rem',
+            borderRadius: '20px',
+            boxShadow: '0 12px 40px rgba(0, 0, 0, 0.06)',
+            marginBottom: '3rem',
+            border: '2px solid rgba(218, 165, 32, 0.15)',
+            backdropFilter: 'blur(20px)'
           }}>
-            <form onSubmit={handleSearch} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <form onSubmit={handleSearch} style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
               <input
                 type="text"
-                placeholder="Search products..."
+                placeholder="🔍 Search for authentic Liberian products..."
                 value={filters.search}
                 onChange={(e) => setFilters({ ...filters, search: e.target.value })}
                 style={{
                   flex: '1',
-                  padding: '0.75rem',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '5px',
-                  minWidth: '200px'
+                  padding: '1rem 1.5rem',
+                  border: '2px solid rgba(218, 165, 32, 0.2)',
+                  borderRadius: '15px',
+                  minWidth: '250px',
+                  fontSize: '1rem',
+                  background: 'rgba(255, 255, 255, 0.95)',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#DAA520';
+                  e.target.style.boxShadow = '0 0 20px rgba(218, 165, 32, 0.2)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = 'rgba(218, 165, 32, 0.2)';
+                  e.target.style.boxShadow = 'none';
                 }}
               />
               <select
                 value={filters.category}
                 onChange={(e) => handleFilterChange('category', e.target.value)}
                 style={{
-                  padding: '0.75rem',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '5px'
+                  padding: '1rem 1.5rem',
+                  border: '2px solid rgba(218, 165, 32, 0.2)',
+                  borderRadius: '15px',
+                  background: 'rgba(255, 255, 255, 0.95)',
+                  fontSize: '1rem'
                 }}
               >
                 <option value="">All Categories</option>
                 <option value="electronics">Electronics</option>
-                <option value="fashion">Fashion</option>
+                <option value="fashion">Fashion & Textiles</option>
                 <option value="home">Home & Garden</option>
-                <option value="books">Books</option>
+                <option value="food">Food & Beverages</option>
+                <option value="art">Arts & Crafts</option>
               </select>
               <select
                 value={filters.sort}
                 onChange={(e) => handleFilterChange('sort', e.target.value)}
                 style={{
-                  padding: '0.75rem',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '5px'
+                  padding: '1rem 1.5rem',
+                  border: '2px solid rgba(218, 165, 32, 0.2)',
+                  borderRadius: '15px',
+                  background: 'rgba(255, 255, 255, 0.95)',
+                  fontSize: '1rem'
                 }}
               >
-                <option value="newest">Newest</option>
+                <option value="newest">Newest First</option>
                 <option value="price-low">Price: Low to High</option>
                 <option value="price-high">Price: High to Low</option>
                 <option value="popular">Most Popular</option>
               </select>
-              <button type="submit" className="btn-primary">
-                Search
+              <button type="submit" style={{
+                background: 'linear-gradient(135deg, #3C3B6E 0%, #B22234 100%)',
+                color: 'white',
+                padding: '1rem 2.5rem',
+                borderRadius: '15px',
+                border: 'none',
+                fontSize: '1rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: '0 6px 20px rgba(60, 59, 110, 0.25)'
+              }}
+              onMouseOver={(e) => {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 10px 30px rgba(60, 59, 110, 0.35)';
+              }}
+              onMouseOut={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 6px 20px rgba(60, 59, 110, 0.25)';
+              }}>
+                🔍 Search
               </button>
             </form>
           </div>
