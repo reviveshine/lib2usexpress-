@@ -60,6 +60,9 @@ export const AuthProvider = ({ children }) => {
     if (tokenRefreshInterval) {
       clearInterval(tokenRefreshInterval);
       setTokenRefreshInterval(null);
+    }
+  };
+
   const setupTokenRefresh = (refreshToken) => {
     // Clear any existing interval
     if (tokenRefreshInterval) {
@@ -117,15 +120,21 @@ export const AuthProvider = ({ children }) => {
       return null;
     }
   };
+
+  const login = (userData, token, refreshToken = null) => {
     localStorage.setItem('auth_token', token);
     localStorage.setItem('user_data', JSON.stringify(userData));
+    
+    if (refreshToken) {
+      localStorage.setItem('refresh_token', refreshToken);
+      setupTokenRefresh(refreshToken);
+    }
+    
     setUser(userData);
   };
 
   const logout = () => {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('user_data');
-    localStorage.removeItem('cart');
+    clearAuthData();
     setUser(null);
   };
 
@@ -134,7 +143,8 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     loading,
-    checkAuthStatus
+    checkAuthStatus,
+    refreshAccessToken
   };
 
   return (
