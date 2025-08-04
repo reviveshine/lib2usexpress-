@@ -313,50 +313,96 @@ const MarketplacePage = () => {
         </div>
       </section>
 
-      {/* Products Grid */}
-      <section style={{ padding: '2rem 0' }}>
+      {/* Professional Products Grid */}
+      <section style={{ padding: '3rem 0' }}>
         <div className="container">
           {loading ? (
-            <div style={{ textAlign: 'center', padding: '4rem 0' }}>
-              <p>Loading products...</p>
+            <div style={{ textAlign: 'center', padding: '6rem 0' }}>
+              <div style={{ 
+                width: '60px', 
+                height: '60px', 
+                border: '5px solid rgba(60, 59, 110, 0.1)',
+                borderTop: '5px solid #DAA520',
+                borderRadius: '50%',
+                animation: 'spin 1.2s linear infinite',
+                margin: '0 auto 2rem',
+                filter: 'drop-shadow(0 2px 4px rgba(218, 165, 32, 0.2))'
+              }}></div>
+              <p style={{ 
+                fontSize: '1.2rem', 
+                color: '#6b7280',
+                fontWeight: '500' 
+              }}>
+                Loading authentic Liberian products...
+              </p>
             </div>
           ) : products.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '4rem 0' }}>
-              <p>No products found matching your criteria.</p>
+            <div style={{ textAlign: 'center', padding: '6rem 0' }}>
+              <div style={{ fontSize: '4rem', marginBottom: '2rem' }}>🔍</div>
+              <p style={{ 
+                fontSize: '1.3rem', 
+                color: '#6b7280',
+                fontWeight: '500' 
+              }}>
+                No products found matching your search criteria.
+              </p>
+              <p style={{ 
+                fontSize: '1rem', 
+                color: '#9ca3af',
+                marginTop: '1rem'
+              }}>
+                Try adjusting your filters or search terms.
+              </p>
             </div>
           ) : (
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-              gap: '2rem'
+              gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+              gap: '2.5rem'
             }}>
               {products.map((product) => (
                 <div
                   key={product._id}
                   style={{
-                    background: 'white',
-                    borderRadius: '10px',
+                    background: 'rgba(255, 255, 255, 0.98)',
+                    borderRadius: '25px',
                     overflow: 'hidden',
-                    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                    transition: 'transform 0.3s, box-shadow 0.3s',
-                    cursor: 'pointer'
+                    boxShadow: '0 12px 40px rgba(0, 0, 0, 0.08)',
+                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                    cursor: 'pointer',
+                    border: '1px solid rgba(218, 165, 32, 0.15)',
+                    backdropFilter: 'blur(20px)',
+                    position: 'relative'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-5px)';
-                    e.currentTarget.style.boxShadow = '0 5px 20px rgba(0,0,0,0.15)';
+                    e.currentTarget.style.transform = 'translateY(-10px)';
+                    e.currentTarget.style.boxShadow = '0 25px 60px rgba(0, 0, 0, 0.15)';
+                    e.currentTarget.style.borderColor = '#DAA520';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                    e.currentTarget.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.08)';
+                    e.currentTarget.style.borderColor = 'rgba(218, 165, 32, 0.15)';
                   }}
                 >
+                  {/* Professional Top Border */}
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: '4px',
+                    background: 'linear-gradient(90deg, #B22234, #DAA520, #3C3B6E)',
+                    opacity: 0.8
+                  }}></div>
+
                   <div style={{ position: 'relative' }}>
                     {product.video ? (
                       <video
                         src={product.video}
                         style={{
                           width: '100%',
-                          height: '200px',
+                          height: '220px',
                           objectFit: 'cover'
                         }}
                         muted
@@ -366,40 +412,49 @@ const MarketplacePage = () => {
                       />
                     ) : (
                       <img
-                        src={product.images[0] || 'https://via.placeholder.com/300x300?text=No+Image'}
+                        src={product.images[0] || 'https://via.placeholder.com/320x220?text=Authentic+Liberian+Product'}
                         alt={product.name}
                         style={{
                           width: '100%',
-                          height: '200px',
+                          height: '220px',
                           objectFit: 'cover'
                         }}
                       />
                     )}
+                    
+                    {/* Enhanced Category Badge */}
                     <div style={{
                       position: 'absolute',
-                      top: '10px',
-                      right: '10px',
-                      background: '#dc2626',
+                      top: '15px',
+                      right: '15px',
+                      background: 'rgba(178, 34, 52, 0.95)',
                       color: 'white',
-                      padding: '0.25rem 0.5rem',
-                      borderRadius: '5px',
-                      fontSize: '0.75rem',
-                      textTransform: 'capitalize'
+                      padding: '0.4rem 1rem',
+                      borderRadius: '20px',
+                      fontSize: '0.8rem',
+                      fontWeight: '600',
+                      textTransform: 'capitalize',
+                      backdropFilter: 'blur(10px)',
+                      boxShadow: '0 4px 15px rgba(178, 34, 52, 0.3)'
                     }}>
                       {product.category}
                     </div>
+                    
+                    {/* Enhanced Video Badge */}
                     {product.video && (
                       <div style={{
                         position: 'absolute',
-                        top: '10px',
-                        left: '10px',
-                        background: 'rgba(0,0,0,0.7)',
+                        top: '15px',
+                        left: '15px',
+                        background: 'rgba(0, 0, 0, 0.8)',
                         color: 'white',
-                        padding: '0.25rem 0.5rem',
-                        borderRadius: '5px',
-                        fontSize: '0.75rem'
+                        padding: '0.4rem 1rem',
+                        borderRadius: '20px',
+                        fontSize: '0.8rem',
+                        fontWeight: '600',
+                        backdropFilter: 'blur(10px)'
                       }}>
-                        🎥 Video
+                        🎥 Video Preview
                       </div>
                     )}
                   </div>
