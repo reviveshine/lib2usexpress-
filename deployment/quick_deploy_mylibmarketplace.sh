@@ -1,11 +1,13 @@
 #!/bin/bash
 
 # Quick Deployment Script for mylibmarketplace.com on Hostinger Cloud Startup
-# Run this script after uploading your files to the server
+# Repository: git@github.com:reviveshine/lib2usexpress-.git
+# Run this script after connecting to your server
 
 set -e  # Exit on any error
 
 echo "🚀 Starting deployment for mylibmarketplace.com..."
+echo "📦 Repository: git@github.com:reviveshine/lib2usexpress-.git"
 
 # Load environment variables
 source ./mylibmarketplace_env.sh
@@ -19,12 +21,33 @@ if [[ $(hostname) != *"hostinger"* ]] && [[ $(pwd) != *"/home/"* ]]; then
     fi
 fi
 
-echo "📂 Setting up project structure..."
-mkdir -p "$PROJECT_PATH"
-mkdir -p "$PUBLIC_HTML_PATH"
+echo "📂 Cloning repository from GitHub..."
+cd /home/u224660466
+
+# Remove existing directory if it exists
+if [ -d "liberia2usa" ]; then
+    echo "📁 Removing existing liberia2usa directory..."
+    rm -rf liberia2usa
+fi
+
+# Clone the repository (try HTTPS first, then SSH)
+echo "🔄 Trying to clone with HTTPS..."
+if git clone https://github.com/reviveshine/lib2usexpress-.git liberia2usa; then
+    echo "✅ Repository cloned successfully via HTTPS"
+elif git clone git@github.com:reviveshine/lib2usexpress-.git liberia2usa; then
+    echo "✅ Repository cloned successfully via SSH"
+else
+    echo "❌ Failed to clone repository. Please check:"
+    echo "   1. Repository exists and is accessible"
+    echo "   2. You have proper permissions"
+    echo "   3. Internet connection is working"
+    exit 1
+fi
+
+cd liberia2usa
 
 echo "🐍 Setting up Python backend..."
-cd "$PROJECT_PATH/backend"
+cd backend
 
 # Create virtual environment
 python3 -m venv venv
