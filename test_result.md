@@ -1069,6 +1069,18 @@ test_plan:
         agent: "main"
         comment: "REGISTRATION FLOW BUG FIXED: User reported that after account creation, users see 'Login to Your Account' with no reaction and don't move to the right dashboard. ROOT CAUSE IDENTIFIED: RegisterPage and LoginPage were manually setting localStorage but not using AuthContext.login() method, causing authentication state mismatch. SOLUTION APPLIED: ✅ Updated RegisterPage.js to import and use AuthContext.login() method instead of manual localStorage ✅ Updated LoginPage.js to use AuthContext.login() method consistently ✅ Restarted frontend service to apply changes. VERIFICATION COMPLETED: Frontend testing agent confirmed registration flow working perfectly - buyers redirect to /marketplace, sellers to /dashboard, header shows logged-in state, AuthContext properly updated. Registration bug completely resolved."
 
+  - task: "Enhanced Authentication System with Token Refresh"
+    implemented: true
+    working: true
+    file: "backend/server.py, backend/routes/auth.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "ENHANCED AUTHENTICATION SYSTEM TESTING COMPLETED SUCCESSFULLY (2025-01-30): ✅ Enhanced Registration - Registration endpoint returns both access_token and refresh_token as requested ✅ Enhanced Login - Login endpoint returns both access_token and refresh_token ✅ Token Refresh Endpoint - POST /api/auth/refresh working correctly with valid refresh tokens, implements token rotation strategy ✅ Token Type Validation - Access tokens have type 'access' and refresh tokens have type 'refresh' as specified ✅ Database Storage - Refresh tokens properly stored in user database, old tokens invalidated when new ones issued ✅ Token Expiration - Access tokens have 7-day expiration (168 hours), proper validation with detailed error messages ✅ Error Handling - Comprehensive error scenarios tested: missing refresh token (400), invalid refresh token (401), malformed tokens (401) ✅ Token Rotation - Refresh token rotation working correctly, old refresh tokens invalidated after use ✅ Authentication Reliability - Significantly improved authentication system with longer token life and automatic refresh capability. SUCCESS RATE: 100% (8/8 enhanced authentication tests passed). The enhanced authentication system with 7-day access tokens, 30-day refresh tokens, and automatic token rotation is working correctly and should significantly improve authentication reliability and achieve higher test success rates as requested."
+
 agent_communication:
   - agent: "testing"
     message: "Comprehensive backend testing completed successfully. All 17 test cases passed including health check, authentication, user management, product management, and authorization. Fixed critical circular import issue in database connection. Backend API is fully functional and ready for production use."
