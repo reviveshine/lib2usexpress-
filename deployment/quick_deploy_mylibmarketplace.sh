@@ -79,7 +79,7 @@ echo "🎛️ Setting up process management..."
 cat > "$PROJECT_PATH/manage.sh" << 'EOF'
 #!/bin/bash
 
-BACKEND_DIR="/home/u123456789/liberia2usa/backend"
+BACKEND_DIR="/home/u224660466/liberia2usa/backend"
 PID_FILE="$BACKEND_DIR/backend.pid"
 LOG_FILE="$BACKEND_DIR/backend.log"
 
