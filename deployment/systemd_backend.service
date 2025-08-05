@@ -1,0 +1,18 @@
+[Unit]
+Description=Liberia2USA Express Backend
+After=network.target
+
+[Service]
+Type=simple
+User=yourusername
+WorkingDirectory=/home/yourusername/liberia2usa/backend
+Environment=PATH=/home/yourusername/liberia2usa/backend/venv/bin
+Environment=MONGO_URL=mongodb+srv://liberia2usa:SecurePass123!@lib2usa.xhw79.mongodb.net/liberia2usa?retryWrites=true&w=majority
+Environment=JWT_SECRET=your_super_secure_jwt_secret_change_this_in_production
+Environment=FRONTEND_URL=https://yourdomain.com
+ExecStart=/home/yourusername/liberia2usa/backend/venv/bin/uvicorn server:app --host 0.0.0.0 --port 8001
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
