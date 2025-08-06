@@ -6,7 +6,7 @@ Debug Profile Issues
 import requests
 import json
 
-BACKEND_URL = "https://b63c3324-aeb1-4ef8-8d26-c78de417cad8.preview.emergentagent.com"
+BACKEND_URL = "https://a1b690fb-1be1-4d78-9f30-ea8b3cb33a31.preview.emergentagent.com"
 
 def debug_seller_profile():
     # Login as seller
