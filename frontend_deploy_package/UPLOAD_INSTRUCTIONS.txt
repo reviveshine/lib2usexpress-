@@ -1,0 +1,18 @@
+=== Liberia2USA Express - Frontend Deployment Instructions ===
+
+1. Upload ALL files in this directory to: ~/domains/libtousa.com/public_html/
+
+2. Make sure to replace:
+   - index.html
+   - asset-manifest.json
+   - static/ directory (entire folder)
+
+3. Keep the existing .htaccess file (DO NOT delete it!)
+
+4. Set proper permissions on server:
+   chmod 644 index.html asset-manifest.json
+   chmod -R 755 static/
+
+5. Clear browser cache and visit https://libtousa.com
+
+Expected result: Professional "Bridging Nations" theme should be live!
