@@ -4,196 +4,196 @@
     "success": true,
     "message": "API is running and database connected",
     "details": null,
-    "timestamp": "2025-08-05T00:01:41.454669"
+    "timestamp": "2025-08-07T18:24:35.748443"
   },
   {
     "test": "Buyer Registration",
     "success": false,
     "message": "HTTP 400",
     "details": "{\"detail\":\"Email already registered\"}",
-    "timestamp": "2025-08-05T00:01:41.510050"
+    "timestamp": "2025-08-07T18:24:35.853463"
   },
   {
     "test": "Seller Registration",
     "success": false,
     "message": "HTTP 400",
     "details": "{\"detail\":\"Email already registered\"}",
-    "timestamp": "2025-08-05T00:01:41.557605"
+    "timestamp": "2025-08-07T18:24:35.939036"
   },
   {
     "test": "Location Validation",
     "success": true,
     "message": "Location validation working - buyer with Liberia location rejected",
     "details": null,
-    "timestamp": "2025-08-05T00:01:41.580542"
+    "timestamp": "2025-08-07T18:24:36.000015"
   },
   {
     "test": "Buyer Login",
     "success": true,
     "message": "Buyer login successful",
     "details": null,
-    "timestamp": "2025-08-05T00:01:42.010230"
+    "timestamp": "2025-08-07T18:24:36.561399"
   },
   {
     "test": "Seller Login",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid email or password\"}",
-    "timestamp": "2025-08-05T00:01:42.293182"
+    "timestamp": "2025-08-07T18:24:36.880283"
   },
   {
     "test": "Auth Me Endpoint",
     "success": true,
     "message": "User info retrieved successfully",
     "details": null,
-    "timestamp": "2025-08-05T00:01:42.370741"
+    "timestamp": "2025-08-07T18:24:36.998030"
   },
   {
     "test": "Forgot Password - Valid Email",
     "success": true,
     "message": "Reset token sent successfully for valid email",
     "details": null,
-    "timestamp": "2025-08-05T00:01:42.479885"
+    "timestamp": "2025-08-07T18:24:37.167675"
   },
   {
     "test": "Forgot Password - Invalid Email",
     "success": true,
     "message": "Security response for invalid email (no token sent)",
     "details": null,
-    "timestamp": "2025-08-05T00:01:42.545812"
+    "timestamp": "2025-08-07T18:24:37.253770"
   },
   {
     "test": "Verify Reset Token - Valid",
     "success": true,
     "message": "Token verification endpoint working (tested with invalid token)",
     "details": null,
-    "timestamp": "2025-08-05T00:01:42.698796"
+    "timestamp": "2025-08-07T18:24:37.492209"
   },
   {
     "test": "Verify Reset Token - Invalid",
     "success": true,
     "message": "Invalid token correctly rejected",
     "details": null,
-    "timestamp": "2025-08-05T00:01:42.747714"
+    "timestamp": "2025-08-07T18:24:37.585402"
   },
   {
     "test": "Reset Password - Mismatched Passwords",
     "success": true,
     "message": "Mismatched passwords correctly rejected",
     "details": null,
-    "timestamp": "2025-08-05T00:01:42.768752"
+    "timestamp": "2025-08-07T18:24:37.642608"
   },
   {
     "test": "Reset Password - Weak Password",
     "success": true,
     "message": "Weak password correctly rejected",
     "details": null,
-    "timestamp": "2025-08-05T00:01:42.853229"
+    "timestamp": "2025-08-07T18:24:37.695627"
   },
   {
     "test": "Reset Password - Invalid Token",
     "success": true,
     "message": "Invalid token correctly rejected",
     "details": null,
-    "timestamp": "2025-08-05T00:01:42.899847"
+    "timestamp": "2025-08-07T18:24:37.779925"
   },
   {
     "test": "Password Reset Flow - Complete",
     "success": true,
     "message": "Password reset flow structure verified - check console for \ud83d\udd10 reset token",
     "details": null,
-    "timestamp": "2025-08-05T00:01:43.079350"
+    "timestamp": "2025-08-07T18:24:37.933133"
   },
   {
     "test": "Password Reset Token Expiration",
     "success": true,
     "message": "Token expiration configured (15 minutes) - check backend logs for token details",
     "details": null,
-    "timestamp": "2025-08-05T00:01:43.188714"
+    "timestamp": "2025-08-07T18:24:38.089319"
   },
   {
     "test": "Enhanced Registration with Tokens",
-    "success": true,
-    "message": "Registration returns both access_token and refresh_token",
-    "details": null,
-    "timestamp": "2025-08-05T00:01:43.535671"
+    "success": false,
+    "message": "HTTP 400",
+    "details": "{\"detail\":\"Email already registered\"}",
+    "timestamp": "2025-08-07T18:24:38.176384"
   },
   {
     "test": "Enhanced Login with Tokens",
     "success": true,
     "message": "Login returns both access_token and refresh_token",
     "details": null,
-    "timestamp": "2025-08-05T00:01:43.852413"
+    "timestamp": "2025-08-07T18:24:38.520119"
   },
   {
     "test": "Token Refresh Endpoint",
     "success": false,
     "message": "Tokens not rotated",
     "details": "Same tokens returned",
-    "timestamp": "2025-08-05T00:01:43.959691"
+    "timestamp": "2025-08-07T18:24:38.669042"
   },
   {
     "test": "Token Type Validation",
     "success": true,
     "message": "Access token has type 'access' and refresh token has type 'refresh'",
     "details": null,
-    "timestamp": "2025-08-05T00:01:43.992497"
+    "timestamp": "2025-08-07T18:24:38.726543"
   },
   {
     "test": "Refresh Token Database Storage",
-    "success": true,
-    "message": "Old refresh token invalidated, new token stored in database",
-    "details": null,
-    "timestamp": "2025-08-05T00:01:44.151767"
+    "success": false,
+    "message": "Old refresh token should be invalidated",
+    "details": "{\"success\":true,\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjMDJlZTFiMy05MjgwLTQ0OGEtYTA2Zi00Yzc0MGM0MWIwZWEiLCJleHAiOjE3NTUxOTU4NzksInR5cGUiOiJhY2Nlc3MifQ.kS-kQE2uFzMbU_-CvAanY2rgU4MuW11-V_wKQAKDN-s\",\"refresh_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjMDJlZTFiMy05MjgwLTQ0OGEtYTA2Zi00Yzc0MGM0MWIwZWEiLCJleHAiOjE3NTcxODMwNzksInR5cGUiOiJyZWZyZXNoIn0.IXlOQYLbaryWYYcpx_sl_fi09HcLSWK4sN742WSbqKk\",\"token_type\":\"bearer\"}",
+    "timestamp": "2025-08-07T18:24:39.044401"
   },
   {
     "test": "Token Expiration Handling",
     "success": true,
     "message": "Invalid tokens properly rejected with 401 status",
     "details": null,
-    "timestamp": "2025-08-05T00:01:44.186108"
+    "timestamp": "2025-08-07T18:24:39.155818"
   },
   {
     "test": "Refresh Token Error Scenarios",
     "success": true,
     "message": "All error scenarios handled correctly",
     "details": null,
-    "timestamp": "2025-08-05T00:01:44.233422"
+    "timestamp": "2025-08-07T18:24:39.309278"
   },
   {
     "test": "Access Token Extended Expiration",
     "success": true,
     "message": "Access token expires in 7.0 days (7-day expiration confirmed)",
     "details": null,
-    "timestamp": "2025-08-05T00:01:44.233774"
+    "timestamp": "2025-08-07T18:24:39.311485"
   },
   {
     "test": "Get User Profile",
     "success": true,
     "message": "User profile retrieved successfully",
     "details": null,
-    "timestamp": "2025-08-05T00:01:44.309920"
+    "timestamp": "2025-08-07T18:24:39.428010"
   },
   {
     "test": "Update User Profile",
     "success": true,
     "message": "User profile updated successfully",
     "details": null,
-    "timestamp": "2025-08-05T00:01:44.442561"
+    "timestamp": "2025-08-07T18:24:39.608995"
   },
   {
     "test": "Get Sellers",
     "success": true,
     "message": "Retrieved 3 sellers",
     "details": null,
-    "timestamp": "2025-08-05T00:01:44.490301"
+    "timestamp": "2025-08-07T18:24:39.694081"
   },
   {
     "test": "Get Profile - Default Creation",
     "success": true,
     "message": "Default profile created with system ID: LIB2USA-343EC29F",
     "details": null,
-    "timestamp": "2025-08-05T00:01:44.597520"
+    "timestamp": "2025-08-07T18:24:39.859831"
   },
   {
     "test": "Add Address - Home",
@@ -203,7 +203,7 @@
       "success": true,
       "message": "Address added successfully",
       "address": {
-        "id": "b144f12e-9da8-4b71-81e4-fdb785cd4d5e",
+        "id": "c36f7afa-c5dd-4cd3-bea9-7c4001e68055",
         "type": "home",
         "street": "123 Main Street",
         "city": "New York",
@@ -213,21 +213,21 @@
         "is_default": false
       }
     },
-    "timestamp": "2025-08-05T00:01:44.703155"
+    "timestamp": "2025-08-07T18:24:40.024122"
   },
   {
     "test": "Add Address - Work",
     "success": true,
-    "message": "Work address added successfully (ID: 2f538ee7-16b7-4eb2-bfed-d2cb61c59bef, default: False)",
+    "message": "Work address added successfully (ID: e996b721-a323-46c2-b464-4e3bb1a484b9, default: False)",
     "details": null,
-    "timestamp": "2025-08-05T00:01:44.812122"
+    "timestamp": "2025-08-07T18:24:40.172751"
   },
   {
     "test": "Add Address - Seller Liberia",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:44.832445"
+    "timestamp": "2025-08-07T18:24:40.225822"
   },
   {
     "test": "Add Shipping Address",
@@ -237,7 +237,7 @@
       "success": true,
       "message": "Shipping address added successfully",
       "address": {
-        "id": "1e6d284b-c269-4b52-bece-5429474e29af",
+        "id": "dd171ea2-05cb-4fda-9062-6e09b2949f84",
         "recipient_name": "John Smith",
         "street": "789 Delivery Lane",
         "city": "Brooklyn",
@@ -248,21 +248,21 @@
         "is_default": false
       }
     },
-    "timestamp": "2025-08-05T00:01:44.938951"
+    "timestamp": "2025-08-07T18:24:40.374460"
   },
   {
     "test": "Add Mobile Wallet - MTN",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:44.952525"
+    "timestamp": "2025-08-07T18:24:40.425754"
   },
   {
     "test": "Add Mobile Wallet - Orange",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:44.971754"
+    "timestamp": "2025-08-07T18:24:40.478734"
   },
   {
     "test": "Add Bank Account",
@@ -272,7 +272,7 @@
       "success": true,
       "message": "Bank account added successfully",
       "bank_account": {
-        "id": "e8dd6bcc-bbba-49da-8a5a-cf115e207771",
+        "id": "74776ca2-dec8-478b-a6cc-4d2a590d84cf",
         "bank_name": "Chase Bank",
         "account_number": "1234567890",
         "account_name": "John Smith",
@@ -281,54 +281,54 @@
         "is_default": false
       }
     },
-    "timestamp": "2025-08-05T00:01:45.083684"
+    "timestamp": "2025-08-07T18:24:40.629163"
   },
   {
     "test": "Add Identity Document - National ID",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:45.100769"
+    "timestamp": "2025-08-07T18:24:40.679512"
   },
   {
     "test": "Add Identity Document - Passport",
     "success": true,
-    "message": "Passport uploaded successfully (ID: 8ac4c37d-c9fa-4e91-8143-5ceb98f55cac, status: pending)",
+    "message": "Passport uploaded successfully (ID: 3d874c30-73ce-493f-88bc-ed02070310a5, status: pending)",
     "details": null,
-    "timestamp": "2025-08-05T00:01:45.206685"
+    "timestamp": "2025-08-07T18:24:40.851722"
   },
   {
     "test": "Delete Address",
     "success": true,
-    "message": "Work address deleted successfully (ID: 2f538ee7-16b7-4eb2-bfed-d2cb61c59bef)",
+    "message": "Work address deleted successfully (ID: e996b721-a323-46c2-b464-4e3bb1a484b9)",
     "details": null,
-    "timestamp": "2025-08-05T00:01:45.283910"
+    "timestamp": "2025-08-07T18:24:40.972168"
   },
   {
     "test": "Delete Mobile Wallet",
     "success": false,
     "message": "No Orange wallet ID available",
     "details": "Wallet creation may have failed",
-    "timestamp": "2025-08-05T00:01:45.284237"
+    "timestamp": "2025-08-07T18:24:40.973746"
   },
   {
     "test": "Set Default Address",
     "success": false,
     "message": "No home address ID available",
     "details": "Address creation may have failed",
-    "timestamp": "2025-08-05T00:01:45.284255"
+    "timestamp": "2025-08-07T18:24:40.973770"
   },
   {
     "test": "Set Default Wallet",
     "success": false,
     "message": "No MTN wallet ID available",
     "details": "Wallet creation may have failed",
-    "timestamp": "2025-08-05T00:01:45.284312"
+    "timestamp": "2025-08-07T18:24:40.973784"
   },
   {
     "test": "Get Complete Profile",
     "success": false,
-    "message": "Expected 1 address, found 8",
+    "message": "Expected 1 address, found 9",
     "details": [
       {
         "id": "73eb151f-570a-423d-920b-45b74b21f364",
@@ -409,79 +409,89 @@
         "country": "USA",
         "postal_code": "10001",
         "is_default": false
+      },
+      {
+        "id": "c36f7afa-c5dd-4cd3-bea9-7c4001e68055",
+        "type": "home",
+        "street": "123 Main Street",
+        "city": "New York",
+        "state": "NY",
+        "country": "USA",
+        "postal_code": "10001",
+        "is_default": false
       }
     ],
-    "timestamp": "2025-08-05T00:01:45.386216"
+    "timestamp": "2025-08-07T18:24:41.118945"
   },
   {
     "test": "Profile Authentication Required",
     "success": true,
     "message": "Profile endpoints correctly require authentication",
     "details": null,
-    "timestamp": "2025-08-05T00:01:45.405210"
+    "timestamp": "2025-08-07T18:24:41.172329"
   },
   {
     "test": "Profile Picture Upload - PNG",
     "success": true,
     "message": "PNG profile picture uploaded successfully",
     "details": null,
-    "timestamp": "2025-08-05T00:01:45.517702"
+    "timestamp": "2025-08-07T18:24:41.321586"
   },
   {
     "test": "Profile Picture Upload - JPEG",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:45.536468"
+    "timestamp": "2025-08-07T18:24:41.379171"
   },
   {
     "test": "Profile Picture Retrieval After Upload",
     "success": true,
     "message": "Profile picture retrieved successfully after upload",
     "details": null,
-    "timestamp": "2025-08-05T00:01:45.642611"
+    "timestamp": "2025-08-07T18:24:41.525490"
   },
   {
     "test": "Profile Picture Updated At Timestamp",
     "success": true,
     "message": "Profile updated_at timestamp correctly updated after picture upload",
     "details": null,
-    "timestamp": "2025-08-05T00:01:46.987335"
+    "timestamp": "2025-08-07T18:24:42.969852"
   },
   {
     "test": "Profile Picture Delete",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:47.005959"
+    "timestamp": "2025-08-07T18:24:43.026791"
   },
   {
     "test": "Profile Picture Retrieval After Delete",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:47.023559"
+    "timestamp": "2025-08-07T18:24:43.077464"
   },
   {
     "test": "Profile Picture Delete When None Exists",
     "success": true,
     "message": "Delete operation successful even when no picture exists",
     "details": null,
-    "timestamp": "2025-08-05T00:01:47.237430"
+    "timestamp": "2025-08-07T18:24:43.374374"
   },
   {
     "test": "Profile Picture Authentication Required",
     "success": true,
     "message": "Profile picture endpoints correctly require authentication",
     "details": null,
-    "timestamp": "2025-08-05T00:01:47.266350"
+    "timestamp": "2025-08-07T18:24:43.473243"
   },
   {
     "test": "Profile Picture Complete Workflow",
     "success": true,
     "message": "Complete workflow successful: upload \u2192 retrieve \u2192 delete \u2192 verify removal",
     "details": null,
-    "timestamp": "2025-08-05T00:01:47.704290"
+    "timestamp": "2025-08-07T18:24:44.069504"
   },
   {
     "test": "Create Product",
@@ -490,66 +500,6 @@
     "details": {
       "success": true,
       "data": [
-        {
-          "id": "29c9eb92-3d56-420d-9fa7-83b44709c15d",
-          "name": "Liberian Coffee Beans - Premium Grade",
-          "description": "Premium coffee beans from the mountains of Liberia, known for their rich flavor and aroma.",
-          "price": 28.5,
-          "category": "food",
-          "images": [
-            "https://via.placeholder.com/400x400?text=Coffee+Beans"
-          ],
-          "video": null,
-          "stock": 50,
-          "tags": [
-            "coffee",
-            "beans",
-            "premium",
-            "liberian"
-          ],
-          "weight": 1.0,
-          "dimensions": {
-            "length": 20,
-            "width": 15,
-            "height": 8
-          },
-          "seller_id": "seller456",
-          "seller_name": "John Smith",
-          "views": 89,
-          "is_active": true,
-          "created_at": "2025-07-26T01:49:36.707000",
-          "updated_at": "2025-07-26T01:49:36.707000"
-        },
-        {
-          "id": "b966ba55-e534-4ec8-a797-bdec65862516",
-          "name": "Liberian Pepper Sauce - Hot",
-          "description": "Authentic Liberian pepper sauce made from locally grown peppers. Perfect for adding heat to any dish.",
-          "price": 12.99,
-          "category": "food",
-          "images": [
-            "https://via.placeholder.com/400x400?text=Pepper+Sauce"
-          ],
-          "video": null,
-          "stock": 100,
-          "tags": [
-            "sauce",
-            "spicy",
-            "condiment",
-            "liberian"
-          ],
-          "weight": 0.3,
-          "dimensions": {
-            "length": 12,
-            "width": 6,
-            "height": 15
-          },
-          "seller_id": "seller456",
-          "seller_name": "John Smith",
-          "views": 203,
-          "is_active": true,
-          "created_at": "2025-07-26T01:49:36.707000",
-          "updated_at": "2025-07-26T01:49:36.707000"
-        },
         {
           "id": "98758bbe-ab32-408e-8c64-b364f86c66a0",
           "name": "Traditional Liberian Kente Cloth",
@@ -581,6 +531,36 @@
           "updated_at": "2025-07-26T01:49:36.707000"
         },
         {
+          "id": "29c9eb92-3d56-420d-9fa7-83b44709c15d",
+          "name": "Liberian Coffee Beans - Premium Grade",
+          "description": "Premium coffee beans from the mountains of Liberia, known for their rich flavor and aroma.",
+          "price": 28.5,
+          "category": "food",
+          "images": [
+            "https://via.placeholder.com/400x400?text=Coffee+Beans"
+          ],
+          "video": null,
+          "stock": 50,
+          "tags": [
+            "coffee",
+            "beans",
+            "premium",
+            "liberian"
+          ],
+          "weight": 1.0,
+          "dimensions": {
+            "length": 20,
+            "width": 15,
+            "height": 8
+          },
+          "seller_id": "seller456",
+          "seller_name": "John Smith",
+          "views": 89,
+          "is_active": true,
+          "created_at": "2025-07-26T01:49:36.707000",
+          "updated_at": "2025-07-26T01:49:36.707000"
+        },
+        {
           "id": "bbde824e-e442-4437-8287-d7e63998e3c6",
           "name": "Handcrafted Wooden Sculpture",
           "description": "Beautiful wooden sculpture carved by skilled artisans, representing traditional Liberian art.",
@@ -606,6 +586,36 @@
           "seller_id": "seller789",
           "seller_name": "Grace Williams",
           "views": 67,
+          "is_active": true,
+          "created_at": "2025-07-26T01:49:36.707000",
+          "updated_at": "2025-07-26T01:49:36.707000"
+        },
+        {
+          "id": "b966ba55-e534-4ec8-a797-bdec65862516",
+          "name": "Liberian Pepper Sauce - Hot",
+          "description": "Authentic Liberian pepper sauce made from locally grown peppers. Perfect for adding heat to any dish.",
+          "price": 12.99,
+          "category": "food",
+          "images": [
+            "https://via.placeholder.com/400x400?text=Pepper+Sauce"
+          ],
+          "video": null,
+          "stock": 100,
+          "tags": [
+            "sauce",
+            "spicy",
+            "condiment",
+            "liberian"
+          ],
+          "weight": 0.3,
+          "dimensions": {
+            "length": 12,
+            "width": 6,
+            "height": 15
+          },
+          "seller_id": "seller456",
+          "seller_name": "John Smith",
+          "views": 203,
           "is_active": true,
           "created_at": "2025-07-26T01:49:36.707000",
           "updated_at": "2025-07-26T01:49:36.707000"
@@ -649,539 +659,539 @@
         "hasPrevPage": false
       }
     },
-    "timestamp": "2025-08-05T00:01:47.792967"
+    "timestamp": "2025-08-07T18:24:44.208494"
   },
   {
     "test": "Get Products",
     "success": true,
     "message": "Retrieved 5 products with pagination",
     "details": null,
-    "timestamp": "2025-08-05T00:01:47.889457"
+    "timestamp": "2025-08-07T18:24:44.344773"
   },
   {
     "test": "Get Products with Filters",
     "success": true,
     "message": "Products filtered successfully",
     "details": null,
-    "timestamp": "2025-08-05T00:01:47.978888"
+    "timestamp": "2025-08-07T18:24:44.472772"
   },
   {
     "test": "Get Single Product",
     "success": false,
     "message": "No product ID available",
     "details": "Product creation may have failed",
-    "timestamp": "2025-08-05T00:01:47.979209"
+    "timestamp": "2025-08-07T18:24:44.474615"
   },
   {
     "test": "Get Seller Products",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:47.993407"
+    "timestamp": "2025-08-07T18:24:44.523455"
   },
   {
     "test": "Buyer Product Creation Block",
     "success": false,
     "message": "Expected 403, got HTTP 200",
-    "details": "{\"success\":true,\"data\":[{\"id\":\"29c9eb92-3d56-420d-9fa7-83b44709c15d\",\"name\":\"Liberian Coffee Beans - Premium Grade\",\"description\":\"Premium coffee beans from the mountains of Liberia, known for their rich flavor and aroma.\",\"price\":28.5,\"category\":\"food\",\"images\":[\"https://via.placeholder.com/400x400?text=Coffee+Beans\"],\"video\":null,\"stock\":50,\"tags\":[\"coffee\",\"beans\",\"premium\",\"liberian\"],\"weight\":1.0,\"dimensions\":{\"length\":20,\"width\":15,\"height\":8},\"seller_id\":\"seller456\",\"seller_name\":\"John Smith\",\"views\":89,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"b966ba55-e534-4ec8-a797-bdec65862516\",\"name\":\"Liberian Pepper Sauce - Hot\",\"description\":\"Authentic Liberian pepper sauce made from locally grown peppers. Perfect for adding heat to any dish.\",\"price\":12.99,\"category\":\"food\",\"images\":[\"https://via.placeholder.com/400x400?text=Pepper+Sauce\"],\"video\":null,\"stock\":100,\"tags\":[\"sauce\",\"spicy\",\"condiment\",\"liberian\"],\"weight\":0.3,\"dimensions\":{\"length\":12,\"width\":6,\"height\":15},\"seller_id\":\"seller456\",\"seller_name\":\"John Smith\",\"views\":203,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"98758bbe-ab32-408e-8c64-b364f86c66a0\",\"name\":\"Traditional Liberian Kente Cloth\",\"description\":\"Authentic handwoven Kente cloth from Liberia, perfect for special occasions and cultural events.\",\"price\":45.99,\"category\":\"fashion\",\"images\":[\"https://via.placeholder.com/400x400?text=Kente+Cloth\"],\"video\":null,\"stock\":15,\"tags\":[\"traditional\",\"kente\",\"fashion\",\"handwoven\"],\"weight\":0.5,\"dimensions\":{\"length\":200,\"width\":150,\"height\":1},\"seller_id\":\"seller123\",\"seller_name\":\"Mary Johnson\",\"views\":125,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"bbde824e-e442-4437-8287-d7e63998e3c6\",\"name\":\"Handcrafted Wooden Sculpture\",\"description\":\"Beautiful wooden sculpture carved by skilled artisans, representing traditional Liberian art.\",\"price\":75.0,\"category\":\"art\",\"images\":[\"https://via.placeholder.com/400x400?text=Wooden+Sculpture\"],\"video\":null,\"stock\":8,\"tags\":[\"sculpture\",\"handcrafted\",\"wood\",\"art\"],\"weight\":2.5,\"dimensions\":{\"length\":30,\"width\":15,\"height\":25},\"seller_id\":\"seller789\",\"seller_name\":\"Grace Williams\",\"views\":67,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"f6fe49f3-b00c-4cad-a478-627d5a66ab51\",\"name\":\"Traditional Liberian Jewelry Set\",\"description\":\"Beautiful jewelry set featuring traditional Liberian designs, made with gold-plated materials.\",\"price\":89.99,\"category\":\"jewelry\",\"images\":[\"https://via.placeholder.com/400x400?text=Jewelry+Set\"],\"video\":null,\"stock\":12,\"tags\":[\"jewelry\",\"traditional\",\"gold\",\"set\"],\"weight\":0.2,\"dimensions\":{\"length\":15,\"width\":10,\"height\":3},\"seller_id\":\"seller789\",\"seller_name\":\"Grace Williams\",\"views\":156,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"}],\"pagination\":{\"currentPage\":1,\"totalPages\":1,\"totalCount\":5,\"hasNextPage\":false,\"hasPrevPage\":false}}",
-    "timestamp": "2025-08-05T00:01:48.083479"
+    "details": "{\"success\":true,\"data\":[{\"id\":\"98758bbe-ab32-408e-8c64-b364f86c66a0\",\"name\":\"Traditional Liberian Kente Cloth\",\"description\":\"Authentic handwoven Kente cloth from Liberia, perfect for special occasions and cultural events.\",\"price\":45.99,\"category\":\"fashion\",\"images\":[\"https://via.placeholder.com/400x400?text=Kente+Cloth\"],\"video\":null,\"stock\":15,\"tags\":[\"traditional\",\"kente\",\"fashion\",\"handwoven\"],\"weight\":0.5,\"dimensions\":{\"length\":200,\"width\":150,\"height\":1},\"seller_id\":\"seller123\",\"seller_name\":\"Mary Johnson\",\"views\":125,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"29c9eb92-3d56-420d-9fa7-83b44709c15d\",\"name\":\"Liberian Coffee Beans - Premium Grade\",\"description\":\"Premium coffee beans from the mountains of Liberia, known for their rich flavor and aroma.\",\"price\":28.5,\"category\":\"food\",\"images\":[\"https://via.placeholder.com/400x400?text=Coffee+Beans\"],\"video\":null,\"stock\":50,\"tags\":[\"coffee\",\"beans\",\"premium\",\"liberian\"],\"weight\":1.0,\"dimensions\":{\"length\":20,\"width\":15,\"height\":8},\"seller_id\":\"seller456\",\"seller_name\":\"John Smith\",\"views\":89,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"bbde824e-e442-4437-8287-d7e63998e3c6\",\"name\":\"Handcrafted Wooden Sculpture\",\"description\":\"Beautiful wooden sculpture carved by skilled artisans, representing traditional Liberian art.\",\"price\":75.0,\"category\":\"art\",\"images\":[\"https://via.placeholder.com/400x400?text=Wooden+Sculpture\"],\"video\":null,\"stock\":8,\"tags\":[\"sculpture\",\"handcrafted\",\"wood\",\"art\"],\"weight\":2.5,\"dimensions\":{\"length\":30,\"width\":15,\"height\":25},\"seller_id\":\"seller789\",\"seller_name\":\"Grace Williams\",\"views\":67,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"b966ba55-e534-4ec8-a797-bdec65862516\",\"name\":\"Liberian Pepper Sauce - Hot\",\"description\":\"Authentic Liberian pepper sauce made from locally grown peppers. Perfect for adding heat to any dish.\",\"price\":12.99,\"category\":\"food\",\"images\":[\"https://via.placeholder.com/400x400?text=Pepper+Sauce\"],\"video\":null,\"stock\":100,\"tags\":[\"sauce\",\"spicy\",\"condiment\",\"liberian\"],\"weight\":0.3,\"dimensions\":{\"length\":12,\"width\":6,\"height\":15},\"seller_id\":\"seller456\",\"seller_name\":\"John Smith\",\"views\":203,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"},{\"id\":\"f6fe49f3-b00c-4cad-a478-627d5a66ab51\",\"name\":\"Traditional Liberian Jewelry Set\",\"description\":\"Beautiful jewelry set featuring traditional Liberian designs, made with gold-plated materials.\",\"price\":89.99,\"category\":\"jewelry\",\"images\":[\"https://via.placeholder.com/400x400?text=Jewelry+Set\"],\"video\":null,\"stock\":12,\"tags\":[\"jewelry\",\"traditional\",\"gold\",\"set\"],\"weight\":0.2,\"dimensions\":{\"length\":15,\"width\":10,\"height\":3},\"seller_id\":\"seller789\",\"seller_name\":\"Grace Williams\",\"views\":156,\"is_active\":true,\"created_at\":\"2025-07-26T01:49:36.707000\",\"updated_at\":\"2025-07-26T01:49:36.707000\"}],\"pagination\":{\"currentPage\":1,\"totalPages\":1,\"totalCount\":5,\"hasNextPage\":false,\"hasPrevPage\":false}}",
+    "timestamp": "2025-08-07T18:24:44.650612"
   },
   {
     "test": "Unauthorized Access Block",
     "success": true,
     "message": "Protected endpoints correctly require authentication",
     "details": null,
-    "timestamp": "2025-08-05T00:01:48.097610"
+    "timestamp": "2025-08-07T18:24:44.703446"
   },
   {
     "test": "Media Upload - Images",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:48.137036"
+    "timestamp": "2025-08-07T18:24:44.790674"
   },
   {
     "test": "Media Upload - Video",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:48.192673"
+    "timestamp": "2025-08-07T18:24:44.888205"
   },
   {
     "test": "Media Upload Authentication",
     "success": true,
     "message": "Media upload correctly requires seller authentication",
     "details": null,
-    "timestamp": "2025-08-05T00:01:48.289181"
+    "timestamp": "2025-08-07T18:24:45.070782"
   },
   {
     "test": "Media Upload Size Limits",
     "success": false,
     "message": "Expected 400 for oversized image, got HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:48.452433"
+    "timestamp": "2025-08-07T18:24:45.331549"
   },
   {
     "test": "Media Upload Count Limits",
     "success": false,
     "message": "Expected 400 for >10 images, got HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:48.473798"
+    "timestamp": "2025-08-07T18:24:45.388119"
   },
   {
     "test": "Create Product with Multimedia",
     "success": false,
     "message": "Media upload failed: HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:48.501114"
+    "timestamp": "2025-08-07T18:24:45.485101"
   },
   {
     "test": "Get Product with Multimedia",
     "success": false,
     "message": "No product ID available",
     "details": "Product creation may have failed",
-    "timestamp": "2025-08-05T00:01:48.501429"
+    "timestamp": "2025-08-07T18:24:45.486975"
   },
   {
     "test": "Media Upload Invalid Files",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:48.522399"
+    "timestamp": "2025-08-07T18:24:45.538104"
   },
   {
     "test": "Get Shipping Carriers",
     "success": true,
     "message": "All 4 carriers (DHL, FedEx, UPS, Aramex) returned with service details",
     "details": null,
-    "timestamp": "2025-08-05T00:01:48.537150"
+    "timestamp": "2025-08-07T18:24:45.591254"
   },
   {
     "test": "Get Shipping Zones",
     "success": true,
     "message": "Shipping zones returned with Liberia origins and all US states",
     "details": null,
-    "timestamp": "2025-08-05T00:01:48.554097"
+    "timestamp": "2025-08-07T18:24:45.666959"
   },
   {
     "test": "Shipping Estimate (No Auth)",
     "success": true,
     "message": "Got 11 shipping estimates with customs duties included",
     "details": null,
-    "timestamp": "2025-08-05T00:01:48.568638"
+    "timestamp": "2025-08-07T18:24:45.725454"
   },
   {
     "test": "Shipping Estimate Different States",
     "success": true,
     "message": "Successfully got estimates for 4 different US states",
     "details": null,
-    "timestamp": "2025-08-05T00:01:48.635396"
+    "timestamp": "2025-08-07T18:24:45.965315"
   },
   {
     "test": "Calculate Customs Duties",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:48.652316"
+    "timestamp": "2025-08-07T18:24:46.019040"
   },
   {
     "test": "Customs Calculation Auth Required",
     "success": true,
     "message": "Customs calculation correctly requires authentication",
     "details": null,
-    "timestamp": "2025-08-05T00:01:48.669528"
+    "timestamp": "2025-08-07T18:24:46.070014"
   },
   {
     "test": "Shipping Rates Full Request",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:48.686364"
+    "timestamp": "2025-08-07T18:24:46.124430"
   },
   {
     "test": "Shipping Rates Multiple Packages",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:48.702653"
+    "timestamp": "2025-08-07T18:24:46.181437"
   },
   {
     "test": "Shipping Rates Origin Validation",
     "success": false,
     "message": "Expected 400 for non-Liberia origin, got HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:48.717509"
+    "timestamp": "2025-08-07T18:24:46.236039"
   },
   {
     "test": "Shipping Rates Destination Validation",
     "success": false,
     "message": "Expected 400 for non-USA destination, got HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:48.732789"
+    "timestamp": "2025-08-07T18:24:46.291009"
   },
   {
     "test": "Shipping Rates Auth Required",
     "success": true,
     "message": "Shipping rates correctly require authentication",
     "details": null,
-    "timestamp": "2025-08-05T00:01:48.750951"
+    "timestamp": "2025-08-07T18:24:46.345476"
   },
   {
     "test": "Create Chat Between Users",
     "success": false,
     "message": "HTTP 422",
     "details": "{\"detail\":[{\"type\":\"string_type\",\"loc\":[\"body\",\"recipient_id\"],\"msg\":\"Input should be a valid string\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.5/v/string_type\"}]}",
-    "timestamp": "2025-08-05T00:01:48.797004"
+    "timestamp": "2025-08-07T18:24:46.428157"
   },
   {
     "test": "Create Chat Without Product",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:48.814088"
+    "timestamp": "2025-08-07T18:24:46.480845"
   },
   {
     "test": "Create Duplicate Chat",
     "success": false,
     "message": "HTTP 422",
     "details": "{\"detail\":[{\"type\":\"string_type\",\"loc\":[\"body\",\"recipient_id\"],\"msg\":\"Input should be a valid string\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.5/v/string_type\"}]}",
-    "timestamp": "2025-08-05T00:01:48.862188"
+    "timestamp": "2025-08-07T18:24:46.566058"
   },
   {
     "test": "Get User Chat List",
     "success": true,
     "message": "Retrieved 1 chats with unread count: 0",
     "details": null,
-    "timestamp": "2025-08-05T00:01:48.966496"
+    "timestamp": "2025-08-07T18:24:46.716258"
   },
   {
     "test": "Send Text Message",
     "success": false,
     "message": "No chat ID available",
     "details": "Chat creation may have failed",
-    "timestamp": "2025-08-05T00:01:48.966787"
+    "timestamp": "2025-08-07T18:24:46.717747"
   },
   {
     "test": "Send Reply Message",
     "success": false,
     "message": "No chat ID or message ID available",
     "details": "Previous tests may have failed",
-    "timestamp": "2025-08-05T00:01:48.966809"
+    "timestamp": "2025-08-07T18:24:46.717772"
   },
   {
     "test": "Get Chat Messages",
     "success": false,
     "message": "No chat ID available",
     "details": "Chat creation may have failed",
-    "timestamp": "2025-08-05T00:01:48.966818"
+    "timestamp": "2025-08-07T18:24:46.717783"
   },
   {
     "test": "Mark Messages Read",
     "success": false,
     "message": "No chat ID available",
     "details": "Chat creation may have failed",
-    "timestamp": "2025-08-05T00:01:48.966828"
+    "timestamp": "2025-08-07T18:24:46.717792"
   },
   {
     "test": "Verify Unread Count Update",
     "success": true,
     "message": "Unread count correctly updated to 0 after marking as read",
     "details": null,
-    "timestamp": "2025-08-05T00:01:49.071492"
+    "timestamp": "2025-08-07T18:24:46.860910"
   },
   {
     "test": "Chat Report Functionality",
     "success": false,
     "message": "No chat ID available",
     "details": "Chat creation may have failed",
-    "timestamp": "2025-08-05T00:01:49.071799"
+    "timestamp": "2025-08-07T18:24:46.862397"
   },
   {
     "test": "Get Online Users",
     "success": true,
     "message": "Retrieved 0 online users",
     "details": null,
-    "timestamp": "2025-08-05T00:01:49.117390"
+    "timestamp": "2025-08-07T18:24:46.944626"
   },
   {
     "test": "Chat Access Control",
     "success": false,
     "message": "No chat ID available",
     "details": "Chat creation may have failed",
-    "timestamp": "2025-08-05T00:01:49.117721"
+    "timestamp": "2025-08-07T18:24:46.946181"
   },
   {
     "test": "Message Encryption in Database",
     "success": false,
     "message": "No chat ID available",
     "details": "Chat creation may have failed",
-    "timestamp": "2025-08-05T00:01:49.117738"
+    "timestamp": "2025-08-07T18:24:46.946202"
   },
   {
     "test": "Chat Authentication Required",
     "success": true,
     "message": "All chat endpoints correctly require authentication",
     "details": null,
-    "timestamp": "2025-08-05T00:01:49.151083"
+    "timestamp": "2025-08-07T18:24:47.050739"
   },
   {
     "test": "Admin Login",
     "success": true,
     "message": "Admin login successful - Role: super_admin",
     "details": null,
-    "timestamp": "2025-08-05T00:01:49.464426"
+    "timestamp": "2025-08-07T18:24:47.436907"
   },
   {
     "test": "Admin Me Endpoint",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"User no longer exists\"}",
-    "timestamp": "2025-08-05T00:01:49.511503"
+    "timestamp": "2025-08-07T18:24:47.519704"
   },
   {
     "test": "Admin Dashboard Stats",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"User no longer exists\"}",
-    "timestamp": "2025-08-05T00:01:49.555992"
+    "timestamp": "2025-08-07T18:24:47.609454"
   },
   {
     "test": "Admin Get Users",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"User no longer exists\"}",
-    "timestamp": "2025-08-05T00:01:49.602323"
+    "timestamp": "2025-08-07T18:24:47.692683"
   },
   {
     "test": "Admin Get Products",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"User no longer exists\"}",
-    "timestamp": "2025-08-05T00:01:49.647859"
+    "timestamp": "2025-08-07T18:24:47.776602"
   },
   {
     "test": "Admin Get Activities",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"User no longer exists\"}",
-    "timestamp": "2025-08-05T00:01:49.693940"
+    "timestamp": "2025-08-07T18:24:47.861909"
   },
   {
     "test": "Admin Authentication Required",
     "success": true,
     "message": "Admin endpoints correctly require admin authentication",
     "details": null,
-    "timestamp": "2025-08-05T00:01:49.784210"
+    "timestamp": "2025-08-07T18:24:48.028157"
   },
   {
     "test": "Create Verification Profile",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:49.799718"
+    "timestamp": "2025-08-07T18:24:48.083411"
   },
   {
     "test": "Get Verification Profile",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:49.815076"
+    "timestamp": "2025-08-07T18:24:48.136511"
   },
   {
     "test": "Upload Verification Document",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:49.833246"
+    "timestamp": "2025-08-07T18:24:48.189149"
   },
   {
     "test": "Upload Utility Bill Document",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:49.856986"
+    "timestamp": "2025-08-07T18:24:48.243084"
   },
   {
     "test": "Get Verification Documents",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:49.872877"
+    "timestamp": "2025-08-07T18:24:48.296456"
   },
   {
     "test": "Get Verification Status",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:49.889618"
+    "timestamp": "2025-08-07T18:24:48.349658"
   },
   {
     "test": "Get Verification Requirements",
     "success": true,
     "message": "Requirements loaded - Basic: 2, Enhanced: 3, Business: 4 docs, 15 counties",
     "details": null,
-    "timestamp": "2025-08-05T00:01:49.906472"
+    "timestamp": "2025-08-07T18:24:48.404083"
   },
   {
     "test": "Verification Buyer Access Denied",
     "success": true,
     "message": "Buyers correctly blocked from verification endpoints",
     "details": null,
-    "timestamp": "2025-08-05T00:01:49.981790"
+    "timestamp": "2025-08-07T18:24:48.520246"
   },
   {
     "test": "Admin Get All Verifications",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"User no longer exists\"}",
-    "timestamp": "2025-08-05T00:01:50.029675"
+    "timestamp": "2025-08-07T18:24:48.605928"
   },
   {
     "test": "Admin Verification Stats",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"User no longer exists\"}",
-    "timestamp": "2025-08-05T00:01:50.081022"
+    "timestamp": "2025-08-07T18:24:48.689726"
   },
   {
     "test": "Get Payment Packages",
     "success": true,
     "message": "Retrieved 3 payment packages",
     "details": null,
-    "timestamp": "2025-08-05T00:01:50.098779"
+    "timestamp": "2025-08-07T18:24:48.741256"
   },
   {
     "test": "Calculate Order Total",
     "success": true,
     "message": "Order total calculated: $141.88",
     "details": null,
-    "timestamp": "2025-08-05T00:01:50.144904"
+    "timestamp": "2025-08-07T18:24:48.824357"
   },
   {
     "test": "Calculate Total Auth Required",
     "success": true,
     "message": "Calculate total correctly requires authentication",
     "details": null,
-    "timestamp": "2025-08-05T00:01:50.161163"
+    "timestamp": "2025-08-07T18:24:48.875096"
   },
   {
     "test": "Create Checkout Session",
     "success": false,
     "message": "HTTP 422",
     "details": "{\"detail\":[{\"type\":\"string_type\",\"loc\":[\"body\",\"cart_items\",0,\"seller_id\"],\"msg\":\"Input should be a valid string\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.5/v/string_type\"}]}",
-    "timestamp": "2025-08-05T00:01:50.206865"
+    "timestamp": "2025-08-07T18:24:48.958728"
   },
   {
     "test": "Create Package Checkout",
     "success": true,
-    "message": "Package checkout session created with ID: cs_test_a1uHmXl030a4XoueXNgqLqXAm0i6k67n3377e4eboVIzKaSI15YAXyIOve",
+    "message": "Package checkout session created with ID: cs_test_a1uZIGHwyEVq2RB4tUe5aQY7pWbR7cMyjKxU9v2RI5Aecp0ZiVEdjcpG8f",
     "details": null,
-    "timestamp": "2025-08-05T00:01:50.879623"
+    "timestamp": "2025-08-07T18:24:49.652603"
   },
   {
     "test": "Package Checkout Invalid Package",
     "success": true,
     "message": "Invalid package ID correctly rejected",
     "details": null,
-    "timestamp": "2025-08-05T00:01:50.925743"
+    "timestamp": "2025-08-07T18:24:49.736418"
   },
   {
     "test": "Check Payment Status",
     "success": false,
     "message": "No checkout session ID available",
     "details": "Checkout session creation may have failed",
-    "timestamp": "2025-08-05T00:01:50.926054"
+    "timestamp": "2025-08-07T18:24:49.737990"
   },
   {
     "test": "Get User Transactions",
     "success": true,
     "message": "Retrieved 10 transactions",
     "details": null,
-    "timestamp": "2025-08-05T00:01:51.032532"
+    "timestamp": "2025-08-07T18:24:49.880787"
   },
   {
     "test": "Transactions Auth Required",
     "success": true,
     "message": "Transactions endpoint correctly requires authentication",
     "details": null,
-    "timestamp": "2025-08-05T00:01:51.046309"
+    "timestamp": "2025-08-07T18:24:49.936063"
   },
   {
     "test": "Payment Status Access Control",
     "success": false,
     "message": "No checkout session ID available",
     "details": "Checkout session creation may have failed",
-    "timestamp": "2025-08-05T00:01:51.046569"
+    "timestamp": "2025-08-07T18:24:49.937528"
   },
   {
     "test": "Checkout Auth Required",
     "success": true,
     "message": "Checkout endpoints correctly require authentication",
     "details": null,
-    "timestamp": "2025-08-05T00:01:51.063880"
+    "timestamp": "2025-08-07T18:24:49.988612"
   },
   {
     "test": "Update User Status - Online",
     "success": true,
     "message": "User status updated to online successfully",
     "details": null,
-    "timestamp": "2025-08-05T00:01:51.141816"
+    "timestamp": "2025-08-07T18:24:50.121933"
   },
   {
     "test": "Update User Status - Away",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:51.161663"
+    "timestamp": "2025-08-07T18:24:50.178155"
   },
   {
     "test": "Update User Status - Offline",
     "success": true,
     "message": "User status updated to offline successfully",
     "details": null,
-    "timestamp": "2025-08-05T00:01:51.236172"
+    "timestamp": "2025-08-07T18:24:50.294984"
   },
   {
     "test": "Update User Status - Auth Required",
     "success": true,
     "message": "Status update correctly requires authentication",
     "details": null,
-    "timestamp": "2025-08-05T00:01:51.255309"
+    "timestamp": "2025-08-07T18:24:50.349447"
   },
   {
     "test": "Get User Status - Existing User",
     "success": true,
     "message": "Retrieved user status: online, online: True",
     "details": null,
-    "timestamp": "2025-08-05T00:01:51.376683"
+    "timestamp": "2025-08-07T18:24:50.555763"
   },
   {
     "test": "Get User Status - Non-existent User",
     "success": true,
     "message": "Non-existent user correctly returns offline status",
     "details": null,
-    "timestamp": "2025-08-05T00:01:51.418703"
+    "timestamp": "2025-08-07T18:24:50.640520"
   },
   {
     "test": "User Heartbeat",
     "success": false,
     "message": "HTTP 401",
     "details": "{\"detail\":\"Invalid token format\"}",
-    "timestamp": "2025-08-05T00:01:51.432877"
+    "timestamp": "2025-08-07T18:24:50.691997"
   },
   {
     "test": "User Heartbeat - Auth Required",
     "success": true,
     "message": "Heartbeat correctly requires authentication",
     "details": null,
-    "timestamp": "2025-08-05T00:01:51.448815"
+    "timestamp": "2025-08-07T18:24:50.748749"
   },
   {
     "test": "Get Online Users List",
     "success": true,
     "message": "Retrieved 1 online users with proper structure",
     "details": null,
-    "timestamp": "2025-08-05T00:01:51.622616"
+    "timestamp": "2025-08-07T18:24:51.061063"
   },
   {
     "test": "Bulk User Status Retrieval",
@@ -1191,7 +1201,7 @@
       "e72a4057-c7fe-45b2-87ee-89785b3c6e41": {
         "status": "online",
         "is_online": true,
-        "last_seen": "2025-08-05T00:01:51.664000"
+        "last_seen": "2025-08-07T18:24:51.143000"
       },
       "None": {
         "status": "offline",
@@ -1199,27 +1209,27 @@
         "last_seen": null
       }
     },
-    "timestamp": "2025-08-05T00:01:51.762071"
+    "timestamp": "2025-08-07T18:24:51.312847"
   },
   {
     "test": "Bulk Status - Mixed Users",
     "success": true,
     "message": "Bulk status correctly handles mix of existing and non-existent users",
     "details": null,
-    "timestamp": "2025-08-05T00:01:51.833169"
+    "timestamp": "2025-08-07T18:24:51.399417"
   },
   {
     "test": "Online Detection - 5 Minute Window",
     "success": true,
     "message": "Online detection working - user shows as online immediately after status update",
     "details": null,
-    "timestamp": "2025-08-05T00:01:51.959348"
+    "timestamp": "2025-08-07T18:24:51.599559"
   },
   {
     "test": "User Status Lifecycle",
     "success": true,
     "message": "Complete user status lifecycle working: status update \u2192 heartbeat \u2192 online detection \u2192 bulk retrieval",
     "details": null,
-    "timestamp": "2025-08-05T00:01:52.282791"
+    "timestamp": "2025-08-07T18:24:52.108194"
   }
 ]
