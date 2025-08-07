@@ -63,9 +63,10 @@ class BridgingNationsBackendTester:
             return False
     
     def test_api_connectivity(self):
-        """Test basic API connectivity"""
+        """Test basic API connectivity via health endpoint"""
         try:
-            response = requests.get(f"{self.base_url}/", timeout=10)
+            # Test via health endpoint since root is served by frontend
+            response = requests.get(f"{self.base_url}/api/health", timeout=10)
             if response.status_code == 200:
                 data = response.json()
                 if data.get("message") and "Liberia2USA Express API" in data["message"]:
