@@ -194,7 +194,7 @@ class BridgingNationsBackendTester:
         """Test CORS configuration for frontend requests"""
         try:
             headers = {
-                'Origin': 'https://e4816979-3661-47e6-8b76-f1266abdc0f3.preview.emergentagent.com',
+                'Origin': 'https://85fb951a-675f-49e9-bee0-3424d726cfe9.preview.emergentagent.com',
                 'Access-Control-Request-Method': 'POST',
                 'Access-Control-Request-Headers': 'Content-Type,Authorization'
             }
