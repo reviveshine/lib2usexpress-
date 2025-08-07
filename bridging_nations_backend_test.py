@@ -127,17 +127,17 @@ class BridgingNationsBackendTester:
     def test_navigation_route_handling(self):
         """Test that backend can handle frontend navigation requests"""
         routes_to_test = [
-            ("/api/products", "Marketplace route"),
-            ("/api/shipping/zones", "Shipping route"),
-            ("/api/auth/login", "Login route"),
-            ("/api/auth/register", "Register route")
+            ("/api/products", "GET", "Marketplace route"),
+            ("/api/shipping/zones", "GET", "Shipping route"),
+            ("/api/auth/login", "POST", "Login route"),
+            ("/api/auth/register", "POST", "Register route")
         ]
         
         all_passed = True
-        for route, description in routes_to_test:
+        for route, method, description in routes_to_test:
             try:
-                if route == "/api/auth/login" or route == "/api/auth/register":
-                    # These are POST endpoints, test with OPTIONS for CORS
+                if method == "POST":
+                    # Test with OPTIONS for CORS preflight
                     response = requests.options(f"{self.base_url}{route}", timeout=10)
                     expected_status = 200  # OPTIONS should return 200
                 else:
