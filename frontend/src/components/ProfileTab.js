@@ -374,15 +374,15 @@ const ProfileTab = () => {
             marginRight: '1rem',
             position: 'relative'
           }}>
-            {profile?.profile_picture ? (
+            {profile?.profile_picture_url ? (
               <img 
-                src={profile.profile_picture}
+                src={`${process.env.REACT_APP_BACKEND_URL}${profile.profile_picture_url}`}
                 alt="Profile"
                 style={{
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover'
-                }}
+                }}}
               />
             ) : (
               <span style={{
