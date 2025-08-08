@@ -310,52 +310,7 @@ const DashboardPage = () => {
         );
 
       case 'products':
-        return (
-          <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-              <h3 style={{ color: '#1f2937' }}>📦 My Products</h3>
-              <Link 
-                to="/add-product"
-                style={{
-                  backgroundColor: '#dc2626',
-                  color: 'white',
-                  padding: '10px 20px',
-                  borderRadius: '8px',
-                  textDecoration: 'none',
-                  fontWeight: 'bold'
-                }}
-              >
-                ➕ Add Product
-              </Link>
-            </div>
-            <div style={{
-              background: 'white',
-              padding: '2rem',
-              borderRadius: '10px',
-              boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-              textAlign: 'center'
-            }}>
-              <p style={{ fontSize: '1.1rem', color: '#6b7280' }}>
-                🏪 No products listed yet. Start by adding your first product!
-              </p>
-              <Link 
-                to="/add-product"
-                style={{
-                  display: 'inline-block',
-                  marginTop: '1rem',
-                  backgroundColor: '#dc2626',
-                  color: 'white',
-                  padding: '12px 24px',
-                  borderRadius: '8px',
-                  textDecoration: 'none',
-                  fontWeight: 'bold'
-                }}
-              >
-                🚀 Add Your First Product
-              </Link>
-            </div>
-          </div>
-        );
+        return <ProductManagement />;
 
       case 'orders':
         return (
