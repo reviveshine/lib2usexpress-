@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import BuyerAnalytics from '../components/BuyerAnalytics';
 
 const BuyerDashboardPage = () => {
   const { user, loading } = useAuth();
-  const [activeTab, setActiveTab] = useState('analytics');
+  const [activeTab, setActiveTab] = useState('shop');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,12 +28,109 @@ const BuyerDashboardPage = () => {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'analytics':
-        return <BuyerAnalytics />;
+      case 'shop':
+        return (
+          <div style={{ padding: '2rem' }}>
+            <h2 style={{ 
+              margin: 0,
+              marginBottom: '1.5rem',
+              background: 'linear-gradient(135deg, #dc2626, #991b1b)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              fontSize: '1.8rem',
+              fontWeight: 'bold',
+              textAlign: 'center'
+            }}>
+              🛍️ Welcome to the Marketplace
+            </h2>
+            
+            <div style={{
+              backgroundColor: '#fef2f2',
+              border: '2px solid #fecaca',
+              borderRadius: '16px',
+              padding: '2rem',
+              textAlign: 'center',
+              marginBottom: '2rem'
+            }}>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🏪</div>
+              <h3 style={{ margin: 0, marginBottom: '1rem', color: '#dc2626' }}>
+                Discover Amazing Products
+              </h3>
+              <p style={{ margin: 0, color: '#6b7280', marginBottom: '2rem', fontSize: '1.1rem' }}>
+                Browse authentic Liberian products and connect directly with sellers. 
+                From traditional crafts to premium coffee beans - find exactly what you're looking for.
+              </p>
+              
+              <Link
+                to="/marketplace"
+                style={{
+                  display: 'inline-block',
+                  padding: '1rem 2rem',
+                  backgroundColor: '#dc2626',
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: '10px',
+                  fontWeight: 'bold',
+                  fontSize: '1.1rem',
+                  boxShadow: '0 4px 6px rgba(220, 38, 38, 0.3)'
+                }}
+              >
+                🛍️ Start Shopping Now
+              </Link>
+            </div>
+
+            {/* Quick Shopping Categories */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '1.5rem',
+              marginTop: '2rem'
+            }}>
+              {[
+                { name: 'Traditional Crafts', icon: '🎨', description: 'Authentic handmade items' },
+                { name: 'Coffee & Foods', icon: '☕', description: 'Premium Liberian products' },
+                { name: 'Electronics', icon: '📱', description: 'Tech and gadgets' },
+                { name: 'Books & Media', icon: '📚', description: 'Educational materials' }
+              ].map((category) => (
+                <Link
+                  key={category.name}
+                  to={`/marketplace?category=${category.name.toLowerCase().replace(' ', '_')}`}
+                  style={{
+                    display: 'block',
+                    padding: '1.5rem',
+                    backgroundColor: 'white',
+                    border: '2px solid #dc2626',
+                    borderRadius: '12px',
+                    textDecoration: 'none',
+                    textAlign: 'center',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 2px 4px rgba(220, 38, 38, 0.1)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.transform = 'translateY(-2px)';
+                    e.target.style.boxShadow = '0 4px 8px rgba(220, 38, 38, 0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.transform = 'translateY(0)';
+                    e.target.style.boxShadow = '0 2px 4px rgba(220, 38, 38, 0.1)';
+                  }}
+                >
+                  <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>{category.icon}</div>
+                  <h4 style={{ margin: 0, color: '#dc2626', fontSize: '1rem', fontWeight: 'bold' }}>
+                    {category.name}
+                  </h4>
+                  <p style={{ margin: '0.5rem 0 0 0', color: '#6b7280', fontSize: '0.9rem' }}>
+                    {category.description}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        );
       
       case 'orders':
         return (
-          <div style={{ padding: '1rem' }}>
+          <div style={{ padding: '2rem' }}>
             <h2 style={{ 
               margin: 0,
               marginBottom: '2rem',
@@ -56,56 +152,50 @@ const BuyerDashboardPage = () => {
             }}>
               <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📋</div>
               <h3 style={{ margin: 0, marginBottom: '1rem', color: '#dc2626' }}>
-                Order Management Coming Soon
+                Your Order History
               </h3>
               <p style={{ margin: 0, color: '#6b7280', marginBottom: '1.5rem' }}>
-                Track your orders, view delivery status, and manage returns all in one place.
+                Track your purchases, view delivery status, and manage your orders.
               </p>
               
-              <div style={{ 
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                gap: '1rem',
-                marginTop: '2rem'
-              }}>
-                <Link
-                  to="/marketplace"
-                  style={{
-                    display: 'block',
-                    padding: '1rem',
-                    backgroundColor: '#dc2626',
-                    color: 'white',
-                    textDecoration: 'none',
-                    borderRadius: '8px',
-                    fontWeight: 'bold',
-                    textAlign: 'center'
-                  }}
-                >
-                  🛍️ Continue Shopping
-                </Link>
-                
-                <button
-                  style={{
-                    padding: '1rem',
-                    backgroundColor: '#ffffff',
-                    color: '#dc2626',
-                    border: '2px solid #dc2626',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    fontWeight: 'bold'
-                  }}
-                  onClick={() => alert('Order tracking feature coming soon!')}
-                >
-                  📍 Track Orders
-                </button>
-              </div>
+              <Link
+                to="/orders"
+                style={{
+                  display: 'inline-block',
+                  padding: '1rem 2rem',
+                  backgroundColor: '#dc2626',
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: '8px',
+                  fontWeight: 'bold',
+                  marginRight: '1rem'
+                }}
+              >
+                📦 View All Orders
+              </Link>
+              
+              <Link
+                to="/marketplace"
+                style={{
+                  display: 'inline-block',
+                  padding: '1rem 2rem',
+                  backgroundColor: '#ffffff',
+                  color: '#dc2626',
+                  border: '2px solid #dc2626',
+                  textDecoration: 'none',
+                  borderRadius: '8px',
+                  fontWeight: 'bold'
+                }}
+              >
+                🛍️ Continue Shopping
+              </Link>
             </div>
           </div>
         );
       
-      case 'favorites':
+      case 'chat':
         return (
-          <div style={{ padding: '1rem' }}>
+          <div style={{ padding: '2rem' }}>
             <h2 style={{ 
               margin: 0,
               marginBottom: '2rem',
@@ -115,7 +205,7 @@ const BuyerDashboardPage = () => {
               fontSize: '1.5rem',
               fontWeight: 'bold'
             }}>
-              ❤️ My Favorites
+              💬 Messages
             </h2>
             
             <div style={{
@@ -125,16 +215,16 @@ const BuyerDashboardPage = () => {
               padding: '2rem',
               textAlign: 'center'
             }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>💝</div>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>💬</div>
               <h3 style={{ margin: 0, marginBottom: '1rem', color: '#dc2626' }}>
-                Save Your Favorite Products
+                Chat with Sellers
               </h3>
               <p style={{ margin: 0, color: '#6b7280', marginBottom: '1.5rem' }}>
-                Create wishlists, save products for later, and get notified about price changes.
+                Ask questions about products, negotiate prices, and coordinate deliveries directly with sellers.
               </p>
               
               <Link
-                to="/marketplace"
+                to="/chat"
                 style={{
                   display: 'inline-block',
                   padding: '1rem 2rem',
@@ -145,15 +235,15 @@ const BuyerDashboardPage = () => {
                   fontWeight: 'bold'
                 }}
               >
-                🛍️ Discover Products to Love
+                💬 Open Messages
               </Link>
             </div>
           </div>
         );
 
-      case 'account':
+      case 'shipping':
         return (
-          <div style={{ padding: '1rem' }}>
+          <div style={{ padding: '2rem' }}>
             <h2 style={{ 
               margin: 0,
               marginBottom: '2rem',
@@ -163,122 +253,38 @@ const BuyerDashboardPage = () => {
               fontSize: '1.5rem',
               fontWeight: 'bold'
             }}>
-              👤 Account Settings
+              🚚 Shipping Calculator
             </h2>
             
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: '2rem'
+              backgroundColor: '#fef2f2',
+              border: '2px solid #fecaca',
+              borderRadius: '12px',
+              padding: '2rem',
+              textAlign: 'center'
             }}>
-              {/* Account Information */}
-              <div style={{
-                backgroundColor: 'white',
-                padding: '2rem',
-                borderRadius: '12px',
-                border: '2px solid #dc2626',
-                boxShadow: '0 2px 4px rgba(220, 38, 38, 0.1)'
-              }}>
-                <h3 style={{ marginTop: 0, color: '#dc2626', fontSize: '1.2rem' }}>
-                  📋 Account Information
-                </h3>
-                
-                <div style={{ marginBottom: '1rem' }}>
-                  <strong>Name:</strong> {user.firstName} {user.lastName}
-                </div>
-                <div style={{ marginBottom: '1rem' }}>
-                  <strong>Email:</strong> {user.email}
-                </div>
-                <div style={{ marginBottom: '1rem' }}>
-                  <strong>Account Type:</strong> 🛍️ Buyer
-                </div>
-                <div style={{ marginBottom: '1rem' }}>
-                  <strong>Location:</strong> {user.location}
-                </div>
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <strong>Member Since:</strong> {new Date(user.createdAt).toLocaleDateString()}
-                </div>
-                
-                <button
-                  style={{
-                    padding: '0.75rem 1.5rem',
-                    backgroundColor: '#dc2626',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    fontWeight: 'bold',
-                    width: '100%'
-                  }}
-                  onClick={() => alert('Edit profile feature coming soon!')}
-                >
-                  ✏️ Edit Profile
-                </button>
-              </div>
-
-              {/* Quick Actions */}
-              <div style={{
-                backgroundColor: '#fef2f2',
-                padding: '2rem',
-                borderRadius: '12px',
-                border: '2px solid #fecaca'
-              }}>
-                <h3 style={{ marginTop: 0, color: '#dc2626', fontSize: '1.2rem' }}>
-                  🚀 Quick Actions
-                </h3>
-                
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <Link
-                    to="/marketplace"
-                    style={{
-                      display: 'block',
-                      padding: '1rem',
-                      backgroundColor: '#dc2626',
-                      color: 'white',
-                      textDecoration: 'none',
-                      borderRadius: '8px',
-                      fontWeight: 'bold',
-                      textAlign: 'center'
-                    }}
-                  >
-                    🛍️ Browse Products
-                  </Link>
-                  
-                  <Link
-                    to="/shipping"
-                    style={{
-                      display: 'block',
-                      padding: '1rem',
-                      backgroundColor: '#ffffff',
-                      color: '#dc2626',
-                      border: '2px solid #dc2626',
-                      textDecoration: 'none',
-                      borderRadius: '8px',
-                      fontWeight: 'bold',
-                      textAlign: 'center'
-                    }}
-                  >
-                    🚚 Calculate Shipping
-                  </Link>
-                  
-                  <Link
-                    to="/chat"
-                    style={{
-                      display: 'block',
-                      padding: '1rem',
-                      backgroundColor: '#ffffff',
-                      color: '#dc2626',
-                      border: '2px solid #dc2626',
-                      textDecoration: 'none',
-                      borderRadius: '8px',
-                      fontWeight: 'bold',
-                      textAlign: 'center'
-                    }}
-                  >
-                    💬 Messages
-                  </Link>
-                </div>
-              </div>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🚚</div>
+              <h3 style={{ margin: 0, marginBottom: '1rem', color: '#dc2626' }}>
+                Calculate Shipping Costs
+              </h3>
+              <p style={{ margin: 0, color: '#6b7280', marginBottom: '1.5rem' }}>
+                Get accurate shipping estimates from Liberia to the USA for your purchases.
+              </p>
+              
+              <Link
+                to="/shipping"
+                style={{
+                  display: 'inline-block',
+                  padding: '1rem 2rem',
+                  backgroundColor: '#dc2626',
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: '8px',
+                  fontWeight: 'bold'
+                }}
+              >
+                📊 Calculate Shipping
+              </Link>
             </div>
           </div>
         );
@@ -304,7 +310,7 @@ const BuyerDashboardPage = () => {
       }}>
         <div style={{ textAlign: 'center', color: '#6b7280' }}>
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🛍️</div>
-          <p>Loading your buyer dashboard...</p>
+          <p>Loading your shopping dashboard...</p>
         </div>
       </div>
     );
@@ -322,7 +328,7 @@ const BuyerDashboardPage = () => {
       fontFamily: 'system-ui, sans-serif'
     }}>
       <div style={{
-        maxWidth: '1200px',
+        maxWidth: '1000px',
         margin: '0 auto',
         padding: '2rem 1rem'
       }}>
@@ -339,87 +345,76 @@ const BuyerDashboardPage = () => {
             marginBottom: '0.5rem',
             fontWeight: 'bold'
           }}>
-            🛍️ Buyer Dashboard
+            🛍️ Shopping Dashboard
           </h1>
           <p style={{ 
             color: '#6b7280',
             fontSize: '1.1rem',
             margin: 0
           }}>
-            Welcome back, {user.firstName}! Track your shopping journey.
+            Hello {user.firstName}! Ready to discover amazing products?
           </p>
         </div>
 
         {/* Navigation and Content */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: '250px 1fr',
-          gap: '2rem',
-          minHeight: '600px'
+          backgroundColor: 'white',
+          borderRadius: '12px',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+          overflow: 'hidden'
         }}>
-          {/* Sidebar Navigation */}
+          {/* Tab Navigation */}
           <div style={{
-            backgroundColor: 'white',
-            padding: '1.5rem',
-            borderRadius: '12px',
-            border: '2px solid #dc2626',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-            height: 'fit-content'
+            borderBottom: '2px solid #fecaca',
+            backgroundColor: '#fef2f2',
+            display: 'flex',
+            overflowX: 'auto'
           }}>
-            <nav>
-              {[
-                { id: 'analytics', label: '📊 Analytics', icon: '📊' },
-                { id: 'orders', label: '📦 Orders', icon: '📦' },
-                { id: 'favorites', label: '❤️ Favorites', icon: '❤️' },
-                { id: 'account', label: '👤 Account', icon: '👤' }
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.75rem',
-                    width: '100%',
-                    padding: '1rem',
-                    marginBottom: '0.5rem',
-                    backgroundColor: activeTab === tab.id ? '#fef2f2' : 'transparent',
-                    color: activeTab === tab.id ? '#dc2626' : '#6b7280',
-                    border: activeTab === tab.id ? '2px solid #dc2626' : '2px solid transparent',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    fontSize: '1rem',
-                    fontWeight: activeTab === tab.id ? 'bold' : 'normal',
-                    transition: 'all 0.2s ease',
-                    textAlign: 'left'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (activeTab !== tab.id) {
-                      e.target.style.backgroundColor = '#f9fafb';
-                      e.target.style.color = '#374151';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (activeTab !== tab.id) {
-                      e.target.style.backgroundColor = 'transparent';
-                      e.target.style.color = '#6b7280';
-                    }
-                  }}
-                >
-                  <span style={{ fontSize: '1.2rem' }}>{tab.icon}</span>
-                  {tab.label.replace(/📊 |📦 |❤️ |👤 /, '')}
-                </button>
-              ))}
-            </nav>
+            {[
+              { id: 'shop', label: 'Shop', icon: '🛍️' },
+              { id: 'orders', label: 'Orders', icon: '📦' },
+              { id: 'chat', label: 'Messages', icon: '💬' },
+              { id: 'shipping', label: 'Shipping', icon: '🚚' }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '1rem 1.5rem',
+                  backgroundColor: activeTab === tab.id ? '#dc2626' : 'transparent',
+                  color: activeTab === tab.id ? 'white' : '#6b7280',
+                  border: 'none',
+                  borderBottom: activeTab === tab.id ? '3px solid #991b1b' : '3px solid transparent',
+                  cursor: 'pointer',
+                  fontSize: '1rem',
+                  fontWeight: activeTab === tab.id ? 'bold' : 'normal',
+                  transition: 'all 0.2s ease',
+                  whiteSpace: 'nowrap'
+                }}
+                onMouseEnter={(e) => {
+                  if (activeTab !== tab.id) {
+                    e.target.style.backgroundColor = '#fecaca';
+                    e.target.style.color = '#dc2626';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (activeTab !== tab.id) {
+                    e.target.style.backgroundColor = 'transparent';
+                    e.target.style.color = '#6b7280';
+                  }
+                }}
+              >
+                <span style={{ fontSize: '1.2rem' }}>{tab.icon}</span>
+                {tab.label}
+              </button>
+            ))}
           </div>
 
           {/* Main Content Area */}
-          <div style={{
-            backgroundColor: 'white',
-            borderRadius: '12px',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-            overflow: 'hidden'
-          }}>
+          <div>
             {renderTabContent()}
           </div>
         </div>
