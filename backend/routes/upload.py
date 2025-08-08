@@ -15,14 +15,17 @@ import hashlib
 
 router = APIRouter()
 
-# Directory to store uploaded profile pictures
+# Directory to store uploaded profile pictures and chunks
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "..", "static", "uploads", "profiles")
+CHUNK_DIR = os.path.join(os.path.dirname(__file__), "..", "static", "uploads", "chunks")
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
 MAX_IMAGE_SIZE = (400, 400)  # 400x400 pixels
+CHUNK_SIZE = 1024 * 1024  # 1MB chunks
 
-# Ensure upload directory exists
+# Ensure upload directories exist
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+os.makedirs(CHUNK_DIR, exist_ok=True)
 
 def validate_image(file: UploadFile) -> bool:
     """Validate image file"""
