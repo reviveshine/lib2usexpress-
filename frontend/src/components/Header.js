@@ -288,7 +288,6 @@ const Header = () => {
                   onClose={() => setIsCartOpen(false)}
                 />
               </div>
-              </button>
             </>
           ) : (
             <>
