@@ -5645,7 +5645,24 @@ class BackendTester:
             self.test_bulk_user_status_retrieval,
             self.test_bulk_user_status_with_nonexistent_users,
             self.test_user_status_online_detection_5_minute_window,
-            self.test_user_status_lifecycle_complete
+            self.test_user_status_lifecycle_complete,
+            # New Enhanced Dashboard Analytics tests
+            self.test_seller_analytics_week,
+            self.test_seller_analytics_month,
+            self.test_seller_analytics_year,
+            self.test_buyer_analytics_week,
+            self.test_buyer_analytics_month,
+            self.test_buyer_analytics_unauthorized,
+            self.test_product_management_basic,
+            self.test_product_management_filters,
+            self.test_product_management_unauthorized,
+            self.test_product_status_update,
+            self.test_product_status_invalid,
+            self.test_product_status_ownership,
+            # New Chunked Upload tests
+            self.test_chunked_upload_basic,
+            self.test_chunked_upload_multi_chunk,
+            self.test_chunked_upload_unauthorized
         ]
         
         passed = 0
