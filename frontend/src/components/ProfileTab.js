@@ -1291,36 +1291,61 @@ const ProfileTab = () => {
               Do you want to update your profile picture?
             </p>
 
+            {uploading && (
+              <div style={{ marginBottom: '1rem' }}>
+                <div style={{
+                  width: '100%',
+                  backgroundColor: '#f0f0f0',
+                  borderRadius: '10px',
+                  overflow: 'hidden',
+                  marginBottom: '0.5rem'
+                }}>
+                  <div style={{
+                    width: `${uploadProgress}%`,
+                    backgroundColor: '#dc2626',
+                    height: '8px',
+                    transition: 'width 0.3s ease'
+                  }}></div>
+                </div>
+                <p style={{ fontSize: '0.9rem', color: '#6b7280' }}>
+                  Uploading... {uploadProgress}%
+                </p>
+              </div>
+            )}
+
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
               <button
                 onClick={() => {
                   setShowProfilePictureModal(false);
                   setNewProfilePicture('');
+                  setSelectedFile(null);
                 }}
+                disabled={uploading}
                 style={{
                   padding: '0.75rem 1.5rem',
-                  backgroundColor: '#6b7280',
+                  backgroundColor: uploading ? '#9ca3af' : '#6b7280',
                   color: 'white',
                   border: 'none',
                   borderRadius: '8px',
-                  cursor: 'pointer'
+                  cursor: uploading ? 'not-allowed' : 'pointer'
                 }}
               >
                 Cancel
               </button>
               <button
                 onClick={handleUpdateProfilePicture}
+                disabled={uploading}
                 style={{
                   padding: '0.75rem 1.5rem',
-                  backgroundColor: '#dc2626',
+                  backgroundColor: uploading ? '#9ca3af' : '#dc2626',
                   color: 'white',
                   border: 'none',
                   borderRadius: '8px',
-                  cursor: 'pointer',
+                  cursor: uploading ? 'not-allowed' : 'pointer',
                   fontWeight: 'bold'
                 }}
               >
-                Update Picture
+                {uploading ? 'Uploading...' : 'Update Picture'}
               </button>
             </div>
           </div>
