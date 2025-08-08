@@ -386,6 +386,7 @@ try:
     from routes.profile import router as profile_router
     from routes.user_status import router as user_status_router
     from routes.upload import router as upload_router
+    from routes.dashboard import router as dashboard_router
 
     app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
     app.include_router(users_router, prefix="/api/users", tags=["Users"])
