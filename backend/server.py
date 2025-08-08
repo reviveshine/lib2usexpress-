@@ -385,6 +385,7 @@ try:
     from routes.verification import router as verification_router
     from routes.profile import router as profile_router
     from routes.user_status import router as user_status_router
+    from routes.upload import router as upload_router
 
     app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
     app.include_router(users_router, prefix="/api/users", tags=["Users"])
@@ -396,6 +397,7 @@ try:
     app.include_router(verification_router, prefix="/api/verification", tags=["Verification"])
     app.include_router(profile_router, prefix="/api/profile", tags=["Profile"])
     app.include_router(user_status_router, prefix="/api/user", tags=["User Status"])
+    app.include_router(upload_router, prefix="/api", tags=["File Upload"])
     
     print("✅ All API routes loaded successfully")
     
