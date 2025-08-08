@@ -113,38 +113,109 @@ const ProfileTab = () => {
     
     try {
       const token = localStorage.getItem('auth_token');
-      const formData = new FormData();
-      formData.append('file', selectedFile);
-
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/upload/profile-picture`,
-        formData,
-        {
-          headers: { 
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data'
-          },
-          onUploadProgress: (progressEvent) => {
-            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-            setUploadProgress(percentCompleted);
-          }
-        }
-      );
-
-      if (response.data.success) {
-        setShowProfilePictureModal(false);
-        setNewProfilePicture('');
-        setSelectedFile(null);
-        setUploadProgress(0);
-        fetchProfile();
-        alert('Profile picture updated successfully!');
+      
+      // Use chunked upload for files larger than 1MB or regular upload for smaller files
+      if (selectedFile.size > 1024 * 1024) {
+        await uploadWithChunks(selectedFile, token);
+      } else {
+        await uploadRegular(selectedFile, token);
       }
+
+      setShowProfilePictureModal(false);
+      setNewProfilePicture('');
+      setSelectedFile(null);
+      setUploadProgress(0);
+      fetchProfile();
+      alert('Profile picture updated successfully!');
     } catch (error) {
       console.error('Error updating profile picture:', error);
       alert('Failed to update profile picture. Please try again.');
     } finally {
       setUploading(false);
     }
+  };
+
+  const uploadRegular = async (file, token) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/api/upload/profile-picture`,
+      formData,
+      {
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        },
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setUploadProgress(percentCompleted);
+        }
+      }
+    );
+
+    if (!response.data.success) {
+      throw new Error('Upload failed');
+    }
+  };
+
+  const uploadWithChunks = async (file, token) => {
+    const chunkSize = 1024 * 1024; // 1MB chunks
+    const totalChunks = Math.ceil(file.size / chunkSize);
+    const fileHash = await calculateFileHash(file);
+    
+    let uploadedChunks = 0;
+
+    for (let i = 0; i < totalChunks; i++) {
+      const start = i * chunkSize;
+      const end = Math.min(start + chunkSize, file.size);
+      const chunk = file.slice(start, end);
+      
+      const formData = new FormData();
+      formData.append('file', chunk);
+      formData.append('chunk_index', i.toString());
+      formData.append('total_chunks', totalChunks.toString());
+      formData.append('file_hash', fileHash);
+      formData.append('filename', file.name);
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/upload/profile-picture-chunk`,
+        formData,
+        {
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+
+      if (response.data.success) {
+        uploadedChunks++;
+        const progress = Math.round((uploadedChunks / totalChunks) * 100);
+        setUploadProgress(progress);
+        
+        if (response.data.complete) {
+          break; // All chunks uploaded and combined
+        }
+      } else {
+        throw new Error(`Chunk ${i} upload failed`);
+      }
+    }
+  };
+
+  const calculateFileHash = async (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const buffer = e.target.result;
+        const hashArray = await crypto.subtle.digest('SHA-256', buffer);
+        const hashHex = Array.from(new Uint8Array(hashArray))
+          .map(byte => byte.toString(16).padStart(2, '0'))
+          .join('');
+        resolve(hashHex);
+      };
+      reader.readAsArrayBuffer(file);
+    });
   };
 
   const handleRemoveProfilePicture = async () => {
