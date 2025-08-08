@@ -73,10 +73,15 @@ async def upload_profile_picture(
         )
     
     try:
+        print(f"DEBUG: Starting upload for user {current_user_id}")
+        print(f"DEBUG: Upload dir: {UPLOAD_DIR}")
+        print(f"DEBUG: Upload dir exists: {os.path.exists(UPLOAD_DIR)}")
+        
         # Generate unique filename
         file_ext = os.path.splitext(file.filename.lower())[1]
         filename = f"{current_user_id}_{uuid.uuid4().hex[:8]}{file_ext}"
         file_path = os.path.join(UPLOAD_DIR, filename)
+        print(f"DEBUG: File path: {file_path}")
         
         # Save file
         with open(file_path, "wb") as buffer:
