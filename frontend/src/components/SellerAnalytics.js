@@ -399,6 +399,23 @@ const SellerAnalytics = () => {
             <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📋</div>
             View Orders
           </button>
+          
+          <button
+            style={{
+              padding: '1rem',
+              backgroundColor: '#ffffff',
+              color: '#dc2626',
+              border: '2px solid #dc2626',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              textAlign: 'left'
+            }}
+            onClick={() => window.location.href = '/marketplace'}
+          >
+            <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🛍️</div>
+            Shop from Others
+          </button>
         </div>
       </div>
     </div>
