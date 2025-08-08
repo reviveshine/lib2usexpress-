@@ -288,6 +288,16 @@ const Header = () => {
                   onClose={() => setIsCartOpen(false)}
                 />
               </div>
+              <span style={{ color: 'white' }}>
+                {user.firstName} {user.lastName}
+              </span>
+              <button 
+                onClick={handleLogout} 
+                className="btn-secondary"
+                style={{ cursor: 'pointer' }}
+              >
+                Logout
+              </button>
             </>
           ) : (
             <>
