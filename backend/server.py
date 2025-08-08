@@ -399,6 +399,7 @@ try:
     app.include_router(profile_router, prefix="/api/profile", tags=["Profile"])
     app.include_router(user_status_router, prefix="/api/user", tags=["User Status"])
     app.include_router(upload_router, prefix="/api", tags=["File Upload"])
+    app.include_router(dashboard_router, prefix="/api/dashboard", tags=["Dashboard Analytics"])
     
     print("✅ All API routes loaded successfully")
     
