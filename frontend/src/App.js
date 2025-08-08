@@ -10,6 +10,7 @@ import MarketplacePage from './pages/MarketplacePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
+import BuyerDashboardPage from './pages/BuyerDashboardPage';
 import AddProductPage from './pages/AddProductPage';
 import ShippingPage from './pages/ShippingPage';
 import ChatPage from './pages/ChatPage';
