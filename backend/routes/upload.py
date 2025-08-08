@@ -83,6 +83,9 @@ async def upload_profile_picture(
         file_path = os.path.join(UPLOAD_DIR, filename)
         print(f"DEBUG: File path: {file_path}")
         
+        # Reset file pointer to beginning before saving
+        file.file.seek(0)
+        
         # Save file
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
