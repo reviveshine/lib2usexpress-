@@ -5677,6 +5677,632 @@ class BackendTester:
         
         return failed == 0
 
+    # ===== ENHANCED DASHBOARD ANALYTICS TESTS =====
+    
+    def test_seller_analytics_week(self):
+        """Test GET /api/dashboard/seller/analytics with week period"""
+        if not self.seller_token:
+            self.log_test("Seller Analytics (Week)", False, "No seller token available", "Seller authentication may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/dashboard/seller/analytics?period=week",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("period") == "week" and 
+                    "analytics" in data and
+                    "overview" in data["analytics"] and
+                    "trends" in data["analytics"] and
+                    "top_products" in data["analytics"] and
+                    "revenue_by_day" in data["analytics"]):
+                    
+                    overview = data["analytics"]["overview"]
+                    required_fields = ["total_products", "active_products", "total_revenue", 
+                                     "total_orders", "pending_orders", "product_views", "new_inquiries"]
+                    
+                    if all(field in overview for field in required_fields):
+                        self.log_test("Seller Analytics (Week)", True, 
+                                    f"Week analytics retrieved - Products: {overview['total_products']}, Revenue: ${overview['total_revenue']}")
+                        return True
+                    else:
+                        missing = [f for f in required_fields if f not in overview]
+                        self.log_test("Seller Analytics (Week)", False, f"Missing overview fields: {missing}", data)
+                        return False
+                else:
+                    self.log_test("Seller Analytics (Week)", False, "Invalid response structure", data)
+                    return False
+            elif response.status_code == 403:
+                self.log_test("Seller Analytics (Week)", False, "Access denied - seller authentication required", response.text)
+                return False
+            else:
+                self.log_test("Seller Analytics (Week)", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Seller Analytics (Week)", False, "Request failed", str(e))
+            return False
+    
+    def test_seller_analytics_month(self):
+        """Test GET /api/dashboard/seller/analytics with month period"""
+        if not self.seller_token:
+            self.log_test("Seller Analytics (Month)", False, "No seller token available", "Seller authentication may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/dashboard/seller/analytics?period=month",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("period") == "month" and 
+                    "analytics" in data):
+                    
+                    trends = data["analytics"]["trends"]
+                    if "revenue_trend" in trends and "orders_trend" in trends:
+                        revenue_trend = trends["revenue_trend"]
+                        if "percentage" in revenue_trend and "direction" in revenue_trend:
+                            self.log_test("Seller Analytics (Month)", True, 
+                                        f"Month analytics with trends - Revenue trend: {revenue_trend['direction']} {revenue_trend['percentage']}%")
+                            return True
+                    
+                    self.log_test("Seller Analytics (Month)", False, "Missing or invalid trends data", data)
+                    return False
+                else:
+                    self.log_test("Seller Analytics (Month)", False, "Invalid response structure", data)
+                    return False
+            else:
+                self.log_test("Seller Analytics (Month)", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Seller Analytics (Month)", False, "Request failed", str(e))
+            return False
+    
+    def test_seller_analytics_year(self):
+        """Test GET /api/dashboard/seller/analytics with year period"""
+        if not self.seller_token:
+            self.log_test("Seller Analytics (Year)", False, "No seller token available", "Seller authentication may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/dashboard/seller/analytics?period=year",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("period") == "year" and 
+                    "analytics" in data):
+                    
+                    top_products = data["analytics"]["top_products"]
+                    revenue_by_day = data["analytics"]["revenue_by_day"]
+                    
+                    self.log_test("Seller Analytics (Year)", True, 
+                                f"Year analytics retrieved - Top products: {len(top_products)}, Daily data points: {len(revenue_by_day)}")
+                    return True
+                else:
+                    self.log_test("Seller Analytics (Year)", False, "Invalid response structure", data)
+                    return False
+            else:
+                self.log_test("Seller Analytics (Year)", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Seller Analytics (Year)", False, "Request failed", str(e))
+            return False
+    
+    def test_buyer_analytics_week(self):
+        """Test GET /api/dashboard/buyer/analytics with week period"""
+        if not self.buyer_token:
+            self.log_test("Buyer Analytics (Week)", False, "No buyer token available", "Buyer authentication may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/dashboard/buyer/analytics?period=week",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    data.get("period") == "week" and 
+                    "analytics" in data and
+                    "overview" in data["analytics"]):
+                    
+                    overview = data["analytics"]["overview"]
+                    required_fields = ["total_spent", "total_orders", "pending_orders", 
+                                     "cancelled_orders", "avg_order_value", "total_items", 
+                                     "shipping_costs", "total_savings"]
+                    
+                    if all(field in overview for field in required_fields):
+                        self.log_test("Buyer Analytics (Week)", True, 
+                                    f"Week buyer analytics - Spent: ${overview['total_spent']}, Orders: {overview['total_orders']}")
+                        return True
+                    else:
+                        missing = [f for f in required_fields if f not in overview]
+                        self.log_test("Buyer Analytics (Week)", False, f"Missing overview fields: {missing}", data)
+                        return False
+                else:
+                    self.log_test("Buyer Analytics (Week)", False, "Invalid response structure", data)
+                    return False
+            elif response.status_code == 403:
+                self.log_test("Buyer Analytics (Week)", False, "Access denied - buyer authentication required", response.text)
+                return False
+            else:
+                self.log_test("Buyer Analytics (Week)", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Buyer Analytics (Week)", False, "Request failed", str(e))
+            return False
+    
+    def test_buyer_analytics_month(self):
+        """Test GET /api/dashboard/buyer/analytics with month period"""
+        if not self.buyer_token:
+            self.log_test("Buyer Analytics (Month)", False, "No buyer token available", "Buyer authentication may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/dashboard/buyer/analytics?period=month",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "analytics" in data and
+                    "favorite_categories" in data["analytics"] and
+                    "recent_purchases" in data["analytics"] and
+                    "spending_by_day" in data["analytics"]):
+                    
+                    favorite_categories = data["analytics"]["favorite_categories"]
+                    recent_purchases = data["analytics"]["recent_purchases"]
+                    spending_by_day = data["analytics"]["spending_by_day"]
+                    
+                    self.log_test("Buyer Analytics (Month)", True, 
+                                f"Month buyer analytics - Categories: {len(favorite_categories)}, Recent purchases: {len(recent_purchases)}, Daily data: {len(spending_by_day)}")
+                    return True
+                else:
+                    self.log_test("Buyer Analytics (Month)", False, "Invalid response structure", data)
+                    return False
+            else:
+                self.log_test("Buyer Analytics (Month)", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Buyer Analytics (Month)", False, "Request failed", str(e))
+            return False
+    
+    def test_buyer_analytics_unauthorized(self):
+        """Test buyer analytics access control - seller should be denied"""
+        if not self.seller_token:
+            self.log_test("Buyer Analytics (Unauthorized)", False, "No seller token available", "Seller authentication may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/dashboard/buyer/analytics?period=month",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 403:
+                self.log_test("Buyer Analytics (Unauthorized)", True, "Seller correctly denied access to buyer analytics")
+                return True
+            else:
+                self.log_test("Buyer Analytics (Unauthorized)", False, f"Expected 403, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Buyer Analytics (Unauthorized)", False, "Request failed", str(e))
+            return False
+    
+    def test_product_management_basic(self):
+        """Test GET /api/dashboard/products/management basic functionality"""
+        if not self.seller_token:
+            self.log_test("Product Management (Basic)", False, "No seller token available", "Seller authentication may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/dashboard/products/management",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "products" in data and
+                    "pagination" in data):
+                    
+                    products = data["products"]
+                    pagination = data["pagination"]
+                    
+                    # Check if products have enhanced data
+                    if products:
+                        product = products[0]
+                        enhanced_fields = ["total_sold", "total_revenue", "stock_status"]
+                        if all(field in product for field in enhanced_fields):
+                            self.log_test("Product Management (Basic)", True, 
+                                        f"Retrieved {len(products)} enhanced products with sales data")
+                            return True
+                        else:
+                            missing = [f for f in enhanced_fields if f not in product]
+                            self.log_test("Product Management (Basic)", False, f"Missing enhanced fields: {missing}", product)
+                            return False
+                    else:
+                        self.log_test("Product Management (Basic)", True, "No products found but endpoint working correctly")
+                        return True
+                else:
+                    self.log_test("Product Management (Basic)", False, "Invalid response structure", data)
+                    return False
+            elif response.status_code == 403:
+                self.log_test("Product Management (Basic)", False, "Access denied - seller authentication required", response.text)
+                return False
+            else:
+                self.log_test("Product Management (Basic)", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Product Management (Basic)", False, "Request failed", str(e))
+            return False
+    
+    def test_product_management_filters(self):
+        """Test GET /api/dashboard/products/management with filters"""
+        if not self.seller_token:
+            self.log_test("Product Management (Filters)", False, "No seller token available", "Seller authentication may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # Test with status filter
+            response = requests.get(
+                f"{self.base_url}/api/dashboard/products/management?status=active&limit=10&skip=0",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "pagination" in data:
+                    pagination = data["pagination"]
+                    if all(field in pagination for field in ["total", "limit", "skip", "has_more"]):
+                        self.log_test("Product Management (Filters)", True, 
+                                    f"Filtered products with pagination - Total: {pagination['total']}, Has more: {pagination['has_more']}")
+                        return True
+                    else:
+                        self.log_test("Product Management (Filters)", False, "Invalid pagination structure", pagination)
+                        return False
+                else:
+                    self.log_test("Product Management (Filters)", False, "Invalid response structure", data)
+                    return False
+            else:
+                self.log_test("Product Management (Filters)", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Product Management (Filters)", False, "Request failed", str(e))
+            return False
+    
+    def test_product_management_unauthorized(self):
+        """Test product management access control - buyer should be denied"""
+        if not self.buyer_token:
+            self.log_test("Product Management (Unauthorized)", False, "No buyer token available", "Buyer authentication may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            response = requests.get(
+                f"{self.base_url}/api/dashboard/products/management",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 403:
+                self.log_test("Product Management (Unauthorized)", True, "Buyer correctly denied access to product management")
+                return True
+            else:
+                self.log_test("Product Management (Unauthorized)", False, f"Expected 403, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Product Management (Unauthorized)", False, "Request failed", str(e))
+            return False
+    
+    def test_product_status_update(self):
+        """Test PUT /api/dashboard/products/{product_id}/status"""
+        if not self.seller_token or not self.product_id:
+            self.log_test("Product Status Update", False, "No seller token or product ID available", 
+                         "Seller authentication or product creation may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # Test updating to inactive
+            status_data = {"status": "inactive"}
+            response = requests.put(
+                f"{self.base_url}/api/dashboard/products/{self.product_id}/status",
+                json=status_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "message" in data:
+                    # Test updating back to active
+                    status_data = {"status": "active"}
+                    response2 = requests.put(
+                        f"{self.base_url}/api/dashboard/products/{self.product_id}/status",
+                        json=status_data,
+                        headers=headers,
+                        timeout=10
+                    )
+                    
+                    if response2.status_code == 200:
+                        data2 = response2.json()
+                        if data2.get("success"):
+                            self.log_test("Product Status Update", True, 
+                                        "Product status updated successfully (inactive → active)")
+                            return True
+                    
+                    self.log_test("Product Status Update", False, "Failed to update back to active", response2.text)
+                    return False
+                else:
+                    self.log_test("Product Status Update", False, "Invalid response structure", data)
+                    return False
+            elif response.status_code == 404:
+                self.log_test("Product Status Update", False, "Product not found or access denied", response.text)
+                return False
+            else:
+                self.log_test("Product Status Update", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Product Status Update", False, "Request failed", str(e))
+            return False
+    
+    def test_product_status_invalid(self):
+        """Test PUT /api/dashboard/products/{product_id}/status with invalid status"""
+        if not self.seller_token or not self.product_id:
+            self.log_test("Product Status (Invalid)", False, "No seller token or product ID available", 
+                         "Seller authentication or product creation may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # Test with invalid status
+            status_data = {"status": "invalid_status"}
+            response = requests.put(
+                f"{self.base_url}/api/dashboard/products/{self.product_id}/status",
+                json=status_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 400:
+                self.log_test("Product Status (Invalid)", True, "Invalid status correctly rejected with 400 error")
+                return True
+            else:
+                self.log_test("Product Status (Invalid)", False, f"Expected 400, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Product Status (Invalid)", False, "Request failed", str(e))
+            return False
+    
+    def test_product_status_ownership(self):
+        """Test product status update ownership validation"""
+        if not self.buyer_token or not self.product_id:
+            self.log_test("Product Status (Ownership)", False, "No buyer token or product ID available", 
+                         "Authentication or product creation may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.buyer_token}"}
+            
+            # Buyer trying to update seller's product status
+            status_data = {"status": "inactive"}
+            response = requests.put(
+                f"{self.base_url}/api/dashboard/products/{self.product_id}/status",
+                json=status_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 404:
+                self.log_test("Product Status (Ownership)", True, "Non-owner correctly denied access (404)")
+                return True
+            elif response.status_code == 403:
+                self.log_test("Product Status (Ownership)", True, "Non-owner correctly denied access (403)")
+                return True
+            else:
+                self.log_test("Product Status (Ownership)", False, f"Expected 404/403, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Product Status (Ownership)", False, "Request failed", str(e))
+            return False
+    
+    # ===== CHUNKED UPLOAD TESTS =====
+    
+    def test_chunked_upload_basic(self):
+        """Test POST /api/upload/profile-picture-chunk basic functionality"""
+        if not self.seller_token:
+            self.log_test("Chunked Upload (Basic)", False, "No seller token available", "Seller authentication may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # Create a small test image (base64 encoded)
+            test_image_data = b"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+            
+            # Simulate chunked upload
+            files = {"file": ("test_chunk_0", test_image_data, "application/octet-stream")}
+            data = {
+                "chunk_index": 0,
+                "total_chunks": 1,
+                "file_hash": "test_hash_123",
+                "filename": "test_profile.png"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/upload/profile-picture-chunk",
+                files=files,
+                data=data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("success") and 
+                    "complete" in data and
+                    "message" in data):
+                    
+                    if data["complete"]:
+                        self.log_test("Chunked Upload (Basic)", True, 
+                                    f"Single chunk upload completed successfully - {data['message']}")
+                        return True
+                    else:
+                        self.log_test("Chunked Upload (Basic)", True, 
+                                    f"Chunk uploaded successfully - {data['message']}")
+                        return True
+                else:
+                    self.log_test("Chunked Upload (Basic)", False, "Invalid response structure", data)
+                    return False
+            elif response.status_code == 403:
+                self.log_test("Chunked Upload (Basic)", False, "Authentication required", response.text)
+                return False
+            else:
+                self.log_test("Chunked Upload (Basic)", False, f"HTTP {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Chunked Upload (Basic)", False, "Request failed", str(e))
+            return False
+    
+    def test_chunked_upload_multi_chunk(self):
+        """Test POST /api/upload/profile-picture-chunk with multiple chunks"""
+        if not self.seller_token:
+            self.log_test("Chunked Upload (Multi)", False, "No seller token available", "Seller authentication may have failed")
+            return False
+            
+        try:
+            headers = {"Authorization": f"Bearer {self.seller_token}"}
+            
+            # Create test data for 2 chunks
+            chunk1_data = b"chunk1_data_test"
+            chunk2_data = b"chunk2_data_test"
+            file_hash = "multi_chunk_test_456"
+            
+            # Upload first chunk
+            files1 = {"file": ("chunk_0", chunk1_data, "application/octet-stream")}
+            data1 = {
+                "chunk_index": 0,
+                "total_chunks": 2,
+                "file_hash": file_hash,
+                "filename": "multi_test.png"
+            }
+            
+            response1 = requests.post(
+                f"{self.base_url}/api/upload/profile-picture-chunk",
+                files=files1,
+                data=data1,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response1.status_code == 200:
+                data1_resp = response1.json()
+                if data1_resp.get("success") and not data1_resp.get("complete"):
+                    
+                    # Upload second chunk
+                    files2 = {"file": ("chunk_1", chunk2_data, "application/octet-stream")}
+                    data2 = {
+                        "chunk_index": 1,
+                        "total_chunks": 2,
+                        "file_hash": file_hash,
+                        "filename": "multi_test.png"
+                    }
+                    
+                    response2 = requests.post(
+                        f"{self.base_url}/api/upload/profile-picture-chunk",
+                        files=files2,
+                        data=data2,
+                        headers=headers,
+                        timeout=10
+                    )
+                    
+                    if response2.status_code == 200:
+                        data2_resp = response2.json()
+                        if data2_resp.get("success"):
+                            complete_status = "complete" if data2_resp.get("complete") else "partial"
+                            self.log_test("Chunked Upload (Multi)", True, 
+                                        f"Multi-chunk upload successful - Status: {complete_status}")
+                            return True
+                        else:
+                            self.log_test("Chunked Upload (Multi)", False, "Second chunk upload failed", data2_resp)
+                            return False
+                    else:
+                        self.log_test("Chunked Upload (Multi)", False, f"Second chunk HTTP {response2.status_code}", response2.text)
+                        return False
+                else:
+                    self.log_test("Chunked Upload (Multi)", False, "First chunk upload failed or completed unexpectedly", data1_resp)
+                    return False
+            else:
+                self.log_test("Chunked Upload (Multi)", False, f"First chunk HTTP {response1.status_code}", response1.text)
+                return False
+        except Exception as e:
+            self.log_test("Chunked Upload (Multi)", False, "Request failed", str(e))
+            return False
+    
+    def test_chunked_upload_unauthorized(self):
+        """Test chunked upload authentication requirement"""
+        try:
+            # No authorization header
+            test_image_data = b"test_data"
+            files = {"file": ("test_chunk", test_image_data, "application/octet-stream")}
+            data = {
+                "chunk_index": 0,
+                "total_chunks": 1,
+                "file_hash": "unauthorized_test",
+                "filename": "test.png"
+            }
+            
+            response = requests.post(
+                f"{self.base_url}/api/upload/profile-picture-chunk",
+                files=files,
+                data=data,
+                timeout=10
+            )
+            
+            if response.status_code == 403:
+                self.log_test("Chunked Upload (Unauthorized)", True, "Unauthorized access correctly denied")
+                return True
+            else:
+                self.log_test("Chunked Upload (Unauthorized)", False, f"Expected 403, got {response.status_code}", response.text)
+                return False
+        except Exception as e:
+            self.log_test("Chunked Upload (Unauthorized)", False, "Request failed", str(e))
+            return False
+
 def main():
     """Main function to run backend tests"""
     tester = BackendTester()
