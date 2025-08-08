@@ -23,8 +23,8 @@ const DashboardPage = () => {
 
       // Only sellers can access dashboard
       if (user.userType !== 'seller') {
-        console.log('🚫 Non-seller trying to access dashboard, redirecting to marketplace');
-        navigate('/marketplace');
+        console.log('🚫 Non-seller trying to access dashboard, redirecting to buyer dashboard');
+        navigate('/buyer-dashboard');
         return;
       }
       
