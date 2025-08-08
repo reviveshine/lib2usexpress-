@@ -146,6 +146,10 @@ async def upload_profile_picture(
         }
         
     except Exception as e:
+        print(f"DEBUG: Exception occurred: {type(e).__name__}: {str(e)}")
+        import traceback
+        print(f"DEBUG: Traceback: {traceback.format_exc()}")
+        
         # Clean up file if database update failed
         if 'file_path' in locals() and os.path.exists(file_path):
             os.remove(file_path)
