@@ -91,7 +91,7 @@ print(f'Seller registration: {response.status_code}')
 if response.status_code == 200:
     data = response.json()
     if data.get('success'):
-        seller_token = data.get('access_token')
+        seller_token = data.get('token')
         print('✅ Seller registered successfully')
         
         # Test seller analytics
