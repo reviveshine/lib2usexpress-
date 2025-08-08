@@ -14,7 +14,7 @@ def test_registration_api():
     """Test the registration API endpoint"""
     
     # Get backend URL from frontend config
-    backend_url = "https://1cf5d37c-b2de-41de-b25f-6ce6b0986561.preview.emergentagent.com"
+    backend_url = "https://9e2f71ee-c51a-4355-9095-21aac0960698.preview.emergentagent.com"
     
     # Test data
     test_data = {
@@ -51,7 +51,7 @@ def test_registration_api():
         print("\n3. Testing registration endpoint...")
         headers = {
             'Content-Type': 'application/json',
-            'Origin': 'https://1cf5d37c-b2de-41de-b25f-6ce6b0986561.preview.emergentagent.com'
+            'Origin': 'https://9e2f71ee-c51a-4355-9095-21aac0960698.preview.emergentagent.com'
         }
         
         reg_response = requests.post(

@@ -219,7 +219,7 @@ async function handleRegistrationSubmit(event) {
     
     try {
         // Use the backend URL from testing
-        const API_BASE = 'https://1cf5d37c-b2de-41de-b25f-6ce6b0986561.preview.emergentagent.com';
+        const API_BASE = 'https://9e2f71ee-c51a-4355-9095-21aac0960698.preview.emergentagent.com';
         const { confirmPassword, ...registrationData } = formData;
         
         console.log('🔐 Sending registration request to:', API_BASE + '/api/auth/register');

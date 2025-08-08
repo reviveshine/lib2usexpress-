@@ -12,7 +12,7 @@ function handleLogin(event) {
   submitButton.disabled = true;
   
   // Backend API endpoint
-  const backendUrl = 'https://1cf5d37c-b2de-41de-b25f-6ce6b0986561.preview.emergentagent.com';
+  const backendUrl = 'https://9e2f71ee-c51a-4355-9095-21aac0960698.preview.emergentagent.com';
   
   // Function to try demo login from localStorage
   function tryDemoLogin() {
