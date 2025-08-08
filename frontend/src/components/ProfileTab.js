@@ -89,6 +89,10 @@ const ProfileTab = () => {
         return;
       }
       
+      // Store the actual file for upload
+      setSelectedFile(file);
+      
+      // Create preview for modal
       const reader = new FileReader();
       reader.onloadend = () => {
         setNewProfilePicture(reader.result);
@@ -99,31 +103,59 @@ const ProfileTab = () => {
   };
 
   const handleUpdateProfilePicture = async () => {
+    if (!selectedFile) {
+      alert('Please select a file first');
+      return;
+    }
+
+    setUploading(true);
+    setUploadProgress(0);
+    
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await axios.put(
-        `${process.env.REACT_APP_BACKEND_URL}/api/profile/profile/picture`,
-        { profile_picture: newProfilePicture },
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/upload/profile-picture`,
+        formData,
         {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
+          },
+          onUploadProgress: (progressEvent) => {
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            setUploadProgress(percentCompleted);
+          }
         }
       );
 
       if (response.data.success) {
         setShowProfilePictureModal(false);
         setNewProfilePicture('');
+        setSelectedFile(null);
+        setUploadProgress(0);
         fetchProfile();
+        alert('Profile picture updated successfully!');
       }
     } catch (error) {
       console.error('Error updating profile picture:', error);
+      alert('Failed to update profile picture. Please try again.');
+    } finally {
+      setUploading(false);
     }
   };
 
   const handleRemoveProfilePicture = async () => {
+    if (!confirm('Are you sure you want to remove your profile picture?')) {
+      return;
+    }
+
     try {
       const token = localStorage.getItem('auth_token');
       const response = await axios.delete(
-        `${process.env.REACT_APP_BACKEND_URL}/api/profile/profile/picture`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/upload/profile-picture`,
         {
           headers: { Authorization: `Bearer ${token}` }
         }
@@ -131,9 +163,11 @@ const ProfileTab = () => {
 
       if (response.data.success) {
         fetchProfile();
+        alert('Profile picture removed successfully!');
       }
     } catch (error) {
       console.error('Error removing profile picture:', error);
+      alert('Failed to remove profile picture. Please try again.');
     }
   };
 
