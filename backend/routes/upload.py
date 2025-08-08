@@ -63,6 +63,135 @@ def resize_image(image_path: str, max_size: tuple = MAX_IMAGE_SIZE):
         print(f"Error resizing image: {e}")
         return False
 
+@router.post("/upload/profile-picture-chunk", response_model=dict)
+async def upload_profile_picture_chunk(
+    file: UploadFile = File(...),
+    chunk_index: int = Form(...),
+    total_chunks: int = Form(...),
+    file_hash: str = Form(...),
+    filename: str = Form(...),
+    current_user_id: str = Depends(get_current_user)
+):
+    """Upload a chunk of profile picture for large files"""
+    
+    try:
+        # Create user-specific chunk directory
+        user_chunk_dir = os.path.join(CHUNK_DIR, current_user_id, file_hash)
+        os.makedirs(user_chunk_dir, exist_ok=True)
+        
+        # Save chunk
+        chunk_filename = f"chunk_{chunk_index}"
+        chunk_path = os.path.join(user_chunk_dir, chunk_filename)
+        
+        with open(chunk_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        
+        # Check if all chunks are uploaded
+        uploaded_chunks = len([f for f in os.listdir(user_chunk_dir) if f.startswith("chunk_")])
+        
+        if uploaded_chunks == total_chunks:
+            # All chunks uploaded, combine them
+            final_path = await combine_chunks(user_chunk_dir, total_chunks, filename, current_user_id)
+            
+            if final_path:
+                return {
+                    "success": True,
+                    "message": "File uploaded successfully",
+                    "profile_picture_url": final_path,
+                    "complete": True
+                }
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail="Failed to combine chunks"
+                )
+        else:
+            return {
+                "success": True,
+                "message": f"Chunk {chunk_index + 1}/{total_chunks} uploaded",
+                "complete": False,
+                "uploaded_chunks": uploaded_chunks
+            }
+            
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to upload chunk: {str(e)}"
+        )
+
+async def combine_chunks(chunk_dir: str, total_chunks: int, filename: str, user_id: str):
+    """Combine uploaded chunks into final file"""
+    try:
+        # Generate unique filename
+        file_ext = os.path.splitext(filename.lower())[1]
+        if file_ext not in ALLOWED_EXTENSIONS:
+            return None
+            
+        final_filename = f"{user_id}_{uuid.uuid4().hex[:8]}{file_ext}"
+        final_path = os.path.join(UPLOAD_DIR, final_filename)
+        
+        # Combine chunks
+        with open(final_path, "wb") as final_file:
+            for i in range(total_chunks):
+                chunk_path = os.path.join(chunk_dir, f"chunk_{i}")
+                if os.path.exists(chunk_path):
+                    with open(chunk_path, "rb") as chunk_file:
+                        shutil.copyfileobj(chunk_file, final_file)
+                else:
+                    # Missing chunk
+                    if os.path.exists(final_path):
+                        os.remove(final_path)
+                    return None
+        
+        # Validate and resize image
+        if not resize_image(final_path):
+            if os.path.exists(final_path):
+                os.remove(final_path)
+            return None
+        
+        # Update database
+        database = get_database()
+        profile = await database.user_profiles.find_one({"user_id": user_id})
+        
+        if not profile:
+            # Create profile if doesn't exist
+            from models.profile import UserProfile
+            new_profile = UserProfile(
+                user_id=user_id,
+                system_user_id=f"LIB2USA-{str(uuid.uuid4())[:8].upper()}",
+                created_at=datetime.utcnow(),
+                updated_at=datetime.utcnow()
+            )
+            await database.user_profiles.insert_one(new_profile.dict())
+        
+        # Remove old profile picture if exists
+        if profile and profile.get("profile_picture_url"):
+            old_filename = profile["profile_picture_url"].split("/")[-1]
+            old_file_path = os.path.join(UPLOAD_DIR, old_filename)
+            if os.path.exists(old_file_path):
+                os.remove(old_file_path)
+        
+        # Update profile with new picture URL
+        profile_picture_url = f"/api/uploads/profiles/{final_filename}"
+        await database.user_profiles.update_one(
+            {"user_id": user_id},
+            {
+                "$set": {
+                    "profile_picture_url": profile_picture_url,
+                    "updated_at": datetime.utcnow()
+                }
+            }
+        )
+        
+        # Clean up chunks
+        shutil.rmtree(os.path.dirname(chunk_dir), ignore_errors=True)
+        
+        return profile_picture_url
+        
+    except Exception as e:
+        print(f"Error combining chunks: {e}")
+        return None
+
 @router.post("/upload/profile-picture", response_model=dict)
 async def upload_profile_picture(
     file: UploadFile = File(...),
