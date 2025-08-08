@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Depends, UploadFile, File
+from fastapi import APIRouter, HTTPException, status, Depends, UploadFile, File, Form
 from fastapi.responses import FileResponse
 import os
 import uuid
@@ -10,6 +10,8 @@ from database import get_database
 from datetime import datetime
 import base64
 from io import BytesIO
+import json
+import hashlib
 
 router = APIRouter()
 
