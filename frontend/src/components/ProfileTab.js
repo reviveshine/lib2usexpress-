@@ -12,6 +12,9 @@ const ProfileTab = () => {
   const [showIdentityModal, setShowIdentityModal] = useState(false);
   const [showProfilePictureModal, setShowProfilePictureModal] = useState(false);
   const [newProfilePicture, setNewProfilePicture] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploading, setUploading] = useState(false);
 
   // Form states
   const [newAddress, setNewAddress] = useState({
