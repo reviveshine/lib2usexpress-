@@ -247,6 +247,9 @@ const Header = () => {
                 <Link to="/dashboard">Dashboard</Link>
               )}
               {user.userType === 'buyer' && (
+                <Link to="/buyer-dashboard">Dashboard</Link>
+              )}
+              {user.userType === 'buyer' && (
                 <div className="cart-dropdown-container" style={{ position: 'relative', display: 'inline-block' }}>
                   <button
                     onClick={() => setIsCartOpen(!isCartOpen)}
