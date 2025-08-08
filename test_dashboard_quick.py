@@ -21,7 +21,7 @@ print(f'Buyer registration: {response.status_code}')
 if response.status_code == 200:
     data = response.json()
     if data.get('success'):
-        buyer_token = data.get('access_token')
+        buyer_token = data.get('token')
         print('✅ Buyer registered successfully')
         
         # Test buyer analytics
