@@ -54,6 +54,7 @@ function App() {
                       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                       <Route path="/reset-password" element={<ResetPasswordPage />} />
                       <Route path="/dashboard" element={<DashboardPage />} />
+                      <Route path="/buyer-dashboard" element={<BuyerDashboardPage />} />
                       <Route path="/add-product" element={<AddProductPage />} />
                       <Route path="/seller-verification" element={<SellerVerificationPage />} />
                     </Routes>
