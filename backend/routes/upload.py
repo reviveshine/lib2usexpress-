@@ -14,7 +14,7 @@ from io import BytesIO
 router = APIRouter()
 
 # Directory to store uploaded profile pictures
-UPLOAD_DIR = "static/uploads/profiles"
+UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "..", "static", "uploads", "profiles")
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
 MAX_IMAGE_SIZE = (400, 400)  # 400x400 pixels
