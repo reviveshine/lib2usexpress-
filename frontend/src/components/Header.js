@@ -240,27 +240,29 @@ const Header = () => {
           <Link to="/marketplace">Marketplace</Link>
           <Link to="/shipping">Shipping</Link>
           {user && <Link to="/chat">Messages</Link>}
-          {user && user.userType === 'buyer' && <Link to="/orders">Orders</Link>}
+          {user && <Link to="/orders">Orders</Link>}
           {user ? (
             <>
               {user.userType === 'seller' && (
-                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/dashboard">Seller Dashboard</Link>
               )}
               {user.userType === 'buyer' && (
                 <Link to="/buyer-dashboard">Dashboard</Link>
               )}
-              {user.userType === 'buyer' && (
-                <div className="cart-dropdown-container" style={{ position: 'relative', display: 'inline-block' }}>
-                  <button
-                    onClick={() => setIsCartOpen(!isCartOpen)}
-                    className="btn-secondary"
-                    style={{ cursor: 'pointer', position: 'relative' }}
-                  >
-                    🛒 Cart
-                    {getTotalItems() > 0 && (
-                      <span
-                        style={{
-                          position: 'absolute',
+              {user.userType === 'seller' && (
+                <Link to="/add-product">Add Product</Link>
+              )}
+              <div className="cart-dropdown-container" style={{ position: 'relative', display: 'inline-block' }}>
+                <button
+                  onClick={() => setIsCartOpen(!isCartOpen)}
+                  className="btn-secondary"
+                  style={{ cursor: 'pointer', position: 'relative' }}
+                >
+                  🛒 Cart
+                  {getTotalItems() > 0 && (
+                    <span
+                      style={{
+                        position: 'absolute',
                           top: '-8px',
                           right: '-8px',
                           backgroundColor: '#ff4444',
