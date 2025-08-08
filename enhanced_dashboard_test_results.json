@@ -1,0 +1,32 @@
+[
+  {
+    "test": "Buyer Analytics Comprehensive",
+    "passed": false,
+    "message": "No buyer token available",
+    "details": null
+  },
+  {
+    "test": "Seller Analytics",
+    "passed": false,
+    "message": "No seller token available - seller authentication failed",
+    "details": null
+  },
+  {
+    "test": "Product Management",
+    "passed": false,
+    "message": "No seller token available - seller authentication failed",
+    "details": null
+  },
+  {
+    "test": "Chunked Upload Auth",
+    "passed": true,
+    "message": "Unauthorized access correctly denied",
+    "details": null
+  },
+  {
+    "test": "Access Control",
+    "passed": false,
+    "message": "No buyer token available",
+    "details": null
+  }
+]
