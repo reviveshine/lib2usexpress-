@@ -53,7 +53,8 @@ class IdentityDocument(BaseModel):
 class UserProfile(BaseModel):
     user_id: str
     system_user_id: str  # Auto-generated unique ID
-    profile_picture: Optional[str] = None  # base64 encoded image
+    profile_picture: Optional[str] = None  # base64 encoded image (deprecated)
+    profile_picture_url: Optional[str] = None  # URL to profile picture file
     addresses: List[AddressModel] = []
     shipping_addresses: List[ShippingAddressModel] = []
     mobile_money_wallets: List[MobileMoneyWallet] = []
