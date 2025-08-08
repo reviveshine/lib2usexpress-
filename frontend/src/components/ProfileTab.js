@@ -382,7 +382,7 @@ const ProfileTab = () => {
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover'
-                }}}
+                }}
               />
             ) : (
               <span style={{
