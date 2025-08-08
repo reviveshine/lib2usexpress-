@@ -428,7 +428,7 @@ const ProfileTab = () => {
             <p style={{ fontSize: '1rem', opacity: '0.8' }}>
               {user.userType === 'seller' ? '🏪 Seller Account' : '🛍️ Buyer Account'} • {user.location}
             </p>
-            {profile?.profile_picture && (
+            {profile?.profile_picture_url && (
               <button
                 onClick={handleRemoveProfilePicture}
                 style={{
