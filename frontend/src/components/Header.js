@@ -263,41 +263,31 @@ const Header = () => {
                     <span
                       style={{
                         position: 'absolute',
-                          top: '-8px',
-                          right: '-8px',
-                          backgroundColor: '#ff4444',
-                          color: 'white',
-                          borderRadius: '50%',
-                          width: '20px',
-                          height: '20px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          fontSize: '12px',
-                          fontWeight: 'bold'
-                        }}
-                      >
-                        {getTotalItems()}
-                      </span>
-                    )}
-                  </button>
-                  
-                  {/* Cart Dropdown */}
-                  <ShoppingCart
-                    isOpen={isCartOpen}
-                    onClose={() => setIsCartOpen(false)}
-                  />
-                </div>
-              )}
-              <span style={{ color: 'white' }}>
-                {user.firstName} {user.lastName}
-              </span>
-              <button 
-                onClick={handleLogout} 
-                className="btn-secondary"
-                style={{ cursor: 'pointer' }}
-              >
-                Logout
+                        top: '-8px',
+                        right: '-8px',
+                        backgroundColor: '#dc2626',
+                        color: 'white',
+                        borderRadius: '50%',
+                        width: '20px',
+                        height: '20px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '12px',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      {getTotalItems()}
+                    </span>
+                  )}
+                </button>
+                
+                {/* Cart Dropdown */}
+                <ShoppingCart
+                  isOpen={isCartOpen}
+                  onClose={() => setIsCartOpen(false)}
+                />
+              </div>
               </button>
             </>
           ) : (
