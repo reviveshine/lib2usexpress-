@@ -3,6 +3,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useUserStatus } from '../hooks/useUserStatus';
 import ProfileTab from '../components/ProfileTab';
+import SellerAnalytics from '../components/SellerAnalytics';
+import BuyerAnalytics from '../components/BuyerAnalytics';
+import ProductManagement from '../components/ProductManagement';
 
 const DashboardPage = () => {
   const { user, loading } = useAuth();
