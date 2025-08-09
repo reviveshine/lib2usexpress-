@@ -12,7 +12,7 @@ function handleLogin(event) {
   submitButton.disabled = true;
   
   // Use the backend URL (you may need to update this to match your actual backend)
-  const backendUrl = 'https://9e2f71ee-c51a-4355-9095-21aac0960698.preview.emergentagent.com';
+  const backendUrl = 'https://c70051fd-5d81-4932-80e9-45f66884f42e.preview.emergentagent.com';
   
   // Make API call to backend
   fetch(`${backendUrl}/api/auth/login`, {
